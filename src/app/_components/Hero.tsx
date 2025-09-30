@@ -8,40 +8,9 @@ import {
 	CarouselItem,
 } from "@/components/ui/carousel";
 import { useEffect, useState } from "react";
-import { TypewriterEffect } from "@/components/ui/typewriter-effect";
+import { HeroData } from "@/app/page";
 
-type HeroData = {
-	title: string;
-	subtitle: string;
-	img: string;
-	btnText: string;
-	href: string;
-};
-
-export default function Hero() {
-	const heroData: HeroData[] = [
-		{
-			subtitle: "We Fit-Out",
-			title: "Smarter Designs",
-			btnText: "About Us",
-			href: "/about-us",
-			img: "/hero-5.jpg",
-		},
-		{
-			subtitle: "We Deliver",
-			title: "Best Spaces in Cebu",
-			btnText: "Our Services",
-			href: "/services",
-			img: "/hero-4.jpg",
-		},
-		{
-			subtitle: "We Design",
-			title: "3D Models of your space",
-			btnText: "Get a Quote",
-			href: "/quote",
-			img: "/hero-6.jpg",
-		},
-	];
+export default function Hero({ heroData }: { heroData: HeroData[] }) {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 	const [api, setApi] = useState<CarouselApi>();
 
@@ -67,32 +36,31 @@ export default function Hero() {
 				{heroData.map((data, index) => (
 					<CarouselItem
 						key={index}
-						className="flex-grow flex items-center justify-center bg-cover bg-center w-full h-screen bg-no-repeat"
+						className="flex-grow flex lg:items-center lg:justify-center bg-cover bg-center w-full h-screen bg-no-repeat"
 						style={{
 							backgroundImage: `url('${data.img}')`,
 						}}
 					>
 						<div className="w-full h-full flex items-center">
-							<div className="w-[32rem] h-fit flex flex-col gap-6 justify-center mx-36">
+							<div className="lg:w-[32rem] h-fit flex flex-col gap-6 justify-center mx-4 lg:mx-36">
 								<div
 									id="subtitle"
-									className="w-full text-white text-xl font-light uppercase"
+									className="w-full text-white lg:text-xl font-light uppercase"
 								>
 									{data.subtitle}
 								</div>
-								{/* <div className="w-1/10 rounded-full min-h-1.5 mx-1 bg-theme-accent"></div> */}
 								<div
 									id="title"
-									className="w-full text-white text-6xl font-extrabold uppercase"
+									className="w-full text-white text-3xl lg:text-6xl font-extrabold uppercase"
 								>
 									{data.title}
 								</div>
-								<button
-									id="btn"
-									className="text-left text-white bg-theme-secondary w-fit px-6 py-2 rounded-sm cursor-pointer transition hover:scale-105"
+								<Link
+									href={data.href}
+									className="uppercase text-left text-white bg-theme-secondary w-fit px-4 py-1.5 lg:px-6 lg:py-2 rounded-sm cursor-pointer transition hover:scale-105"
 								>
 									{data.btnText}
-								</button>
+								</Link>
 							</div>
 						</div>
 					</CarouselItem>
