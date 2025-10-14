@@ -193,7 +193,7 @@ function TeamSection() {
 
 function StatsSection() {
 	const stats = [
-		{ number: "100+", label: "Projects Completed" },
+		{ number: "30+", label: "Projects Completed" },
 		{ number: "50+", label: "Happy Clients" },
 		{ number: "5+", label: "Years of Experience" },
 		{ number: "24/7", label: "Customer Support" },
