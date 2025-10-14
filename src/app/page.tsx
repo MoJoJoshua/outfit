@@ -48,22 +48,22 @@ export default function Page() {
 	const homeCardData: HomeCardData[] = [
 		{
 			title: "Design & Build",
-			desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, velit in? Quasi, cupiditate consectetur. Facere laboriosam quis veritatis ab optio, sunt architecto iste incidunt hic distinctio illum quo cum sit?",
+			desc: "Complete construction solutions from concept to completion. We handle architectural design, project management, and construction with premium materials and skilled craftsmanship to bring your vision to life efficiently and cost-effectively.",
 			image: "/design_build.jpg",
 		},
 		{
 			title: "Commercial Fit-Out",
-			desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, velit in? Quasi, cupiditate consectetur. Facere laboriosam quis veritatis ab optio, sunt architecto iste incidunt hic distinctio illum quo cum sit?",
+			desc: "Transform your commercial space into a productive and inspiring environment. We specialize in office fit-outs, retail spaces, restaurants, and other commercial properties that enhance productivity and reflect your brand identity.",
 			image: "/commercial_fitout.jpg",
 		},
 		{
 			title: "House Renovation",
-			desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, velit in? Quasi, cupiditate consectetur. Facere laboriosam quis veritatis ab optio, sunt architecto iste incidunt hic distinctio illum quo cum sit?",
+			desc: "Breathe new life into your home with our comprehensive renovation services. From single room updates to complete home makeovers, we combine functionality with aesthetic appeal to create spaces that truly feel like home.",
 			image: "/house_renovation.jpg",
 		},
 		{
 			title: "3D Modeling",
-			desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, velit in? Quasi, cupiditate consectetur. Facere laboriosam quis veritatis ab optio, sunt architecto iste incidunt hic distinctio illum quo cum sit?",
+			desc: "See your project before it's built with our advanced 3D modeling and visualization services. Our detailed models help you make informed decisions about design elements, materials, and layouts for the perfect result.",
 			image: "/3d_model.jpg",
 		},
 	];
@@ -73,7 +73,7 @@ export default function Page() {
 			<Navbar />
 			<div id="body" className="flex flex-col gap-24 pb-16 relative">
 				<Hero heroData={heroData} />
-				<section className="max-w-md md:max-w-2xl lg:max-w-7xl w-full mx-auto flex flex-col gap-40">
+				<section className="max-w-sm md:max-w-2xl lg:max-w-7xl w-full mx-auto flex flex-col gap-40">
 					<OutfitPH />
 					<Services homeCardData={homeCardData} />
 					<VideoSection />

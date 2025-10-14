@@ -14,14 +14,12 @@ export default function OutfitPH() {
 						</span>
 						<div id="content" className="flex flex-col gap-8">
 							<span className="font-light text-base/8">
-								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut
-								optio harum magni assumenda sequi libero omnis iure sed facere
-								mollitia veritatis, voluptas nihil illum corrupti necessitatibus
-								provident hic, voluptate reiciendis! Lorem ipsum dolor, sit amet
-								consectetur adipisicing elit. Cupiditate, inventore hic
-								voluptatem esse illum aut commodi unde distinctio aperiam ipsa!
-								Ea labore officiis repellendus earum voluptas aliquam doloribus
-								nisi quam!
+								At Outfit Construction PH, we believe that every space has the
+								potential to inspire and transform lives. Our team of skilled
+								architects, designers, and craftsmen work together to create
+								environments that perfectly balance functionality with aesthetic
+								appeal. From conceptual design to final execution, we ensure
+								every detail reflects your unique vision and lifestyle.
 							</span>
 							<span className="font-light text-base/8">
 								Find out more about our team and why we are considered to be the

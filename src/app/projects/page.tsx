@@ -69,10 +69,6 @@ function ProjectCard({ project }: ProjectCardProps) {
 		? project.description.replace(/<[^>]*>/g, "").substring(0, 150) + "..."
 		: "Professional renovation and fit-out services.";
 
-	// Import Card components
-	// ...existing code...
-	// Use Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter
-	// Import at top: import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 	return (
 		<Card className="group hover:shadow-xl transition-shadow overflow-hidden pt-0">
 			<div className="relative h-64 overflow-hidden rounded-xl">
