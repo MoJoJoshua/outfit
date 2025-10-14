@@ -4,7 +4,7 @@ import { contactData } from "@/lib/constants";
 
 export default function Footer() {
 	return (
-		<footer className="bg-theme-secondary text-white py-12">
+		<footer className="bg-theme-secondary text-white p-12">
 			<div className="container mx-auto max-w-7xl">
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 					{/* Logo and Description Section */}

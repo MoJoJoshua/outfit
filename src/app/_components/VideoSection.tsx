@@ -14,14 +14,11 @@ export default function VideoSection() {
 						</span>
 						<div id="content" className="flex flex-col gap-6 md:gap-8">
 							<span className="font-light text-sm md:text-base">
-								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut
-								optio harum magni assumenda sequi libero omnis iure sed facere
-								mollitia veritatis, voluptas nihil illum corrupti necessitatibus
-								provident hic, voluptate reiciendis! Lorem ipsum dolor, sit amet
-								consectetur adipisicing elit. Cupiditate, inventore hic
-								voluptatem esse illum aut commodi unde distinctio aperiam ipsa!
-								Ea labore officiis repellendus earum voluptas aliquam doloribus
-								nisi quam!
+								Our team consists of skilled architects, experienced project
+								managers, creative interior designers, and master craftsmen who
+								bring decades of combined experience to every project. Each team
+								member is passionate about creating spaces that make a
+								difference in people&apos;s lives and exceed expectations.
 							</span>
 							<span className="font-light text-sm md:text-base">
 								Find out more about our team and why we are considered to be the
@@ -30,7 +27,7 @@ export default function VideoSection() {
 						</div>
 					</div>
 				</div>
-				<div className="w-full lg:w-auto aspect-video max-w-full flex items-center justify-center">
+				<div className="w-full aspect-video max-w-full flex items-center justify-center">
 					<iframe
 						src="https://www.youtube.com/embed/5rDWm8ZSnhQ"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

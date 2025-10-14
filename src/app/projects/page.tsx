@@ -12,6 +12,12 @@ import {
 	CardDescription,
 	CardFooter,
 } from "@/components/ui/card";
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { projectData } from "@/lib/constants";
 import { useState } from "react";
 
@@ -23,6 +29,7 @@ interface ProjectCardProps {
 		imgGallery: string[];
 		description?: string;
 	};
+	onViewDetails: (project: ProjectCardProps["project"]) => void;
 }
 
 function ProjectsHero() {
@@ -50,7 +57,7 @@ function ProjectsHero() {
 	);
 }
 
-function ProjectCard({ project }: ProjectCardProps) {
+function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
 	const [imageIndex, setImageIndex] = useState(0);
 
 	const nextImage = () => {
@@ -69,10 +76,6 @@ function ProjectCard({ project }: ProjectCardProps) {
 		? project.description.replace(/<[^>]*>/g, "").substring(0, 150) + "..."
 		: "Professional renovation and fit-out services.";
 
-	// Import Card components
-	// ...existing code...
-	// Use Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter
-	// Import at top: import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 	return (
 		<Card className="group hover:shadow-xl transition-shadow overflow-hidden pt-0">
 			<div className="relative h-64 overflow-hidden rounded-xl">
@@ -133,11 +136,156 @@ function ProjectCard({ project }: ProjectCardProps) {
 				<Button
 					variant="outline"
 					className="w-full bg-transparent hover:bg-theme-primary text-theme-base hover:text-white border-theme-primary hover:border-theme-primary transition-all"
+					onClick={() => onViewDetails(project)}
 				>
 					View Details
 				</Button>
 			</CardFooter>
 		</Card>
+	);
+}
+
+function ProjectModal({
+	project,
+	isOpen,
+	onClose,
+}: {
+	project: ProjectCardProps["project"] | null;
+	isOpen: boolean;
+	onClose: () => void;
+}) {
+	const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+	if (!project) return null;
+
+	const nextImage = () => {
+		setCurrentImageIndex((prev) => (prev + 1) % project.imgGallery.length);
+	};
+
+	const prevImage = () => {
+		setCurrentImageIndex(
+			(prev) =>
+				(prev - 1 + project.imgGallery.length) % project.imgGallery.length
+		);
+	};
+
+	const cleanDescription = project.description
+		? project.description.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ")
+		: "Professional renovation and fit-out services by Outfit Construction PH.";
+
+	return (
+		<Dialog open={isOpen} onOpenChange={onClose}>
+			<DialogContent className="!max-w-4xl max-h-[90vh] overflow-y-auto">
+				<DialogHeader>
+					<div className="flex items-center gap-3 mb-2">
+						<span
+							className={`px-3 py-1 rounded-full text-xs font-semibold uppercase ${
+								project.category === "Renovation"
+									? "bg-theme-primary text-white"
+									: "bg-theme-accent text-white"
+							}`}
+						>
+							{project.category}
+						</span>
+					</div>
+					<DialogTitle className="text-2xl font-bold text-theme-base text-left">
+						{project.title}
+					</DialogTitle>
+				</DialogHeader>
+
+				<div className="grid md:grid-cols-2 gap-6">
+					<div>
+						<div className="relative h-80 mb-4">
+							<Image
+								src={project.imgGallery[currentImageIndex]}
+								alt={project.title}
+								className="w-full h-full object-cover rounded-lg"
+								width={600}
+								height={400}
+							/>
+							{project.imgGallery.length > 1 && (
+								<>
+									<button
+										onClick={prevImage}
+										className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+									>
+										←
+									</button>
+									<button
+										onClick={nextImage}
+										className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+									>
+										→
+									</button>
+								</>
+							)}
+						</div>
+
+						{project.imgGallery.length > 1 && (
+							<div className="grid grid-cols-4 gap-2">
+								{project.imgGallery.slice(0, 4).map((img, index) => (
+									<button
+										key={index}
+										onClick={() => setCurrentImageIndex(index)}
+										className={`relative h-20 rounded overflow-hidden ${
+											currentImageIndex === index
+												? "ring-2 ring-theme-primary"
+												: ""
+										}`}
+									>
+										<Image
+											src={img}
+											alt={`${project.title} ${index + 1}`}
+											className="w-full h-full object-cover"
+											width={100}
+											height={80}
+										/>
+									</button>
+								))}
+							</div>
+						)}
+					</div>
+
+					<div>
+						<h3 className="text-lg font-semibold text-theme-base mb-4">
+							Project Details
+						</h3>
+						<p className="text-gray-700 leading-relaxed mb-6">
+							{cleanDescription}
+						</p>
+
+						<div className="space-y-4">
+							<div>
+								<span className="font-semibold text-theme-base">Category:</span>
+								<span className="ml-2 text-gray-700">{project.category}</span>
+							</div>
+							<div>
+								<span className="font-semibold text-theme-base">Images:</span>
+								<span className="ml-2 text-gray-700">
+									{project.imgGallery.length} photos
+								</span>
+							</div>
+						</div>
+
+						<div className="mt-6 flex gap-3">
+							<Button
+								variant="outline"
+								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary"
+							>
+								Get Similar Quote
+							</Button>
+							<Button
+								variant="outline"
+								onClick={onClose}
+								className="bg-transparent hover:bg-gray-100 text-gray-700 border-gray-300"
+							>
+								Close
+							</Button>
+						</div>
+					</div>
+				</div>
+			</DialogContent>
+		</Dialog>
 	);
 }
 
@@ -173,7 +321,7 @@ function FilterTabs({
 
 function StatsSection() {
 	const stats = [
-		{ number: "100+", label: "Projects Completed" },
+		{ number: "30+", label: "Projects Completed" },
 		{ number: "2-3", label: "Months Average Timeline" },
 		{ number: "50+", label: "Happy Clients" },
 		{ number: "100%", label: "Quality Guarantee" },
@@ -210,6 +358,10 @@ function StatsSection() {
 export default function ProjectsPage() {
 	const [activeFilter, setActiveFilter] = useState("All");
 	const [visibleProjects, setVisibleProjects] = useState(12);
+	const [selectedProject, setSelectedProject] = useState<
+		ProjectCardProps["project"] | null
+	>(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const filteredProjects =
 		activeFilter === "All"
@@ -220,6 +372,16 @@ export default function ProjectsPage() {
 
 	const loadMore = () => {
 		setVisibleProjects((prev) => Math.min(prev + 12, filteredProjects.length));
+	};
+
+	const handleViewDetails = (project: ProjectCardProps["project"]) => {
+		setSelectedProject(project);
+		setIsModalOpen(true);
+	};
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+		setSelectedProject(null);
 	};
 
 	return (
@@ -254,7 +416,11 @@ export default function ProjectsPage() {
 
 						<div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
 							{displayedProjects.map((project) => (
-								<ProjectCard key={project.key} project={project} />
+								<ProjectCard
+									key={project.key}
+									project={project}
+									onViewDetails={handleViewDetails}
+								/>
 							))}
 						</div>
 
@@ -361,6 +527,12 @@ export default function ProjectsPage() {
 				</section>
 			</div>
 			<Footer />
+
+			<ProjectModal
+				project={selectedProject}
+				isOpen={isModalOpen}
+				onClose={closeModal}
+			/>
 		</>
 	);
 }

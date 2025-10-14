@@ -3,6 +3,7 @@ import Footer from "../_components/Footer";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { testimonialData } from "@/lib/constants";
+import VideoSection from "../_components/VideoSection";
 
 function AboutHero() {
 	return (
@@ -192,7 +193,7 @@ function TeamSection() {
 
 function StatsSection() {
 	const stats = [
-		{ number: "100+", label: "Projects Completed" },
+		{ number: "30+", label: "Projects Completed" },
 		{ number: "50+", label: "Happy Clients" },
 		{ number: "5+", label: "Years of Experience" },
 		{ number: "24/7", label: "Customer Support" },
@@ -277,7 +278,7 @@ export default function AboutPage() {
 			<div id="body" className="flex flex-col relative">
 				<AboutHero />
 
-				<div className="max-w-7xl mx-auto px-4 py-20">
+				<div className="max-w-sm md:max-w-2xl lg:max-w-7xl mx-auto px-4 py-20">
 					<div className="flex flex-col gap-32">
 						<CompanyStory />
 					</div>
@@ -285,8 +286,8 @@ export default function AboutPage() {
 
 				<ValuesSection />
 
-				<div className="max-w-7xl mx-auto px-4 py-20">
-					<TeamSection />
+				<div className="max-w-sm md:max-w-2xl lg:max-w-7xl mx-auto px-4 py-20">
+					<VideoSection />
 				</div>
 
 				<StatsSection />
