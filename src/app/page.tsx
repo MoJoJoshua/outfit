@@ -4,6 +4,7 @@ import Services from "./_components/Services";
 import Footer from "./_components/Footer";
 import OutfitPH from "./_components/OutfitPH";
 import VideoSection from "./_components/VideoSection";
+import GoogleMaps from "@/components/shared/Map";
 
 export type HeroData = {
 	title: string;
@@ -26,21 +27,21 @@ export default function Page() {
 			title: "Smarter Designs",
 			btnText: "About Us",
 			href: "/about-us",
-			img: "/hero-5.jpg",
+			img: "/hero-1.jpg",
 		},
 		{
 			subtitle: "We Deliver",
 			title: "Best Spaces in Cebu",
 			btnText: "Our Services",
 			href: "/services",
-			img: "/hero-4.jpg",
+			img: "/hero-2.jpg",
 		},
 		{
 			subtitle: "We Design",
 			title: "3D Models of your space",
 			btnText: "Get a Quote",
 			href: "/quote",
-			img: "/hero-6.jpg",
+			img: "/hero-3.jpg",
 		},
 	];
 
@@ -76,6 +77,7 @@ export default function Page() {
 					<OutfitPH />
 					<Services homeCardData={homeCardData} />
 					<VideoSection />
+					<GoogleMaps mapId="HQ_LOC" className="w-full h-[28rem]" />
 				</section>
 			</div>
 			<Footer />

@@ -19,10 +19,6 @@ export default function Hero({ heroData }: { heroData: HeroData[] }) {
 			return;
 		}
 		const interval = setInterval(() => {
-			console.log(
-				"Changing image: ",
-				(currentImageIndex + 1) % heroData.length
-			);
 			setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroData.length);
 			api.scrollNext();
 		}, 5000); // Change image every 5 seconds

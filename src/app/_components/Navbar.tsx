@@ -1,17 +1,34 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ApplicationLogo from "./ApplicationLogo";
 import Link from "next/link";
+import { contactData } from "@/lib/constants";
 
 const Navbar = () => {
-	const navData = {
-		contact: "",
-		fbLink: "https://www.facebook.com/OutfitConstructionPh/",
-		igLink: "",
-		youtubeLink: "https://www.youtube.com/@outfitconstruction",
-		linkedInLink: "",
-	};
+	const navData = [
+		{
+			name: "Home",
+			href: "/",
+		},
+		{
+			name: "About",
+			href: "/about",
+		},
+		{
+			name: "Services",
+			href: "/services",
+		},
+		{
+			name: "Projects",
+			href: "/projects",
+		},
+		{
+			name: "Contact Us",
+			href: "/contact",
+		},
+	];
+
 	const [, setIsScrolled] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -42,7 +59,7 @@ const Navbar = () => {
 					</Link>
 					<div className="hidden md:flex space-x-8 w-full min-w-fit justify-end">
 						<Link
-							href={`tel:${navData.contact}`}
+							href={`tel:${contactData.telephone}`}
 							className="flex gap-2 items-center"
 						>
 							<svg
@@ -60,10 +77,12 @@ const Navbar = () => {
 							</svg>
 							<div className="flex flex-col">
 								<span className="font-bold text-theme-secondary">CALL US</span>
-								<span className="text-xs font-light">{navData.contact}</span>
+								<span className="text-xs font-light">
+									{contactData.telephone}
+								</span>
 							</div>
 						</Link>
-						<Link href={navData.fbLink} className="flex gap-2 items-center">
+						<Link href={contactData.fbLink} className="flex gap-2 items-center">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="32"
@@ -84,7 +103,7 @@ const Navbar = () => {
 								<span className="text-xs font-light">OutfitConstructionPH</span>
 							</div>
 						</Link>
-						<Link href="/" className="flex gap-2 items-center">
+						<Link href="/quote" className="flex gap-2 items-center">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="32"
@@ -152,28 +171,15 @@ const Navbar = () => {
 
 				<div className="hidden md:flex gap-4 px-4 py-6 md:justify-center lg:justify-between items-center ">
 					<div className="flex gap-12 text-xs uppercase">
-						<Link href="/" className="text-theme-primary">
-							Home
-						</Link>
-						<Link href="/about" className="text-theme-primary">
-							About
-						</Link>
-						<Link href="/locations" className="text-theme-primary">
-							Locations
-						</Link>
-						<Link href="/services" className="text-theme-primary">
-							Services
-						</Link>
-						<Link href="/reservations" className="text-theme-primary">
-							Reservations
-						</Link>
-						<Link href="/contact" className="text-theme-primary">
-							Contact
-						</Link>
+						{navData.map((item, index) => (
+							<Link key={index} href={item.href} className="text-theme-primary">
+								{item.name}
+							</Link>
+						))}
 					</div>
 					<div className="flex space-x-4">
 						<Link
-							href={navData.fbLink}
+							href={contactData.fbLink}
 							target="_blank"
 							className="text-theme-primary transition-colors"
 						>
@@ -182,7 +188,7 @@ const Navbar = () => {
 							</svg>
 						</Link>
 						<Link
-							href={navData.igLink}
+							href={contactData.igLink}
 							target="_blank"
 							className="text-theme-primary transition-colors"
 						>
@@ -191,7 +197,7 @@ const Navbar = () => {
 							</svg>
 						</Link>
 						<Link
-							href={navData.youtubeLink}
+							href={contactData.youtubeLink}
 							target="_blank"
 							className="text-theme-primary transition-colors"
 						>
@@ -199,44 +205,33 @@ const Navbar = () => {
 								<path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.267 4.356-2.631 4.385-8.816-.029-6.196-.488-8.55-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
 							</svg>
 						</Link>
-						<Link
-							href={navData.linkedInLink}
-							target="_blank"
-							className="text-theme-primary transition-colors"
-						>
-							<svg className="size-4" fill="currentColor" viewBox="0 0 24 24">
-								<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-							</svg>
-						</Link>
+						{contactData.linkedInLink && (
+							<Link
+								href={contactData.linkedInLink}
+								target="_blank"
+								className="text-theme-primary transition-colors"
+							>
+								<svg className="size-4" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+								</svg>
+							</Link>
+						)}
 					</div>
 				</div>
 
 				{/* Mobile Menu */}
 				{isMenuOpen && (
 					<div className="md:hidden bg-theme-secondary text-white shadow-md py-4 px-6 flex flex-col text-lg font-bold">
-						<Link
-							href="/about-us"
-							className="hover:text-gray-300 py-2"
-							onClick={() => setIsMenuOpen(false)}
-						>
-							About Us
-						</Link>
-						<Link href="/locations" className="hover:text-gray-300 py-2">
-							Locations
-						</Link>
-						<Link href="/services" className="hover:text-gray-300 py-2">
-							Services
-						</Link>
-						<Link href="/reservations" className="hover:text-gray-300 py-2">
-							Reservations
-						</Link>
-						<Link
-							href="/contact-us"
-							className="hover:text-gray-300 py-2"
-							onClick={() => setIsMenuOpen(false)}
-						>
-							Contact Us
-						</Link>
+						{navData.map((item, index) => (
+							<Link
+								key={index}
+								href={item.href}
+								className="hover:text-gray-300 py-2"
+								onClick={() => setIsMenuOpen(false)}
+							>
+								{item.name}
+							</Link>
+						))}
 					</div>
 				)}
 			</div>

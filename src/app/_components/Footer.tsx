@@ -1,16 +1,8 @@
 import Link from "next/link";
 import ApplicationLogo from "./ApplicationLogo";
+import { contactData } from "@/lib/constants";
 
 export default function Footer() {
-	const footerData = {
-		location: "J.R Martinez Building, Cebu City, Philippines",
-		contact: "",
-		email: "",
-		fbLink: "https://www.facebook.com/OutfitConstructionPh/",
-		igLink: "",
-		youtubeLink: "https://www.youtube.com/@outfitconstruction",
-		linkedInLink: "",
-	};
 	return (
 		<footer className="bg-theme-secondary text-white py-12">
 			<div className="container mx-auto max-w-7xl">
@@ -31,7 +23,7 @@ export default function Footer() {
 							beautiful but also built to last.
 						</p>
 						<Link
-							href={`mailto:${footerData.email}`}
+							href={`mailto:${contactData.email}`}
 							className="bg-theme-accent text-white px-6 py-2 text-sm font-medium transition-colors"
 						>
 							GET IN TOUCH
@@ -44,15 +36,15 @@ export default function Footer() {
 						<div className="space-y-3 text-sm text-gray-300">
 							<div className="flex items-start space-x-2">
 								<span>📍</span>
-								<p>{footerData.location}</p>
+								<p>{contactData.location}</p>
 							</div>
 							<div className="flex items-center space-x-2">
 								<span>📞</span>
-								<p>{footerData.contact}</p>
+								<p>{contactData.telephone}</p>
 							</div>
 							<div className="flex items-center space-x-2">
 								<span>✉️</span>
-								<p>{footerData.email}</p>
+								<p>{contactData.email}</p>
 							</div>
 						</div>
 						<Link
@@ -68,7 +60,7 @@ export default function Footer() {
 						<h3 className="text-xl font-bold mb-6">SOCIAL</h3>
 						<div className="flex space-x-4">
 							<Link
-								href={footerData.fbLink}
+								href={contactData.fbLink}
 								target="_blank"
 								className="text-white hover:text-gray-300 transition-colors"
 							>
@@ -81,7 +73,7 @@ export default function Footer() {
 								</svg>
 							</Link>
 							<Link
-								href={footerData.igLink}
+								href={contactData.igLink}
 								target="_blank"
 								className="text-white hover:text-gray-300 transition-colors"
 							>
@@ -94,7 +86,7 @@ export default function Footer() {
 								</svg>
 							</Link>
 							<Link
-								href={footerData.youtubeLink}
+								href={contactData.youtubeLink}
 								target="_blank"
 								className="text-white hover:text-gray-300 transition-colors"
 							>
@@ -106,19 +98,21 @@ export default function Footer() {
 									<path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.267 4.356-2.631 4.385-8.816-.029-6.196-.488-8.55-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
 								</svg>
 							</Link>
-							<Link
-								href={footerData.linkedInLink}
-								target="_blank"
-								className="text-white hover:text-gray-300 transition-colors"
-							>
-								<svg
-									className="w-6 h-6"
-									fill="currentColor"
-									viewBox="0 0 24 24"
+							{contactData.linkedInLink && (
+								<Link
+									href={contactData.linkedInLink}
+									target="_blank"
+									className="text-white hover:text-gray-300 transition-colors"
 								>
-									<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-								</svg>
-							</Link>
+									<svg
+										className="w-6 h-6"
+										fill="currentColor"
+										viewBox="0 0 24 24"
+									>
+										<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+									</svg>
+								</Link>
+							)}
 						</div>
 					</div>
 				</div>
