@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { projectData } from "@/lib/constants";
 import { useState } from "react";
+import Link from "next/link";
 
 interface ProjectCardProps {
 	project: {
@@ -46,7 +47,7 @@ function ProjectsHero() {
 					Our Portfolio
 				</span>
 				<h1 className="text-4xl lg:text-6xl font-extrabold uppercase mt-4">
-					Inspiring <span className="text-theme-primary">Projects</span>
+					Inspiring <span className="text-[#F9ECCE]">Projects</span>
 				</h1>
 				<p className="text-lg lg:text-xl font-light mt-6 max-w-2xl mx-auto">
 					Explore our diverse portfolio of successful renovations and fit-outs
@@ -365,8 +366,8 @@ export default function ProjectsPage() {
 
 	const filteredProjects =
 		activeFilter === "All"
-			? projectData
-			: projectData.filter((project) => project.category === activeFilter);
+			? projectData.sort((a, b) => b.key - a.key)
+			: projectData.filter((project) => project.category === activeFilter).sort((a, b) => b.key - a.key);
 
 	const displayedProjects = filteredProjects.slice(0, visibleProjects);
 
@@ -510,12 +511,14 @@ export default function ProjectsPage() {
 							to life.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
-							<Button
-								variant="outline"
-								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all border-theme-primary"
-							>
-								Get Free Quote
-							</Button>
+							<Link href="/quote" className="w-fit">
+								<Button
+									variant="outline"
+									className="bg-theme-primary hover:bg-theme-accent hover:cursor-pointer text-white hover:text-white hover:scale-105 transition-all border-theme-primary"
+								>
+									Get Free Quote
+								</Button>
+							</Link>
 							<Button
 								variant="outline"
 								className="bg-transparent hover:bg-white text-white hover:text-theme-base hover:scale-105 transition-all border-white"

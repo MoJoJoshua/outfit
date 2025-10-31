@@ -1,7 +1,7 @@
 const contactData = {
 	location: "J.R Martinez Building, Cebu City, Philippines",
-	telephone: "09568852565",
-	email: "outfit054@gmail.com",
+	telephone: ["09568852565"],
+	email: "admin@outfit.ph",
 	fbLink: "https://www.facebook.com/OutfitConstructionPh/",
 	igLink: "https://www.instagram.com/outfitconstructionph/",
 	youtubeLink: "https://www.youtube.com/@outfitconstruction",

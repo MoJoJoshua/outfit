@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { testimonialData } from "@/lib/constants";
 import VideoSection from "../_components/VideoSection";
+import Link from "next/link";
 
 function AboutHero() {
 	return (
@@ -19,8 +20,7 @@ function AboutHero() {
 					About Us
 				</span>
 				<h1 className="text-4xl lg:text-6xl font-extrabold uppercase mt-4">
-					Crafting <span className="text-theme-primary">Exceptional</span>{" "}
-					Spaces
+					Crafting <span className="text-[#F9ECCE]">Exceptional</span> Spaces
 				</h1>
 				<p className="text-lg lg:text-xl font-light mt-6 max-w-2xl mx-auto">
 					We are Cebu&apos;s premier construction and interior design company,
@@ -67,12 +67,14 @@ function CompanyStory() {
 								that exceed expectations.
 							</span>
 						</div>
-						<Button
-							variant="outline"
-							className="w-fit uppercase mt-4 bg-theme-base cursor-pointer hover:bg-theme-primary text-white hover:text-white hover:scale-105 transition-all"
-						>
-							View Portfolio
-						</Button>
+						<Link href="/projects" className="w-fit">
+							<Button
+								variant="outline"
+								className="w-fit uppercase mt-4 bg-theme-primary cursor-pointer hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all"
+							>
+								View Portfolio
+							</Button>
+						</Link>
 					</div>
 				</div>
 				<Image
@@ -141,52 +143,6 @@ function ValuesSection() {
 					))}
 				</div>
 			</div>
-		</section>
-	);
-}
-
-function TeamSection() {
-	return (
-		<section className="flex-grow flex w-full h-full">
-			<section className="text-theme-base flex flex-col lg:grid lg:grid-cols-2 gap-8 place-items-center">
-				<iframe
-					src="https://www.youtube.com/embed/5rDWm8ZSnhQ"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					className="col-span-1 row-span-2 object-cover rounded-lg shadow-lg"
-					width={600}
-					height={400}
-				/>
-				<div id="content" className="flex flex-col gap-4">
-					<span className="uppercase font-light text-xl">Our Team</span>
-					<div className="border-b-4 rounded-full border-gray-400 w-32"></div>
-					<div className="flex flex-col gap-4">
-						<span className="uppercase text-5xl font-bold w-2/3">
-							Meet the Team of{" "}
-							<span className="text-theme-primary">Builders</span>
-						</span>
-						<div id="content" className="flex flex-col gap-8">
-							<span className="font-light text-base/8">
-								Our team consists of skilled architects, experienced project
-								managers, creative interior designers, and master craftsmen who
-								bring decades of combined experience to every project. Each team
-								member is passionate about creating spaces that make a
-								difference.
-							</span>
-							<span className="font-light text-base/8">
-								From the initial consultation to the final walkthrough, our team
-								works collaboratively to ensure every detail is perfect. We
-								believe that great spaces are created by great teams, and
-								we&apos;re proud of the talented individuals who make up Outfit
-								Construction PH.
-							</span>
-							<span className="font-light text-base/8">
-								Find out more about our team and why we are considered to be the
-								best office fit-out company in Cebu.
-							</span>
-						</div>
-					</div>
-				</div>
-			</section>
 		</section>
 	);
 }
