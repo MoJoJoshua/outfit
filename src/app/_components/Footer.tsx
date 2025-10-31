@@ -24,7 +24,7 @@ export default function Footer() {
 						</p>
 						<Link
 							href={`mailto:${contactData.email}`}
-							className="bg-theme-accent text-white px-6 py-2 text-sm font-medium transition-colors"
+							className="bg-theme-primary hover:bg-theme-accent text-white px-6 py-2 text-sm font-medium transition-colors"
 						>
 							GET IN TOUCH
 						</Link>
@@ -40,7 +40,11 @@ export default function Footer() {
 							</div>
 							<div className="flex items-center space-x-2">
 								<span>📞</span>
-								<p>{contactData.telephone}</p>
+								<div>
+									{contactData.telephone.map((number, index) => (
+										<p key={index}>{number}</p>
+									))}
+								</div>
 							</div>
 							<div className="flex items-center space-x-2">
 								<span>✉️</span>
@@ -48,8 +52,8 @@ export default function Footer() {
 							</div>
 						</div>
 						<Link
-							href="#"
-							className="bg-theme-accent text-white px-6 py-2 text-sm font-medium transition-colors mt-6"
+							href="/quote"
+							className="bg-theme-primary hover:bg-theme-accent text-white px-6 py-2 text-sm font-medium transition-colors mt-6"
 						>
 							GET AN ESTIMATE
 						</Link>

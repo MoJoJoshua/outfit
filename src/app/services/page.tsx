@@ -2,6 +2,7 @@ import Navbar from "../_components/Navbar";
 import Footer from "../_components/Footer";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface ServiceData {
 	title: string;
@@ -26,8 +27,7 @@ function ServiceHero() {
 					Our Services
 				</span>
 				<h1 className="text-4xl lg:text-6xl font-extrabold uppercase mt-4">
-					Professional <span className="text-theme-primary">Fit-Out</span>{" "}
-					Solutions
+					Professional <span className="text-[#F9ECCE]">Fit-Out</span> Solutions
 				</h1>
 				<p className="text-lg lg:text-xl font-light mt-6 max-w-2xl mx-auto">
 					From concept to completion, we deliver exceptional spaces that inspire
@@ -88,12 +88,14 @@ function ServiceCard({
 						))}
 					</ul>
 				</div>
-				<Button
-					variant="outline"
-					className="w-fit uppercase mt-4 bg-theme-base cursor-pointer hover:bg-theme-primary text-white hover:text-white hover:scale-105 transition-all"
-				>
-					Get Quote
-				</Button>
+				<Link href="/quote" className="w-fit">
+					<Button
+						variant="outline"
+						className="w-fit uppercase mt-4 bg-theme-primary cursor-pointer hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all"
+					>
+						Get Quote
+					</Button>
+				</Link>
 			</div>
 		</section>
 	);
@@ -247,18 +249,22 @@ export default function ServicesPage() {
 							transform your space into something extraordinary.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
-							<Button
-								variant="outline"
-								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all border-theme-primary"
-							>
-								Get Free Quote
-							</Button>
-							<Button
-								variant="outline"
-								className="bg-transparent hover:bg-white text-white hover:text-theme-base hover:scale-105 transition-all border-white"
-							>
-								View Portfolio
-							</Button>
+							<Link href="/quote" className="w-fit">
+								<Button
+									variant="outline"
+									className="bg-theme-primary hover:bg-theme-accent hover:cursor-pointer text-white hover:text-white hover:scale-105 transition-all border-theme-primary"
+								>
+									Get Free Quote
+								</Button>
+							</Link>
+							<Link href="/projects" className="w-fit">
+								<Button
+									variant="outline"
+									className="bg-transparent hover:bg-white hover:cursor-pointer text-white hover:text-theme-base hover:scale-105 transition-all border-white"
+								>
+									View Portfolio
+								</Button>
+							</Link>
 						</div>
 					</div>
 				</section>

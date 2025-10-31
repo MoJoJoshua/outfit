@@ -59,7 +59,7 @@ const Navbar = () => {
 					</Link>
 					<div className="hidden md:flex space-x-8 w-full min-w-fit justify-end">
 						<Link
-							href={`tel:${contactData.telephone}`}
+							href={`tel:${contactData.telephone[0]}`}
 							className="flex gap-2 items-center"
 						>
 							<svg
@@ -78,7 +78,9 @@ const Navbar = () => {
 							<div className="flex flex-col">
 								<span className="font-bold text-theme-secondary">CALL US</span>
 								<span className="text-xs font-light">
-									{contactData.telephone}
+									{contactData.telephone.map((number, index) => (
+										<p key={index}>{number}</p>
+									))}
 								</span>
 							</div>
 						</Link>

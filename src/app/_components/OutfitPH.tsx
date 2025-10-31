@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function OutfitPH() {
 	return (
@@ -26,12 +27,14 @@ export default function OutfitPH() {
 								best office fit-out company in Cebu.
 							</span>
 						</div>
-						<Button
-							variant="outline"
-							className="w-fit uppercase mt-4 bg-theme-base cursor-pointer hover:bg-theme-base text-white hover:text-white hover:scale-105 "
-						>
-							View our Portfolio
-						</Button>
+						<Link href="/projects" className="w-fit">
+							<Button
+								variant="outline"
+								className="w-fit uppercase mt-4 bg-theme-base cursor-pointer hover:bg-theme-base text-white hover:text-white hover:scale-105 "
+							>
+								View our Portfolio
+							</Button>
+						</Link>
 					</div>
 				</div>
 				<Image

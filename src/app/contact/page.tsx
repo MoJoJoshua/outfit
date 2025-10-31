@@ -12,6 +12,7 @@ import {
 	AccordionContent,
 } from "@/components/ui/accordion";
 import { useState } from "react";
+import Link from "next/link";
 
 function ContactHero() {
 	return (
@@ -27,8 +28,7 @@ function ContactHero() {
 					Contact Us
 				</span>
 				<h1 className="text-4xl lg:text-6xl font-extrabold uppercase mt-4">
-					Let&apos;s Start Your{" "}
-					<span className="text-theme-primary">Project</span>
+					Let&apos;s Start Your <span className="text-[#F9ECCE]">Project</span>
 				</h1>
 				<p className="text-lg lg:text-xl font-light mt-6 max-w-2xl mx-auto">
 					Ready to transform your space? Get in touch with our team for a free
@@ -203,7 +203,7 @@ function ContactInfo() {
 		{
 			icon: "📞",
 			title: "Call Us",
-			info: contactData.telephone,
+			info: contactData.telephone.join("\n"),
 			action: "Call Now",
 		},
 		{
@@ -401,12 +401,14 @@ export default function ContactPage() {
 							>
 								Schedule Consultation
 							</Button>
-							<Button
-								variant="outline"
-								className="bg-transparent hover:bg-theme-base text-theme-base hover:text-white hover:scale-105 transition-all border-theme-base"
-							>
-								Call Now
-							</Button>
+							<Link href={"tel:" + contactData.telephone[0]}>
+								<Button
+									variant="outline"
+									className="bg-transparent hover:bg-theme-base text-theme-base hover:text-white hover:cursor-pointer hover:scale-105 transition-all border-theme-base"
+								>
+									Call Now
+								</Button>
+							</Link>
 						</div>
 					</div>
 				</section>
