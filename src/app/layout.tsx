@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
+import ChatBot from "@/components/shared/ChatBot";
 
 const outfit = Outfit({
 	subsets: ["latin"],
@@ -9,7 +10,8 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
 	title: "OutfitPH",
-	description: "We design condo fit-out, studios, offices, shops and cafes for you & for your business. We also do renovations, furniture, cabinets and smart devices installation. \"We fit out your space\" - Outfit Construction Inc.",
+	description:
+		'We design condo fit-out, studios, offices, shops and cafes for you & for your business. We also do renovations, furniture, cabinets and smart devices installation. "We fit out your space" - Outfit Construction Inc.',
 };
 
 export default function RootLayout({
@@ -19,7 +21,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${outfit.className} antialiased`}>{children}</body>
+			<body className={`${outfit.className} antialiased`}>
+				{children}
+				<ChatBot />
+			</body>
 		</html>
 	);
 }

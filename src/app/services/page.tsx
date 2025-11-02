@@ -3,15 +3,8 @@ import Footer from "../_components/Footer";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-interface ServiceData {
-	title: string;
-	subtitle: string;
-	description: string;
-	features: string[];
-	image: string;
-	bgColor?: string;
-}
+import type { ServiceDataProps } from "@/lib/constants";
+import { serviceData } from "@/lib/constants";
 
 function ServiceHero() {
 	return (
@@ -42,7 +35,7 @@ function ServiceCard({
 	service,
 	index,
 }: {
-	service: ServiceData;
+	service: ServiceDataProps;
 	index: number;
 }) {
 	const isReversed = index % 2 === 1;
@@ -159,64 +152,7 @@ function ProcessSection() {
 }
 
 export default function ServicesPage() {
-	const servicesData: ServiceData[] = [
-		{
-			title: "Design & Build",
-			subtitle: "Complete Solutions",
-			description:
-				"From initial concept to final construction, we provide comprehensive design and build services. Our integrated approach ensures seamless project delivery, combining creative design with expert construction management to bring your vision to life efficiently and cost-effectively.",
-			features: [
-				"Architectural design and space planning",
-				"3D visualization and modeling",
-				"Project management from start to finish",
-				"Quality construction with premium materials",
-				"Timeline and budget optimization",
-			],
-			image: "/design_build.jpg",
-		},
-		{
-			title: "Commercial Fit-Out",
-			subtitle: "Business Spaces",
-			description:
-				"Transform your commercial space into a productive and inspiring environment. We specialize in office fit-outs, retail spaces, restaurants, and other commercial properties, creating functional layouts that enhance productivity and reflect your brand identity.",
-			features: [
-				"Office space optimization and layout",
-				"Retail and restaurant interior design",
-				"Modern lighting and electrical systems",
-				"Custom furniture and fixtures",
-				"Brand-aligned design concepts",
-			],
-			image: "/commercial_fitout.jpg",
-		},
-		{
-			title: "House Renovation",
-			subtitle: "Home Transformation",
-			description:
-				"Breathe new life into your home with our comprehensive renovation services. Whether it's a single room update or a complete home makeover, we combine functionality with aesthetic appeal to create spaces that truly feel like home.",
-			features: [
-				"Complete home renovations",
-				"Kitchen and bathroom remodeling",
-				"Living space optimization",
-				"Modern amenities integration",
-				"Energy-efficient solutions",
-			],
-			image: "/house_renovation.jpg",
-		},
-		{
-			title: "3D Modeling",
-			subtitle: "Visualization Services",
-			description:
-				"See your project before it's built with our advanced 3D modeling and visualization services. Our detailed models help you make informed decisions about design elements, materials, and layouts, ensuring the final result exceeds your expectations.",
-			features: [
-				"Photorealistic 3D renderings",
-				"Virtual walkthroughs and tours",
-				"Material and color visualization",
-				"Design iteration and refinement",
-				"Client presentation materials",
-			],
-			image: "/3d_model.jpg",
-		},
-	];
+	const servicesData = serviceData;
 
 	return (
 		<>
