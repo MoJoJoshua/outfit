@@ -20,7 +20,7 @@ export type HomeCardData = {
 	image: string;
 };
 
-export default function Page() {
+export default async function Page() {
 	const heroData: HeroData[] = [
 		{
 			subtitle: "We Fit-Out",
