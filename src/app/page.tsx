@@ -5,8 +5,6 @@ import Footer from "./_components/Footer";
 import OutfitPH from "./_components/OutfitPH";
 import VideoSection from "./_components/VideoSection";
 import GoogleMaps from "@/components/shared/Map";
-import { HumanMessage } from "langchain";
-import { generateQueryOrRespond } from "@/lib/langchain/initVectorStore";
 
 export type HeroData = {
 	title: string;
