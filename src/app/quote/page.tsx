@@ -3,7 +3,8 @@
 import Navbar from "../_components/Navbar";
 import Footer from "../_components/Footer";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 
 function QuoteHero() {
 	return (
@@ -38,6 +39,26 @@ function QuoteForm() {
 		service: "",
 		message: "",
 	});
+
+	const searchParams = useSearchParams();
+
+	useEffect(() => {
+		if (!searchParams) return;
+		const service = searchParams.get("service") ?? "";
+		const message = searchParams.get("message") ?? "";
+		const project = searchParams.get("project") ?? "";
+
+		// Only set values when params are present to avoid overwriting any user input
+		setFormData((prev) => ({
+			...prev,
+			service: service || prev.service,
+			message: message
+				? project
+					? `${message}${"\n\n"}Project: ${project}`
+					: message
+				: prev.message,
+		}));
+	}, [searchParams]);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -147,7 +168,7 @@ function QuoteForm() {
 								<option value="">Select a service</option>
 								<option value="Design & Build">Design & Build</option>
 								<option value="Commercial Fit-Out">Commercial Fit-Out</option>
-								<option value="House Renovation">House Renovation</option>
+								<option value="Renovation">Renovation</option>
 								<option value="3D Modeling">3D Modeling</option>
 								<option value="Consultation">Consultation Only</option>
 							</select>

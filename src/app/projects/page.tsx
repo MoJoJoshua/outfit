@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { projectData } from "@/lib/constants";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface ProjectCardProps {
@@ -155,6 +156,7 @@ function ProjectModal({
 	onClose: () => void;
 }) {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
+	const router = useRouter();
 
 	if (!project) return null;
 
@@ -271,6 +273,19 @@ function ProjectModal({
 							<Button
 								variant="outline"
 								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary"
+								onClick={() => {
+									// Close modal then navigate to quote page with prefilled params
+									onClose();
+									const params = new URLSearchParams();
+									params.set("service", project.category);
+									// Provide a helpful message for the quote form
+									params.set(
+										"message",
+										`I am interested in a similar project: ${project.title}`
+									);
+									params.set("project", project.title);
+									router.push(`/quote?${params.toString()}`);
+								}}
 							>
 								Get Similar Quote
 							</Button>
@@ -366,7 +381,9 @@ export default function ProjectsPage() {
 	const filteredProjects =
 		activeFilter === "All"
 			? projectData.sort((a, b) => b.key - a.key)
-			: projectData.filter((project) => project.category === activeFilter).sort((a, b) => b.key - a.key);
+			: projectData
+					.filter((project) => project.category === activeFilter)
+					.sort((a, b) => b.key - a.key);
 
 	const displayedProjects = filteredProjects.slice(0, visibleProjects);
 
