@@ -7,7 +7,6 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSanitize from "rehype-sanitize";
 import "highlight.js/styles/github.css";
-import Image from "next/image";
 
 // Floating ChatBot component
 export default function ChatBot() {
