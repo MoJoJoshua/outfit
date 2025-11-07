@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import ChatBot from "@/components/shared/ChatBot";
+// import ChatBot from "@/components/shared/ChatBot";
 
 const outfit = Outfit({
 	subsets: ["latin"],
@@ -23,7 +23,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`${outfit.className} antialiased`}>
 				{children}
-				<ChatBot />
+				{/* <ChatBot /> */}
 			</body>
 		</html>
 	);
