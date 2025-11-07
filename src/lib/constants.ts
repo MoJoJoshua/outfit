@@ -645,6 +645,275 @@ const projectData: ProjectDataProps[] = [
 	},
 ];
 
+type ThreeDProjectDataProps = {
+	key: number;
+	title: string;
+	imgGallery: string[];
+	description?: string;
+};
+
+const threeDProjectData: ThreeDProjectDataProps[] = [
+    {
+        key: 1,
+        title: "A Proposed Studio Unit Design at Casa Mira Guadalupe Tower 2",
+        imgGallery: [
+            "/3d/1/1.jpg",
+            "/3d/1/2.jpg",
+            "/3d/1/3.jpg",
+        ],
+        description:
+            "A compact yet complete studio that balances style, function, and comfort. Featuring built-in storage, a fully equipped modern kitchen, and a seamless workspace, this design maximizes every inch. Clean lines, soft neutrals, and subtle curves create a warm, modern atmosphere for effortless everyday living.",
+    },
+    {
+        key: 2,
+        title: "An Office Fit-out at Lahug, Cebu City",
+        imgGallery: [
+            "/3d/2/1.jpg",
+            "/3d/2/2.jpg",
+            "/3d/2/3.jpg",
+        ],
+        description:
+            "A modern office designed to boost productivity and comfort. With streamlined co-working desks, open shelving, and a cozy lounge, it balances work and relaxation through natural tones and textures—creating a space where ideas and collaboration flourish.",
+    },
+    {
+        key: 3,
+        title: "A 1-Bedroom Unit Fit-out at Somerset Gorordo, Cebu City",
+        imgGallery: [
+            "/3d/3/1.jpg",
+            "/3d/3/2.jpg",
+            "/3d/3/3.jpg",
+            "/3d/3/4.jpg",
+        ],
+        description:
+            "A thoughtfully designed condo that blends comfort, function, and style. Featuring a cozy lounge with a dedicated workspace, a minimalist bedroom with natural finishes, and a neutral palette for a calm, timeless feel—perfect for modern small-space living.",
+    },
+    {
+        key: 4,
+        title: "A 2-Storey Residential Fit-Out in Danao City, Cebu",
+        imgGallery: [
+            "/3d/4/1.jpg",
+            "/3d/4/2.jpg",
+            "/3d/4/3.jpg",
+            "/3d/4/4.jpg",
+            "/3d/4/5.jpg",
+            "/3d/4/6.jpg",
+            "/3d/4/7.jpg",
+        ],
+        description:
+            "A refined home that balances sophistication with everyday comfort. Open living and dining areas flow seamlessly into a functional kitchen, while light-filled bedrooms and sleek bathrooms offer rest and relaxation. Thoughtful details and personalized nooks make this residence truly feel like home.",
+    },
+    {
+        key: 5,
+        title: "A 1-Bedroom Unit Fit-out at Azalea Place, Gorordo Avenue, Cebu City",
+        imgGallery: [
+            "/3d/5/1.jpg",
+            "/3d/5/2.jpg",
+            "/3d/5/3.jpg",
+            "/3d/5/4.jpg",
+            "/3d/5/5.jpg",
+            "/3d/5/6.jpg",
+        ],
+        description:
+            "A compact home designed to make every square meter count. Warm wood tones, hidden storage, and multi-functional furniture create a calm, clutter-free environment. With a seamless kitchen, living, and bath layout, this project proves that small spaces can feel open, stylish, and effortlessly functional.",
+    },
+    {
+        key: 6,
+        title: "A Studio Unit Fit-out at Symfoni Nichols, Nichols Height, Guadalupe, Cebu City",
+        imgGallery: [
+            "/3d/6/1.jpg",
+            "/3d/6/2.jpg",
+            "/3d/6/3.jpg",
+            "/3d/6/4.jpg",
+        ],
+        description: "A thoughtfully planned studio at Symfoni Nichols built for both Airbnb hosting and future personal use. Featuring a warm neutral palette, built-in workspace, efficient kitchen, and smart storage, this design blends durability, comfort, and timeless style—perfect for today's guests and tomorrow's homeowners."
+    },
+    {
+        key: 7,
+        title: "A Studio Unit Fit-out at City Clou Tower 1, Dioniso Jakosalem St., Cebu City",
+        imgGallery: [
+            "/3d/7/1.jpg",
+            "/3d/7/2.jpg",
+            "/3d/7/3.jpg",
+            "/3d/7/4.jpg",
+        ],
+        description: "This studio fit-out at City Clou Tower 1 was created hand-in-hand with the client to bring their vision to life. Featuring a smart kitchen layout, sliding mirror door, dual workspace, and customized storage, the result is a cozy, functional space that reflects true collaboration and thoughtful design."
+    },
+    {
+        key: 8,
+        title: "A Studio Unit Fit-out at Taft EastGate",
+        imgGallery: [
+            "/3d/8/1.jpg",
+            "/3d/8/2.jpg",
+            "/3d/8/3.jpg",
+            "/3d/8/4.jpg",
+        ],
+        description: "A modern space defined by balance and calm. Warm wood tones, vertical slats, and a round mirror create harmony and rhythm—bringing together timeless elegance and contemporary comfort, soon to be realized in full."
+    },
+    {
+        key: 9,
+        title: "A 2 Bedroom Unit Fit-out Design at Urban Deca Homes Banilad Tower 1",
+        imgGallery: [
+            "/3d/9/1.jpg",
+            "/3d/9/2.jpg",
+            "/3d/9/3.jpg",
+            "/3d/9/4.jpg",
+        ],
+        description: "A thoughtfully designed small unit where every inch counts. With a muted palette, integrated lighting, and custom storage, the space feels brighter and more expansive. Clean vertical lines, matte finishes, and a cozy bedroom come together to create a modern, intentional lifestyle."
+    },
+    {
+        key: 10,
+        title: "Day One Cafe Renovation Design at Matumbo-Pusok Rd., Lapu-Lapu City",
+        imgGallery: [
+            "/3d/10/1.jpg",
+            "/3d/10/2.jpg",
+            "/3d/10/3.jpg",
+            "/3d/10/4.jpg",
+        ],
+        description: "A cozy yet contemporary café concept featuring natural textures, clean lines, and thoughtful lighting. From the sleek counter to inviting seating, every detail was designed to create a calm, elevated coffee experience—a perfect blend of comfort and creativity."
+    },
+    {
+        key: 11,
+        title: "A 2 Bedroom Unit Fit-out Design at Urban Deca Homes Banilad Tower 1",
+        imgGallery: [
+            "/3d/11/1.jpg",
+            "/3d/11/2.jpg",
+            "/3d/11/3.jpg",
+            "/3d/11/4.jpg",
+        ],
+        description: "A project that balances sleek design with everyday practicality. From compact, streamlined kitchens to warm, textured bedrooms and baths, every element is crafted with purpose and personality. The result: a space that feels smart, subtle, and effortlessly sophisticated—designed to fit real life."
+    },
+    {
+        key: 12,
+        title: "Bloq Residences Sikatuna Tower 2",
+        imgGallery: [
+            "/3d/12/1.jpg",
+            "/3d/12/2.jpg",
+            "/3d/12/3.jpg",
+            "/3d/12/4.jpg",
+        ],
+        description: "A compact unit designed for maximum functionality and comfort. Featuring a loft bed, generous storage, and a streamlined kitchen, this project proves that great design knows no limits—no matter the space."
+    },
+    {
+        key: 13,
+        title: "A Studio Unit Fit-out Design at Symfoni Residences Tower 2",
+        imgGallery: [
+            "/3d/13/1.jpg",
+            "/3d/13/2.jpg",
+            "/3d/13/3.jpg",
+        ],
+        description: "Transforming compact spaces into functional and aesthetic havens! This modern minimalist interior maximizes every inch, blending warm wood tones with sleek finishes for a cozy yet sophisticated feel. From a well-designed kitchen to a workspace that inspires productivity—this is how you fit out your space for ultimate comfort and style!"
+    },
+    {
+        key: 14,
+        title: "A Studio Unit Fit-out Design at One Garden Residences Tower 1",
+        imgGallery: [
+            "/3d/14/1.jpg",
+            "/3d/14/2.jpg",
+            "/3d/14/3.jpg",
+            "/3d/14/4.jpg",
+        ],
+        description: "Here's our proposed perspective featuring an all-white interior finish for the entertainment, wardrobe, and kitchen areas—just as our client envisioned. A timeless design that radiates sophistication and serenity."
+    },
+    {
+        key: 15,
+        title: "A 2 Bedroom Unit Renovation Design at Bloq Residences Sikatuna Tower 2",
+        imgGallery: [
+            "/3d/15/1.jpg",
+            "/3d/15/2.jpg",
+            "/3d/15/3.jpg",
+            "/3d/15/4.jpg",
+            "/3d/15/5.jpg",
+        ],
+        description: "Here's the perspective for a sleek 2-bedroom unit featuring a stylish black, white, and wood palette, complete with a cozy coffee nook—designed for our coffee enthusiast client."
+    },
+    {
+        key: 16,
+        title: "A Studio Unit Fit-out Design at Royal Oceancrest Mactan Tower B",
+        imgGallery: [
+            "/3d/16/1.jpg",
+            "/3d/16/2.jpg",
+            "/3d/16/3.jpg",
+            "/3d/16/4.jpg",
+        ],
+        description: "Here's the perspective for our latest condo project—designed with sleek, modern touches and perfectly Airbnb-ready. A stylish and functional space your guests will love!"
+    },
+    {
+        key: 17,
+        title: "A 4 Bedroom House Fit-out Designs at Bali Residences Agus Lapu-Lapu City",
+        imgGallery: [
+            "/3d/17/1.jpg",
+            "/3d/17/2.jpg",
+            "/3d/17/3.jpg",
+            "/3d/17/4.jpg",
+            "/3d/17/5.jpg",
+        ],
+        description: "Here's a sneak peek of the design perspective for our latest project—a modern 4-bedroom unit featuring trending claddings and sleek finishes."
+    },
+    {
+        key: 18,
+        title: "A Studio Unit Fit-out Design at J Tower Residences, Mandaue City",
+        imgGallery: [
+            "/3d/18/1.jpg",
+            "/3d/18/2.jpg",
+            "/3d/18/3.jpg",
+        ],
+        description: "Cream walls paired with wood grain storage and warm illumination create a cozy, inviting vibe that's both timeless and functional. Perfect for a minimalistic design that highlights natural textures and soft lighting."
+    },
+    {
+        key: 19,
+        title: "A Clinic Renovation at Chonghua Medical Arts, Mandaue City",
+        imgGallery: [
+            "/3d/19/1.jpg",
+            "/3d/19/2.jpg",
+            "/3d/19/3.jpg",
+        ],
+        description: "Clean white walls combined with warm mocha wood grain accents create a modern, inviting space that promotes comfort and calm for patients and staff. Transform your clinic into a stylish, functional, and relaxing environment with this soothing design."
+    },
+    {
+        key: 20,
+        title: "A 2 Bedroom Unit Fit-out Design at Urban Deca Homes Banilad Tower 1",
+        imgGallery: [
+            "/3d/20/1.jpg",
+            "/3d/20/2.jpg",
+            "/3d/20/3.jpg",
+            "/3d/20/4.jpg",
+            "/3d/20/5.jpg",
+            "/3d/20/6.jpg",
+        ],
+        description: "Bringing modern sophistication and French elegance to life in our latest condo fit-out. With bold black accents and refined details, this space is designed for timeless style."
+    },
+    {
+        key: 21,
+        title: "A Condo Fit-out at CitySpaces Grand Tower",
+        imgGallery: [
+            "/3d/21/1.jpg",
+            "/3d/21/2.jpg",
+            "/3d/21/3.jpg",
+        ],
+        description: "A proposed fit-out for Ms. A that seamlessly blends style and function. Featuring an open-concept layout, ergonomic furnishings, smart lighting, and custom finishes tailored to the client's brand—this design brings modern comfort and personal character together in one space."
+    },
+    {
+        key: 22,
+        title: "A Proposed Design at Galleria Residences Tower 2",
+        imgGallery: [
+            "/3d/22/1.jpg",
+            "/3d/22/2.jpg",
+            "/3d/22/3.jpg",
+        ],
+        description: "Presenting a proposed design we crafted for a client: a luxurious blend of marble and gold finishes for a high-end, sophisticated look."
+    },
+    {
+        key: 23,
+        title: "A Cafe Renovation at Beanawake Ramos",
+        imgGallery: [
+            "/3d/23/1.jpg",
+            "/3d/23/2.jpg",
+            "/3d/23/3.jpg",
+        ],
+        description: "A vibrant cafe renovation concept that combines modern aesthetics with functional design. Featuring colorful accents, cozy seating, and efficient layout to create an inviting atmosphere for customers."
+    }
+];
+
 export type ServiceDataProps = {
 	title: string;
 	subtitle: string;
@@ -718,6 +987,7 @@ export {
 	mapData,
 	faqData,
 	testimonialData,
-	projectData,
+    projectData,
+    threeDProjectData,
 	serviceData,
 };
