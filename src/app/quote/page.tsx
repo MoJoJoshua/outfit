@@ -3,7 +3,7 @@
 import Navbar from "../_components/Navbar";
 import Footer from "../_components/Footer";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 function QuoteHero() {
@@ -209,7 +209,18 @@ export default function QuotePage() {
 			<div id="body" className="flex flex-col relative">
 				<QuoteHero />
 				<div className="max-w-7xl mx-auto px-4 py-20">
-					<QuoteForm />
+					<Suspense
+						fallback={
+							<div className="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
+								<h3 className="text-2xl font-bold text-theme-base mb-4">
+									Loading form…
+								</h3>
+								<div className="h-36 bg-gray-100 animate-pulse rounded" />
+							</div>
+						}
+					>
+						<QuoteForm />
+					</Suspense>
 				</div>
 			</div>
 			<Footer />
