@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
-import ChatBot from "@/components/shared/ChatBot";
+import { Toaster } from "@/components/ui/sonner"
+// import ChatBot from "@/components/shared/ChatBot";
 
 const outfit = Outfit({
 	subsets: ["latin"],
@@ -22,8 +23,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${outfit.className} antialiased`}>
-				{children}
-				<ChatBot />
+                {children}
+                <Toaster />
+				{/* <ChatBot /> */}
 			</body>
 		</html>
 	);
