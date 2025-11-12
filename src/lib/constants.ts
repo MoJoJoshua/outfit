@@ -1,11 +1,12 @@
 const contactData = {
 	location: "J.R Martinez Building, Cebu City, Philippines",
-	telephone: ["09568852565"],
+	telephone: "09568852565",
 	email: "sales@outfit.ph",
 	fbLink: "https://www.facebook.com/OutfitConstructionPh/",
 	igLink: "https://www.instagram.com/outfitconstructionph/",
 	youtubeLink: "https://www.youtube.com/@outfitconstruction",
-	linkedInLink: "",
+    linkedInLink: "",
+    googleAppointmentsLink: "https://calendar.app.google/gkHL3heYdtAA5FrP7"
 };
 
 const mapData = {
@@ -608,7 +609,7 @@ const projectData: ProjectDataProps[] = [
 	},
 	{
 		key: 33,
-		title: "Functional Beauty: Clinic Fit-Out at Cebu Doctor's University Hos",
+		title: "Functional Beauty: Clinic Fit-Out at Cebu Doctor's University Hospital",
 		category: "Fit-out",
 		imgGallery: [
 			"/projects/33/1.jpg",

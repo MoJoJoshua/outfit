@@ -59,7 +59,7 @@ const Navbar = () => {
 					</Link>
 					<div className="hidden md:flex space-x-8 w-full min-w-fit justify-end">
 						<Link
-							href={`tel:${contactData.telephone[0]}`}
+							href={`mailto:${contactData.email}`}
 							className="flex gap-2 items-center"
 						>
 							<svg
@@ -69,18 +69,18 @@ const Navbar = () => {
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
-								strokeWidth="1.5"
-								strokeLinecap="round"
-								strokeLinejoin="round"
+								stroke-width="1.5"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								className="lucide lucide-mail-icon lucide-mail"
 							>
-								<path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
+								<path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+								<rect x="2" y="4" width="20" height="16" rx="2" />
 							</svg>
 							<div className="flex flex-col">
-								<span className="font-bold text-theme-secondary">CALL US</span>
+								<span className="font-bold text-theme-secondary">EMAIL US</span>
 								<span className="text-xs font-light">
-									{contactData.telephone.map((number, index) => (
-										<p key={index}>{number}</p>
-									))}
+									<p>{contactData.email}</p>
 								</span>
 							</div>
 						</Link>

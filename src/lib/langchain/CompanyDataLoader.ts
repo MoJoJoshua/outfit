@@ -13,7 +13,6 @@
 
 // 		const contactText = `
 //             Company Address: ${contactData.location}
-//             Telephone: ${contactData.telephone[0]} and ${contactData.telephone[1]}
 //             Email: ${contactData.email}
 //             Working Hours: Mon-Sat: 8:00 AM - 6:00 PM, Sunday: By Appointment
 //             Facebook: ${contactData.fbLink}
@@ -73,7 +72,6 @@
 // 		let dataStrings: string = "";
 // 		const contactText = `
 //             Company Address: ${contactData.location}
-//             Telephone Numbers: ${contactData.telephone[0]} and ${contactData.telephone[1]}
 //             Email: ${contactData.email}
 //             Working Hours: Mon-Sat: 8:00 AM - 6:00 PM, Sunday: By Appointment
 //             Facebook: ${contactData.fbLink}

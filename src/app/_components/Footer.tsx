@@ -39,14 +39,6 @@ export default function Footer() {
 								<p>{contactData.location}</p>
 							</div>
 							<div className="flex items-center space-x-2">
-								<span>📞</span>
-								<div>
-									{contactData.telephone.map((number, index) => (
-										<p key={index}>{number}</p>
-									))}
-								</div>
-							</div>
-							<div className="flex items-center space-x-2">
 								<span>✉️</span>
 								<p>{contactData.email}</p>
 							</div>

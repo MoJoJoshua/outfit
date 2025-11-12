@@ -94,7 +94,29 @@ function ContactForm() {
 				</div>
 				<div className="w-full max-w-md">
 					<form
-						onSubmit={handleSubmit}
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            const mailBody = [
+                                '--- Request for Quote ---',
+                                `Date: ${new Date().toLocaleString()}`,
+                                '',
+                                'Contact Details:',
+                                `  Name: ${formData.name || 'N/A'}`,
+                                `  Email: ${formData.email || 'N/A'}`,
+                                `  Phone: ${formData.phone || 'N/A'}`,
+                                `  Service: ${formData.service || 'N/A'}`,
+                                '',
+                                'Project Details:',
+                                formData.message?.trim() || 'N/A',
+                                '',
+                                '--- End of Message ---',
+                            ].join('\n');
+
+							const mailtoLink = `mailto:${contactData.email}?subject=Request%20a%20Quote&body=${encodeURIComponent(
+								mailBody
+							)}`;
+							window.location.href = mailtoLink;
+                        }}
 						className="bg-white p-8 rounded-lg shadow-lg"
 					>
 						<h3 className="text-2xl font-bold text-theme-base mb-6">
@@ -199,24 +221,21 @@ function ContactInfo() {
 			title: "Our Location",
 			info: contactData.location,
 			action: "Get Directions",
-		},
-		{
-			icon: "📞",
-			title: "Call Us",
-			info: contactData.telephone.join("\n"),
-			action: "Call Now",
+			link: "https://www.google.com/maps/dir//J.R.+Martinez+Building,+MEGAREVIEW,+85+Osme%C3%B1a+Blvd,+Cebu+City,+6000+Cebu/@10.3047182,123.8949872,20z/data=!4m16!1m7!3m6!1s0x33a999505a582cc1:0x2a4fbbd602ecfb47!2sJ.R.+Martinez+Building,+MEGAREVIEW!8m2!3d10.3048911!4d123.8951978!16s%2Fg%2F11c6v4wn5k!4m7!1m0!1m5!1m1!1s0x33a999505a582cc1:0x2a4fbbd602ecfb47!2m2!1d123.895132!2d10.3048789?entry=ttu&g_ep=EgoyMDI1MTEwNS4wIKXMDSoASAFQAw%3D%3D",
 		},
 		{
 			icon: "✉️",
 			title: "Email Us",
 			info: contactData.email,
 			action: "Send Email",
+			link: `mailto:${contactData.email}`,
 		},
 		{
 			icon: "🕒",
 			title: "Business Hours",
 			info: "Mon-Sat: 8:00 AM - 6:00 PM\nSunday: By Appointment",
 			action: "Schedule Call",
+			link: contactData.googleAppointmentsLink,
 		},
 	];
 
@@ -231,9 +250,12 @@ function ContactInfo() {
 						Get In <span className="text-theme-primary">Touch</span>
 					</h2>
 				</div>
-				<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+				<div className="grid md:grid-cols-3 gap-8">
 					{contactMethods.map((method, index) => (
-						<div
+						<Link
+							href={method.link}
+							target="_blank"
+							rel="noopener noreferrer"
 							key={index}
 							className="bg-white p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow"
 						>
@@ -250,7 +272,7 @@ function ContactInfo() {
 							>
 								{method.action}
 							</Button>
-						</div>
+						</Link>
 					))}
 				</div>
 			</div>
@@ -354,6 +376,35 @@ export default function ContactPage() {
 
 				<ContactInfo />
 
+				{/* Schedule Consultation (Google Appointments) */}
+				<section className="py-20">
+					<div className="max-w-7xl mx-auto px-4">
+						<div className="text-center mb-8">
+							<span className="uppercase font-light text-xl text-theme-primary">
+								Schedule Consultation
+							</span>
+							<h2 className="text-3xl lg:text-4xl font-bold uppercase mt-4 text-theme-base">
+								Book a <span className="text-theme-primary">Consultation</span>
+							</h2>
+							<p className="text-gray-700 font-light mt-4 max-w-2xl mx-auto">
+								Choose a convenient time for a consultation using our scheduling
+								tool below.
+							</p>
+						</div>
+
+						<div className="mx-auto" style={{ maxWidth: 980 }}>
+							<iframe
+								src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3W_ESa4k-b5rYSfF8WMIhLuCe3L3MV8Iao3iQv9Bp3Y5z4DADoxzxyQL1ZmdrFpPZb2hanRoy5?gv=true"
+								style={{ border: 0 }}
+								width="100%"
+								height={600}
+								frameBorder={0}
+								aria-label="Schedule a consultation"
+							/>
+						</div>
+					</div>
+				</section>
+
 				{/* Map Section */}
 				<section className="py-20">
 					<div className="max-w-7xl mx-auto px-4">
@@ -395,18 +446,20 @@ export default function ContactPage() {
 							let&apos;s turn your vision into reality.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
-							<Button
-								variant="outline"
-								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all border-theme-primary"
-							>
-								Schedule Consultation
-							</Button>
-							<Link href={"tel:" + contactData.telephone[0]}>
+							<Link href={contactData.googleAppointmentsLink}>
+								<Button
+									variant="outline"
+									className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all border-theme-primary"
+								>
+									Schedule Consultation
+								</Button>
+							</Link>
+							<Link href={"mailto:" + contactData.email}>
 								<Button
 									variant="outline"
 									className="bg-transparent hover:bg-theme-base text-theme-base hover:text-white hover:cursor-pointer hover:scale-105 transition-all border-theme-base"
 								>
-									Call Now
+									Email Now
 								</Button>
 							</Link>
 						</div>
