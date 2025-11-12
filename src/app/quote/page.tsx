@@ -3,7 +3,10 @@
 import Navbar from "../_components/Navbar";
 import Footer from "../_components/Footer";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
+import { contactData } from "@/lib/constants";
 
 function QuoteHero() {
 	return (
@@ -39,11 +42,68 @@ function QuoteForm() {
 		message: "",
 	});
 
+	const [submitting, setSubmitting] = useState(false);
+
+	const searchParams = useSearchParams();
+
+	useEffect(() => {
+		if (!searchParams) return;
+		const service = searchParams.get("service") ?? "";
+		const message = searchParams.get("message") ?? "";
+		const project = searchParams.get("project") ?? "";
+
+		// Only set values when params are present to avoid overwriting any user input
+		setFormData((prev) => ({
+			...prev,
+			service: service || prev.service,
+			message: message
+				? project
+					? `${message}${"\n\n"}Project: ${project}`
+					: message
+				: prev.message,
+		}));
+	}, [searchParams]);
+
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		// Handle form submission here
-		console.log("Quote form submitted:", formData);
-		// You can integrate with your preferred form handling service
+		// Send form data to API
+		setSubmitting(true);
+
+		fetch("/api/email", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(formData),
+		})
+			.then(async (res) => {
+				if (!res.ok) {
+					const body = await res.json().catch(() => ({}));
+					throw new Error(body?.message || "Failed to send request");
+				}
+				return res.json();
+			})
+			.then(() => {
+				toast.success("Inquiry sent successfully.", {
+					style: { background: "#d1fae5", color: "#065f46" },
+				});
+				toast.success("Inquiry sent successfully.", {
+					style: { background: "#d1fae5", color: "#065f46" },
+				});
+				setFormData({
+					name: "",
+					email: "",
+					phone: "",
+					service: "",
+					message: "",
+				});
+			})
+			.catch((err: unknown) => {
+				console.error("Error sending quote request:", err);
+				const msg = err instanceof Error ? err.message : String(err);
+				toast.error(msg, {
+					style: { background: "#fee2e2", color: "#b91c1c" },
+				});
+			})
+			.finally(() => setSubmitting(false));
 	};
 
 	const handleChange = (
@@ -82,8 +142,31 @@ function QuoteForm() {
 					</div>
 				</div>
 				<div className="w-full max-w-md">
-					<form
-						onSubmit={handleSubmit}
+                    <form
+                        // onsubmit, send to mailto:contact@yourdomain.com
+						onSubmit={e => {
+                            e.preventDefault();
+                            const mailBody = [
+                                '--- Request for Quote ---',
+                                `Date: ${new Date().toLocaleString()}`,
+                                '',
+                                'Contact Details:',
+                                `  Name: ${formData.name || 'N/A'}`,
+                                `  Email: ${formData.email || 'N/A'}`,
+                                `  Phone: ${formData.phone || 'N/A'}`,
+                                `  Service: ${formData.service || 'N/A'}`,
+                                '',
+                                'Project Details:',
+                                formData.message?.trim() || 'N/A',
+                                '',
+                                '--- End of Message ---',
+                            ].join('\n');
+
+							const mailtoLink = `mailto:${contactData.email}?subject=Request%20a%20Quote&body=${encodeURIComponent(
+								mailBody
+							)}`;
+							window.location.href = mailtoLink;
+						}}
 						className="bg-white p-8 rounded-lg shadow-lg"
 					>
 						<h3 className="text-2xl font-bold text-theme-base mb-6">
@@ -147,7 +230,7 @@ function QuoteForm() {
 								<option value="">Select a service</option>
 								<option value="Design & Build">Design & Build</option>
 								<option value="Commercial Fit-Out">Commercial Fit-Out</option>
-								<option value="House Renovation">House Renovation</option>
+								<option value="Renovation">Renovation</option>
 								<option value="3D Modeling">3D Modeling</option>
 								<option value="Consultation">Consultation Only</option>
 							</select>
@@ -170,9 +253,10 @@ function QuoteForm() {
 
 						<Button
 							type="submit"
-							className="w-full bg-theme-primary hover:bg-theme-accent text-white font-medium py-2 px-4 rounded-md transition-colors"
+							disabled={submitting}
+							className="w-full bg-theme-primary hover:bg-theme-accent text-white font-medium py-2 px-4 rounded-md transition-colors disabled:opacity-60"
 						>
-							Send Request
+							{submitting ? "Sending…" : "Send Request"}
 						</Button>
 					</form>
 				</div>
@@ -188,7 +272,18 @@ export default function QuotePage() {
 			<div id="body" className="flex flex-col relative">
 				<QuoteHero />
 				<div className="max-w-7xl mx-auto px-4 py-20">
-					<QuoteForm />
+					<Suspense
+						fallback={
+							<div className="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
+								<h3 className="text-2xl font-bold text-theme-base mb-4">
+									Loading form…
+								</h3>
+								<div className="h-36 bg-gray-100 animate-pulse rounded" />
+							</div>
+						}
+					>
+						<QuoteForm />
+					</Suspense>
 				</div>
 			</div>
 			<Footer />

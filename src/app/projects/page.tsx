@@ -17,8 +17,9 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { projectData } from "@/lib/constants";
+import { contactData, projectData, threeDProjectData } from "@/lib/constants";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface ProjectCardProps {
@@ -155,6 +156,7 @@ function ProjectModal({
 	onClose: () => void;
 }) {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
+	const router = useRouter();
 
 	if (!project) return null;
 
@@ -271,6 +273,254 @@ function ProjectModal({
 							<Button
 								variant="outline"
 								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary"
+								onClick={() => {
+									// Close modal then navigate to quote page with prefilled params
+									onClose();
+									const params = new URLSearchParams();
+									params.set("service", project.category);
+									// Provide a helpful message for the quote form
+									params.set(
+										"message",
+										`I am interested in a similar project: ${project.title}`
+									);
+									params.set("project", project.title);
+									router.push(`/quote?${params.toString()}`);
+								}}
+							>
+								Get Similar Quote
+							</Button>
+							<Button
+								variant="outline"
+								onClick={onClose}
+								className="bg-transparent hover:bg-gray-100 text-gray-700 border-gray-300"
+							>
+								Close
+							</Button>
+						</div>
+					</div>
+				</div>
+			</DialogContent>
+		</Dialog>
+	);
+}
+
+function ThreeDProjectCard({
+	project,
+	onViewDetails,
+}: {
+	project: {
+		key: number;
+		title: string;
+		imgGallery: string[];
+		description?: string;
+	};
+	onViewDetails: (project: {
+		key: number;
+		title: string;
+		imgGallery: string[];
+		description?: string;
+	}) => void;
+}) {
+	const [imageIndex, setImageIndex] = useState(0);
+
+	const nextImage = () => {
+		setImageIndex((prev) => (prev + 1) % project.imgGallery.length);
+	};
+
+	const prevImage = () => {
+		setImageIndex(
+			(prev) =>
+				(prev - 1 + project.imgGallery.length) % project.imgGallery.length
+		);
+	};
+
+	const cleanDescription = project.description
+		? project.description.replace(/<[^>]*>/g, "").substring(0, 150) + "..."
+		: "3D design and visualization.";
+
+	return (
+		<Card className="group hover:shadow-xl transition-shadow overflow-hidden pt-0">
+			<div className="relative h-64 overflow-hidden rounded-xl">
+				<Image
+					src={project.imgGallery[imageIndex]}
+					alt={project.title}
+					className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+					width={400}
+					height={300}
+				/>
+				{project.imgGallery.length > 1 && (
+					<>
+						<button
+							onClick={prevImage}
+							className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+						>
+							←
+						</button>
+						<button
+							onClick={nextImage}
+							className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+						>
+							→
+						</button>
+						<div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
+							{project.imgGallery.map((_, index) => (
+								<div
+									key={index}
+									className={`w-2 h-2 rounded-full ${
+										index === imageIndex ? "bg-white" : "bg-white/50"
+									}`}
+								/>
+							))}
+						</div>
+					</>
+				)}
+			</div>
+			<CardContent className="pt-6 pb-0">
+				<CardTitle className="text-lg font-bold text-theme-base mb-2 line-clamp-2">
+					{project.title}
+				</CardTitle>
+				<CardDescription className="text-gray-600 font-light text-sm mb-4 line-clamp-3">
+					{cleanDescription}
+				</CardDescription>
+			</CardContent>
+			<CardFooter>
+				<Button
+					variant="outline"
+					className="w-full bg-transparent hover:bg-theme-primary text-theme-base hover:text-white border-theme-primary hover:border-theme-primary transition-all"
+					onClick={() => onViewDetails(project)}
+				>
+					View Details
+				</Button>
+			</CardFooter>
+		</Card>
+	);
+}
+
+function ThreeDProjectModal({
+	project,
+	isOpen,
+	onClose,
+}: {
+	project: {
+		key: number;
+		title: string;
+		imgGallery: string[];
+		description?: string;
+	} | null;
+	isOpen: boolean;
+	onClose: () => void;
+}) {
+	const [currentImageIndex, setCurrentImageIndex] = useState(0);
+	const router = useRouter();
+
+	if (!project) return null;
+
+	const nextImage = () =>
+		setCurrentImageIndex((prev) => (prev + 1) % project.imgGallery.length);
+	const prevImage = () =>
+		setCurrentImageIndex(
+			(prev) =>
+				(prev - 1 + project.imgGallery.length) % project.imgGallery.length
+		);
+
+	const cleanDescription = project.description
+		? project.description.replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ")
+		: "3D design visualization services by Outfit Construction PH.";
+
+	return (
+		<Dialog open={isOpen} onOpenChange={onClose}>
+			<DialogContent className="!max-w-4xl max-h-[90vh] overflow-y-auto">
+				<DialogHeader>
+					<DialogTitle className="text-2xl font-bold text-theme-base text-left">
+						{project.title}
+					</DialogTitle>
+				</DialogHeader>
+
+				<div className="grid md:grid-cols-2 gap-6">
+					<div>
+						<div className="relative h-80 mb-4">
+							<Image
+								src={project.imgGallery[currentImageIndex]}
+								alt={project.title}
+								className="w-full h-full object-cover rounded-lg"
+								width={600}
+								height={400}
+							/>
+							{project.imgGallery.length > 1 && (
+								<>
+									<button
+										onClick={prevImage}
+										className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+									>
+										←
+									</button>
+									<button
+										onClick={nextImage}
+										className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+									>
+										→
+									</button>
+								</>
+							)}
+						</div>
+
+						{project.imgGallery.length > 1 && (
+							<div className="grid grid-cols-4 gap-2">
+								{project.imgGallery.slice(0, 4).map((img, index) => (
+									<button
+										key={index}
+										onClick={() => setCurrentImageIndex(index)}
+										className={`relative h-20 rounded overflow-hidden ${
+											currentImageIndex === index
+												? "ring-2 ring-theme-primary"
+												: ""
+										}`}
+									>
+										<Image
+											src={img}
+											alt={`${project.title} ${index + 1}`}
+											className="w-full h-full object-cover"
+											width={100}
+											height={80}
+										/>
+									</button>
+								))}
+							</div>
+						)}
+					</div>
+
+					<div>
+						<h3 className="text-lg font-semibold text-theme-base mb-4">
+							Project Details
+						</h3>
+						<p className="text-gray-700 leading-relaxed mb-6">
+							{cleanDescription}
+						</p>
+
+						<div className="space-y-4">
+							<div>
+								<span className="font-semibold text-theme-base">Images:</span>
+								<span className="ml-2 text-gray-700">
+									{project.imgGallery.length} photos
+								</span>
+							</div>
+						</div>
+
+						<div className="mt-6 flex gap-3">
+							<Button
+								variant="outline"
+								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary"
+								onClick={() => {
+									onClose();
+									const params = new URLSearchParams();
+									params.set("service", "3D Modeling");
+									params.set(
+										"message",
+										`I am interested in a 3D design similar to: ${project.title}`
+									);
+									params.set("project", project.title);
+									router.push(`/quote?${params.toString()}`);
+								}}
 							>
 								Get Similar Quote
 							</Button>
@@ -358,20 +608,54 @@ function StatsSection() {
 export default function ProjectsPage() {
 	const [activeFilter, setActiveFilter] = useState("All");
 	const [visibleProjects, setVisibleProjects] = useState(12);
+	const [visibleThreeDProjects, setVisibleThreeDProjects] = useState(12);
 	const [selectedProject, setSelectedProject] = useState<
 		ProjectCardProps["project"] | null
 	>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedThreeDProject, setSelectedThreeDProject] = useState<{
+		key: number;
+		title: string;
+		imgGallery: string[];
+		description?: string;
+	} | null>(null);
+	const [isThreeDModalOpen, setIsThreeDModalOpen] = useState(false);
 
 	const filteredProjects =
 		activeFilter === "All"
 			? projectData.sort((a, b) => b.key - a.key)
-			: projectData.filter((project) => project.category === activeFilter).sort((a, b) => b.key - a.key);
+			: projectData
+					.filter((project) => project.category === activeFilter)
+					.sort((a, b) => b.key - a.key);
 
 	const displayedProjects = filteredProjects.slice(0, visibleProjects);
 
 	const loadMore = () => {
 		setVisibleProjects((prev) => Math.min(prev + 12, filteredProjects.length));
+	};
+
+	const sortedThreeD = threeDProjectData.sort((a, b) => b.key - a.key);
+	const displayedThreeDProjects = sortedThreeD.slice(0, visibleThreeDProjects);
+
+	const loadMoreThreeD = () => {
+		setVisibleThreeDProjects((prev) =>
+			Math.min(prev + 12, threeDProjectData.length)
+		);
+	};
+
+	const handleViewDetailsThreeD = (project: {
+		key: number;
+		title: string;
+		imgGallery: string[];
+		description?: string;
+	}) => {
+		setSelectedThreeDProject(project);
+		setIsThreeDModalOpen(true);
+	};
+
+	const closeThreeDModal = () => {
+		setIsThreeDModalOpen(false);
+		setSelectedThreeDProject(null);
 	};
 
 	const handleViewDetails = (project: ProjectCardProps["project"]) => {
@@ -432,6 +716,46 @@ export default function ProjectsPage() {
 									className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary hover:border-theme-accent px-8 py-3"
 								>
 									Load More Projects
+								</Button>
+							</div>
+						)}
+					</div>
+				</section>
+
+				{/* 3D Designs Portfolio Section */}
+				<section className="py-20">
+					<div className="max-w-7xl mx-auto px-4">
+						<div className="text-center mb-16">
+							<span className="uppercase font-light text-xl text-theme-primary">
+								3D Designs
+							</span>
+							<h2 className="text-4xl lg:text-5xl font-bold uppercase mt-4 text-theme-base">
+								Featured <span className="text-theme-primary">3D Projects</span>
+							</h2>
+							<p className="text-lg font-light mt-6 max-w-2xl mx-auto text-gray-700">
+								Explore our collection of 3D design concepts and visualizations
+								created to help clients envision their completed spaces.
+							</p>
+						</div>
+
+						<div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
+							{displayedThreeDProjects.map((project) => (
+								<ThreeDProjectCard
+									key={project.key}
+									project={project}
+									onViewDetails={handleViewDetailsThreeD}
+								/>
+							))}
+						</div>
+
+						{visibleThreeDProjects < threeDProjectData.length && (
+							<div className="text-center">
+								<Button
+									onClick={loadMoreThreeD}
+									variant="outline"
+									className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary hover:border-theme-accent px-8 py-3"
+								>
+									Load More 3D Projects
 								</Button>
 							</div>
 						)}
@@ -517,13 +841,15 @@ export default function ProjectsPage() {
 								>
 									Get Free Quote
 								</Button>
-							</Link>
+                            </Link>
+                            <Link href={contactData.googleAppointmentsLink}>
 							<Button
 								variant="outline"
 								className="bg-transparent hover:bg-white text-white hover:text-theme-base hover:scale-105 transition-all border-white"
 							>
 								Schedule Consultation
-							</Button>
+                                </Button>
+                            </Link>
 						</div>
 					</div>
 				</section>
@@ -534,6 +860,12 @@ export default function ProjectsPage() {
 				project={selectedProject}
 				isOpen={isModalOpen}
 				onClose={closeModal}
+			/>
+
+			<ThreeDProjectModal
+				project={selectedThreeDProject}
+				isOpen={isThreeDModalOpen}
+				onClose={closeThreeDModal}
 			/>
 		</>
 	);

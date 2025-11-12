@@ -26,7 +26,7 @@ export default async function Page() {
 			subtitle: "We Fit-Out",
 			title: "Smarter Designs",
 			btnText: "About Us",
-			href: "/about-us",
+			href: "/about",
 			img: "/hero-1.jpg",
 		},
 		{
