@@ -2,7 +2,7 @@ import Navbar from "../_components/Navbar";
 import Footer from "../_components/Footer";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { testimonialData } from "@/lib/constants";
+import { contactData, testimonialData } from "@/lib/constants";
 import VideoSection from "../_components/VideoSection";
 import Link from "next/link";
 
@@ -266,18 +266,22 @@ export default function AboutPage() {
 							with expertise and dedication.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
-							<Button
-								variant="outline"
-								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all border-theme-primary"
-							>
-								Start Your Project
-							</Button>
-							<Button
-								variant="outline"
-								className="bg-transparent hover:bg-theme-base text-theme-base hover:text-white hover:scale-105 transition-all border-theme-base"
-							>
-								Contact Us
-							</Button>
+							<Link href={contactData.googleAppointmentsLink}>
+								<Button
+									variant="outline"
+									className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all border-theme-primary"
+								>
+									Start Your Project
+								</Button>
+							</Link>
+							<Link href={`mailto:${contactData.email}`}>
+								<Button
+									variant="outline"
+									className="bg-transparent hover:bg-theme-base text-theme-base hover:text-white hover:scale-105 transition-all border-theme-base"
+								>
+									Contact Us
+								</Button>
+							</Link>
 						</div>
 					</div>
 				</section>

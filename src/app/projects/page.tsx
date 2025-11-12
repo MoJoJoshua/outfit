@@ -17,7 +17,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { projectData, threeDProjectData } from "@/lib/constants";
+import { contactData, projectData, threeDProjectData } from "@/lib/constants";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -841,13 +841,15 @@ export default function ProjectsPage() {
 								>
 									Get Free Quote
 								</Button>
-							</Link>
+                            </Link>
+                            <Link href={contactData.googleAppointmentsLink}>
 							<Button
 								variant="outline"
 								className="bg-transparent hover:bg-white text-white hover:text-theme-base hover:scale-105 transition-all border-white"
 							>
 								Schedule Consultation
-							</Button>
+                                </Button>
+                            </Link>
 						</div>
 					</div>
 				</section>
