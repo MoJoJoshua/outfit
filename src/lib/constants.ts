@@ -921,7 +921,8 @@ export type ServiceDataProps = {
 	description: string;
 	features: string[];
 	image: string;
-	bgColor?: string;
+    bgColor?: string;
+    portfolioLink: string;
 };
 
 const serviceData: ServiceDataProps[] = [
@@ -937,7 +938,8 @@ const serviceData: ServiceDataProps[] = [
 			"Quality construction with premium materials",
 			"Timeline and budget optimization",
 		],
-		image: "/design_build.jpg",
+        image: "/design_build.jpg",
+        portfolioLink: "/projects"
 	},
 	{
 		title: "Commercial Fit-Out",
@@ -951,7 +953,8 @@ const serviceData: ServiceDataProps[] = [
 			"Custom furniture and fixtures",
 			"Brand-aligned design concepts",
 		],
-		image: "/commercial_fitout.jpg",
+        image: "/commercial_fitout.jpg",
+        portfolioLink: "/projects?category=Fit-out"
 	},
 	{
 		title: "House Renovation",
@@ -965,7 +968,8 @@ const serviceData: ServiceDataProps[] = [
 			"Modern amenities integration",
 			"Energy-efficient solutions",
 		],
-		image: "/house_renovation.jpg",
+        image: "/house_renovation.jpg",
+        portfolioLink: "/projects?category=Renovation"
 	},
 	{
 		title: "3D Modeling",
@@ -979,7 +983,8 @@ const serviceData: ServiceDataProps[] = [
 			"Design iteration and refinement",
 			"Client presentation materials",
 		],
-		image: "/3d_model.jpg",
+        image: "/3d_model.jpg",
+        portfolioLink: "/projects#3d-projects"
 	},
 ];
 
