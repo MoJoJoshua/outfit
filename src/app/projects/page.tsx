@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/dialog";
 import { contactData, projectData, threeDProjectData } from "@/lib/constants";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface ProjectCardProps {
@@ -156,7 +155,6 @@ function ProjectModal({
 	onClose: () => void;
 }) {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
-	const router = useRouter();
 
 	if (!project) return null;
 
@@ -270,7 +268,17 @@ function ProjectModal({
 						</div>
 
 						<div className="mt-6 flex gap-3">
-							<Button
+							<Link
+								href={`projects/${encodeURIComponent(project.title.toLowerCase())}`}
+							>
+								<Button
+									variant="outline"
+									className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary"
+								>
+									View Project Details
+								</Button>
+							</Link>
+							{/* <Button
 								variant="outline"
 								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary"
 								onClick={() => {
@@ -288,7 +296,7 @@ function ProjectModal({
 								}}
 							>
 								Get Similar Quote
-							</Button>
+							</Button> */}
 							<Button
 								variant="outline"
 								onClick={onClose}
@@ -411,7 +419,6 @@ function ThreeDProjectModal({
 	onClose: () => void;
 }) {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
-	const router = useRouter();
 
 	if (!project) return null;
 
@@ -506,8 +513,18 @@ function ThreeDProjectModal({
 							</div>
 						</div>
 
-						<div className="mt-6 flex gap-3">
-							<Button
+                        <div className="mt-6 flex gap-3">
+							<Link
+								href={`projects/3d-design/${encodeURIComponent(project.title.toLowerCase())}`}
+							>
+								<Button
+									variant="outline"
+									className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary"
+								>
+									View Project Details
+								</Button>
+							</Link>
+							{/* <Button
 								variant="outline"
 								className="bg-theme-primary hover:bg-theme-accent text-white hover:text-white border-theme-primary"
 								onClick={() => {
@@ -523,7 +540,7 @@ function ThreeDProjectModal({
 								}}
 							>
 								Get Similar Quote
-							</Button>
+							</Button> */}
 							<Button
 								variant="outline"
 								onClick={onClose}
@@ -841,15 +858,15 @@ export default function ProjectsPage() {
 								>
 									Get Free Quote
 								</Button>
-                            </Link>
-                            <Link href={contactData.googleAppointmentsLink}>
-							<Button
-								variant="outline"
-								className="bg-transparent hover:bg-white text-white hover:text-theme-base hover:scale-105 transition-all border-white"
-							>
-								Schedule Consultation
-                                </Button>
-                            </Link>
+							</Link>
+							<Link href={contactData.googleAppointmentsLink}>
+								<Button
+									variant="outline"
+									className="bg-transparent hover:bg-white text-white hover:text-theme-base hover:scale-105 transition-all border-white"
+								>
+									Schedule Consultation
+								</Button>
+							</Link>
 						</div>
 					</div>
 				</section>
