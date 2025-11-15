@@ -1,7 +1,7 @@
 "use client";
 
-import Navbar from "../_components/Navbar";
-import Footer from "../_components/Footer";
+import Navbar from "@/app/_components/Navbar";
+import Footer from "@/app/_components/Footer";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +20,7 @@ import {
 import { contactData, projectData, threeDProjectData } from "@/lib/constants";
 import { useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 interface ProjectCardProps {
 	project: {
@@ -269,7 +270,9 @@ function ProjectModal({
 
 						<div className="mt-6 flex gap-3">
 							<Link
-								href={`projects/${encodeURIComponent(project.title.toLowerCase())}`}
+								href={`projects/${encodeURIComponent(
+									project.title.toLowerCase()
+								)}`}
 							>
 								<Button
 									variant="outline"
@@ -513,9 +516,11 @@ function ThreeDProjectModal({
 							</div>
 						</div>
 
-                        <div className="mt-6 flex gap-3">
+						<div className="mt-6 flex gap-3">
 							<Link
-								href={`projects/3d-design/${encodeURIComponent(project.title.toLowerCase())}`}
+								href={`projects/3d-design/${encodeURIComponent(
+									project.title.toLowerCase()
+								)}`}
 							>
 								<Button
 									variant="outline"
@@ -622,8 +627,9 @@ function StatsSection() {
 	);
 }
 
-export default function ProjectsPage() {
-	const [activeFilter, setActiveFilter] = useState("All");
+export default function Projects() {
+    const currentFilter = useSearchParams().get("category") || "All";
+	const [activeFilter, setActiveFilter] = useState(currentFilter);
 	const [visibleProjects, setVisibleProjects] = useState(12);
 	const [visibleThreeDProjects, setVisibleThreeDProjects] = useState(12);
 	const [selectedProject, setSelectedProject] = useState<
@@ -688,11 +694,11 @@ export default function ProjectsPage() {
 	return (
 		<>
 			<Navbar />
-			<div id="body" className="flex flex-col relative">
+			<div className="flex flex-col relative">
 				<ProjectsHero />
 
 				{/* Main Projects Section */}
-				<section className="py-20">
+				<section className="py-20" id="projects">
 					<div className="max-w-7xl mx-auto px-4">
 						<div className="text-center mb-16">
 							<span className="uppercase font-light text-xl text-theme-primary">
@@ -740,7 +746,7 @@ export default function ProjectsPage() {
 				</section>
 
 				{/* 3D Designs Portfolio Section */}
-				<section className="py-20">
+				<section className="py-20" id="3d-projects">
 					<div className="max-w-7xl mx-auto px-4">
 						<div className="text-center mb-16">
 							<span className="uppercase font-light text-xl text-theme-primary">

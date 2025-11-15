@@ -81,14 +81,24 @@ function ServiceCard({
 						))}
 					</ul>
 				</div>
-				<Link href="/quote" className="w-fit">
-					<Button
-						variant="outline"
-						className="w-fit uppercase mt-4 bg-theme-primary cursor-pointer hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all"
-					>
-						Get Quote
-					</Button>
-				</Link>
+				<div className="flex items-center space-x-4">
+					<Link href="/quote" className="w-fit">
+						<Button
+							variant="outline"
+							className="w-fit uppercase mt-4 bg-theme-primary cursor-pointer hover:bg-theme-accent text-white hover:text-white hover:scale-105 transition-all"
+						>
+							Get Quote
+						</Button>
+					</Link>
+					<Link href={service.portfolioLink} className="w-fit">
+						<Button
+							variant="outline"
+							className="w-fit uppercase mt-4 bg-transparent cursor-pointer text-theme-base hover:scale-105 transition-all border-theme-base"
+						>
+							View Portfolio
+						</Button>
+					</Link>
+				</div>
 			</div>
 		</section>
 	);
