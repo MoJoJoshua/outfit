@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { contactData } from "@/lib/constants";
 
 function QuoteHero() {
 	return (
@@ -66,7 +65,6 @@ function QuoteForm() {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		// Send form data to API
 		setSubmitting(true);
 
 		fetch("/api/email", {
@@ -143,30 +141,7 @@ function QuoteForm() {
 				</div>
 				<div className="w-full max-w-md">
                     <form
-                        // onsubmit, send to mailto:contact@yourdomain.com
-						onSubmit={e => {
-                            e.preventDefault();
-                            const mailBody = [
-                                '--- Request for Quote ---',
-                                `Date: ${new Date().toLocaleString()}`,
-                                '',
-                                'Contact Details:',
-                                `  Name: ${formData.name || 'N/A'}`,
-                                `  Email: ${formData.email || 'N/A'}`,
-                                `  Phone: ${formData.phone || 'N/A'}`,
-                                `  Service: ${formData.service || 'N/A'}`,
-                                '',
-                                'Project Details:',
-                                formData.message?.trim() || 'N/A',
-                                '',
-                                '--- End of Message ---',
-                            ].join('\n');
-
-							const mailtoLink = `mailto:${contactData.email}?subject=Request%20a%20Quote&body=${encodeURIComponent(
-								mailBody
-							)}`;
-							window.location.href = mailtoLink;
-						}}
+						onSubmit={handleSubmit}
 						className="bg-white p-8 rounded-lg shadow-lg"
 					>
 						<h3 className="text-2xl font-bold text-theme-base mb-6">

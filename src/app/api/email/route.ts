@@ -51,11 +51,13 @@ export async function POST(req: NextRequest) {
 				clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 				refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
 			},
-		});
+        });
+        
+        console.log("Validated body: ", validatedBody);
 
 		await transporter
 			.sendMail({
-				from: `"${validatedBody.name}" <${validatedBody.email}>`,
+				from: validatedBody.email,
 				to: contactData.email,
 				subject: `New Service Inquiry: ${validatedBody.service}`,
 				html: buildInquiryEmail({
