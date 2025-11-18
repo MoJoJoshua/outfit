@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/accordion";
 import { useState } from "react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 function ContactHero() {
 	return (
@@ -47,12 +48,47 @@ function ContactForm() {
 		service: "",
 		message: "",
 	});
+	const [submitting, setSubmitting] = useState(false);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		// Handle form submission here
-		console.log("Form submitted:", formData);
-		// You can integrate with your preferred form handling service
+		setSubmitting(true);
+
+		fetch("/api/email", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(formData),
+		})
+			.then(async (res) => {
+				if (!res.ok) {
+					const body = await res.json().catch(() => ({}));
+					throw new Error(body?.message || "Failed to send request");
+				}
+				return res.json();
+			})
+			.then(() => {
+				toast.success("Inquiry sent successfully.", {
+					style: { background: "#d1fae5", color: "#065f46" },
+				});
+				toast.success("Inquiry sent successfully.", {
+					style: { background: "#d1fae5", color: "#065f46" },
+				});
+				setFormData({
+					name: "",
+					email: "",
+					phone: "",
+					service: "",
+					message: "",
+				});
+			})
+			.catch((err: unknown) => {
+				console.error("Error sending quote request:", err);
+				const msg = err instanceof Error ? err.message : String(err);
+				toast.error(msg, {
+					style: { background: "#fee2e2", color: "#b91c1c" },
+				});
+			})
+			.finally(() => setSubmitting(false));
 	};
 
 	const handleChange = (
@@ -94,29 +130,7 @@ function ContactForm() {
 				</div>
 				<div className="w-full max-w-md">
 					<form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            const mailBody = [
-                                '--- Request for Quote ---',
-                                `Date: ${new Date().toLocaleString()}`,
-                                '',
-                                'Contact Details:',
-                                `  Name: ${formData.name || 'N/A'}`,
-                                `  Email: ${formData.email || 'N/A'}`,
-                                `  Phone: ${formData.phone || 'N/A'}`,
-                                `  Service: ${formData.service || 'N/A'}`,
-                                '',
-                                'Project Details:',
-                                formData.message?.trim() || 'N/A',
-                                '',
-                                '--- End of Message ---',
-                            ].join('\n');
-
-							const mailtoLink = `mailto:${contactData.email}?subject=Request%20a%20Quote&body=${encodeURIComponent(
-								mailBody
-							)}`;
-							window.location.href = mailtoLink;
-                        }}
+						onSubmit={handleSubmit}
 						className="bg-white p-8 rounded-lg shadow-lg"
 					>
 						<h3 className="text-2xl font-bold text-theme-base mb-6">
@@ -203,9 +217,10 @@ function ContactForm() {
 
 						<Button
 							type="submit"
-							className="w-full bg-theme-primary hover:bg-theme-accent text-white font-medium py-2 px-4 rounded-md transition-colors"
+							disabled={submitting}
+							className="w-full bg-theme-primary hover:bg-theme-accent text-white font-medium py-2 px-4 rounded-md transition-colors disabled:opacity-60"
 						>
-							Send Message
+							{submitting ? "Sending…" : "Send Request"}
 						</Button>
 					</form>
 				</div>
