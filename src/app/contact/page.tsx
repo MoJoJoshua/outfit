@@ -243,6 +243,13 @@ function ContactInfo() {
 			link: `mailto:${contactData.email}`,
 		},
 		{
+			icon: "💬",
+			title: "Message Us",
+			info: `Messenger ${contactData.messengerHandle}`,
+			action: "Open Messenger",
+			link: contactData.messengerLink,
+		},
+		{
 			icon: "🕒",
 			title: "Business Hours",
 			info: "Mon-Sat: 8:00 AM - 6:00 PM\nSunday: By Appointment",
@@ -262,7 +269,7 @@ function ContactInfo() {
 						Get In <span className="text-theme-primary">Touch</span>
 					</h2>
 				</div>
-				<div className="grid md:grid-cols-3 gap-8">
+				<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 					{contactMethods.map((method, index) => (
 						<Link
 							href={method.link}

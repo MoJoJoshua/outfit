@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
 		await transporter.sendMail({
 			from: contactData.email,
 			replyTo: email,
-			to: contactData.email,
+			to: contactData.inquiryEmail,
 			subject: `New Service Inquiry: ${service}`,
 			html: buildInquiryEmail({ name, email, phone, service, message }),
 		});

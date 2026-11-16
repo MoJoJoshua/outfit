@@ -42,6 +42,17 @@ export default function Footer() {
 								<span>✉️</span>
 								<p>{contactData.email}</p>
 							</div>
+							<div className="flex items-center space-x-2">
+								<span>💬</span>
+								<Link
+									href={contactData.messengerLink}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="hover:text-white transition-colors"
+								>
+									Messenger {contactData.messengerHandle}
+								</Link>
+							</div>
 						</div>
 						<Link
 							href="/quote"

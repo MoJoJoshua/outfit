@@ -84,7 +84,12 @@ const Navbar = () => {
 								</span>
 							</div>
 						</Link>
-						<Link href={contactData.fbLink} className="flex gap-2 items-center">
+						<Link
+							href={contactData.messengerLink}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="flex gap-2 items-center"
+						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="32"
@@ -102,7 +107,9 @@ const Navbar = () => {
 								<span className="font-bold text-theme-secondary">
 									LET&apos;S CHAT
 								</span>
-								<span className="text-xs font-light">OutfitConstructionPH</span>
+								<span className="text-xs font-light">
+									Messenger {contactData.messengerHandle}
+								</span>
 							</div>
 						</Link>
 						<Link href="/quote" className="flex gap-2 items-center">
