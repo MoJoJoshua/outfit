@@ -83,9 +83,6 @@ function QuoteForm() {
 				toast.success("Inquiry sent successfully.", {
 					style: { background: "#d1fae5", color: "#065f46" },
 				});
-				toast.success("Inquiry sent successfully.", {
-					style: { background: "#d1fae5", color: "#065f46" },
-				});
 				setFormData({
 					name: "",
 					email: "",
