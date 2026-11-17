@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 			service: "gmail",
 			auth: {
 				type: "OAuth2",
-				user: contactData.email,
+				user: contactData.senderEmail,
 				clientId: process.env.GOOGLE_CLIENT_ID,
 				clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 				refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
@@ -49,9 +49,9 @@ export async function POST(req: NextRequest) {
 		});
 
 		await transporter.sendMail({
-			from: contactData.email,
+			from: contactData.senderEmail,
 			replyTo: email,
-			to: contactData.inquiryEmail,
+			to: contactData.email,
 			subject: `New Service Inquiry: ${service}`,
 			html: buildInquiryEmail({ name, email, service, message }),
 		});

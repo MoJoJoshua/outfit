@@ -74,9 +74,9 @@ export default async function Page() {
 			<div id="body" className="flex flex-col gap-24 pb-16 relative">
 				<Hero heroData={heroData} />
 				<section className="max-w-sm md:max-w-2xl lg:max-w-7xl w-full mx-auto flex flex-col gap-40">
+					<FeaturedProjects />
 					<OutfitPH />
 					<Services homeCardData={homeCardData} />
-					<FeaturedProjects />
 					<GoogleMaps mapId="HQ_LOC" className="w-full h-[28rem]" />
 				</section>
 			</div>
