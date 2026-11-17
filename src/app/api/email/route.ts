@@ -37,16 +37,16 @@ export async function POST(req: NextRequest) {
 	const service = parsed.data.service || "General Inquiry";
 
 	try {
-		// Prefer a Gmail App Password (GMAIL_APP_PASSWORD) for sales@outfit.ph;
+		// Prefer a Gmail App Password (GMAIL_APP_PASSWORD) for admin@outfit.ph;
 		// fall back to the older Google OAuth2 credentials if it isn't set.
 		const appPassword = process.env.GMAIL_APP_PASSWORD?.replace(/\s+/g, "");
 		const transporter = nodemailer.createTransport({
 			service: "gmail",
 			auth: appPassword
-				? { user: contactData.senderEmail, pass: appPassword }
+				? { user: contactData.email, pass: appPassword }
 				: {
 						type: "OAuth2",
-						user: contactData.senderEmail,
+						user: contactData.email,
 						clientId: process.env.GOOGLE_CLIENT_ID,
 						clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 						refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
 		});
 
 		await transporter.sendMail({
-			from: contactData.senderEmail,
+			from: contactData.email,
 			replyTo: email,
 			to: contactData.email,
 			subject: `New Service Inquiry: ${service}`,

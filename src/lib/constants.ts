@@ -1,10 +1,8 @@
 const contactData = {
 	location: "J.R Martinez Building, Cebu City, Philippines",
-	// Shown on the website, and where contact/quote form inquiries are delivered
+	// Shown on the website. Inquiry emails are also sent from and delivered to it
+	// (GMAIL_APP_PASSWORD must be an app password for this account).
 	email: "admin@outfit.ph",
-	// Gmail account the website signs in as to send inquiry emails (matches the
-	// GOOGLE_REFRESH_TOKEN). Not shown on the website.
-	senderEmail: "sales@outfit.ph",
 	messengerHandle: "@outfitconstructionph",
 	messengerLink: "https://m.me/outfitconstructionph",
 	fbLink: "https://www.facebook.com/OutfitConstructionPh/",
