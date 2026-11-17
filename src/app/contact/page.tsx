@@ -3,7 +3,7 @@
 import Navbar from "../_components/Navbar";
 import Footer from "../_components/Footer";
 import { Button } from "@/components/ui/button";
-import { contactData, faqData } from "@/lib/constants";
+import { contactData, faqData, mapData } from "@/lib/constants";
 import GoogleMaps from "@/components/shared/Map";
 import {
 	Accordion,
@@ -217,7 +217,9 @@ function ContactInfo() {
 			title: "Our Location",
 			info: contactData.location,
 			action: "Get Directions",
-			link: "https://www.google.com/maps/dir//J.R.+Martinez+Building,+MEGAREVIEW,+85+Osme%C3%B1a+Blvd,+Cebu+City,+6000+Cebu/@10.3047182,123.8949872,20z/data=!4m16!1m7!3m6!1s0x33a999505a582cc1:0x2a4fbbd602ecfb47!2sJ.R.+Martinez+Building,+MEGAREVIEW!8m2!3d10.3048911!4d123.8951978!16s%2Fg%2F11c6v4wn5k!4m7!1m0!1m5!1m1!1s0x33a999505a582cc1:0x2a4fbbd602ecfb47!2m2!1d123.895132!2d10.3048789?entry=ttu&g_ep=EgoyMDI1MTEwNS4wIKXMDSoASAFQAw%3D%3D",
+			link: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+				mapData.query
+			)}`,
 		},
 		{
 			icon: "✉️",
@@ -424,7 +426,6 @@ export default function ContactPage() {
 							</p>
 						</div>
 						<GoogleMaps
-							mapId="CONTACT_MAP"
 							className="w-full h-[28rem] rounded-lg shadow-lg"
 						/>
 					</div>
