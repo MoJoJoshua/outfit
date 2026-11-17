@@ -697,7 +697,7 @@ const projectData: ProjectDataProps[] = [
 	{
 		key: 38,
 		title: "From Bare to Beautiful | Japandi 2-Bedroom Transformation at Royal Oceancrest Mactan",
-		category: "Renovation",
+		category: "Fit-out",
 		imgGallery: [
 			"/projects/38/1.jpg",
 			"/projects/38/2.jpg",
@@ -716,7 +716,7 @@ const projectData: ProjectDataProps[] = [
 	},
 	{
 		key: 39,
-		title: "From Bare to Tropical Modern | A Stunning Two-Bedroom Condo Transformation",
+		title: "From Bare to Tropical Modern | A Stunning Two-Bedroom Condo Transformation at Royal Oceancrest Mactan",
 		category: "Fit-out",
 		imgGallery: [
 			"/projects/39/1.jpg",
@@ -735,7 +735,7 @@ const projectData: ProjectDataProps[] = [
 	},
 	{
 		key: 40,
-		title: "From Bare to Business-Ready | Modern and Customized Office Fit-Out",
+		title: "From Bare to Business-Ready | Modern and Customized Office Fit-Out at Litecloud Office Building, Lahug",
 		category: "Fit-out",
 		imgGallery: [
 			"/projects/40/1.jpg",
@@ -753,7 +753,7 @@ const projectData: ProjectDataProps[] = [
 	},
 	{
 		key: 41,
-		title: "From Bare to Bold | Industrial Townhouse Transformation",
+		title: "From Bare to Bold | Industrial Townhouse Transformation at Harrington Place, Talisay",
 		category: "Renovation",
 		imgGallery: [
 			"/projects/41/1.jpg",
@@ -771,7 +771,7 @@ const projectData: ProjectDataProps[] = [
 	},
 	{
 		key: 42,
-		title: "From Outdated to Timeless | Warm and Modern Townhouse Ground Floor Renovation",
+		title: "From Outdated to Timeless | Warm and Modern Townhouse Ground Floor Renovation at Maria Elena Residences",
 		category: "Renovation",
 		imgGallery: [
 			"/projects/42/1.jpg",
