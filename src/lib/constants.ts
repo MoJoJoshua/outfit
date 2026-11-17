@@ -1,5 +1,5 @@
 const contactData = {
-	location: "J.R Martinez Building, Cebu City, Philippines",
+	location: "J Block, Banawa, R. Duterte St., Cebu City, Cebu",
 	// Shown on the website. Inquiry emails are also sent from and delivered to it
 	// (GMAIL_APP_PASSWORD must be an app password for this account).
 	email: "admin@outfit.ph",
@@ -12,9 +12,10 @@ const contactData = {
     googleAppointmentsLink: "https://calendar.app.google/gkHL3heYdtAA5FrP7"
 };
 
+// Office pin (J Block, Banawa, R. Duterte St., Cebu City), used for the embedded
+// Google Map and the Get Directions link.
 const mapData = {
-	latitude: 10.304912201370488,
-	longitude: 123.89512805813968,
+	query: "10.3106885,123.8766559",
 };
 
 type FaqDataProps = {

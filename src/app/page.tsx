@@ -77,7 +77,7 @@ export default async function Page() {
 					<FeaturedProjects />
 					<OutfitPH />
 					<Services homeCardData={homeCardData} />
-					<GoogleMaps mapId="HQ_LOC" className="w-full h-[28rem]" />
+					<GoogleMaps className="w-full h-[28rem]" />
 				</section>
 			</div>
 			<Footer />

@@ -31,7 +31,7 @@ export function buildInquiryEmail(data: InquiryData) {
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>New Inquiry</title>
   </head>
-  <body style="margin:0;padding:24px;background:#f5f7fa;font-family:Segoe UI, Roboto, Helvetica, Arial, sans-serif;color:${baseText};">
+  <body style="margin:0;padding:24px;background:#f5f7fa;font-family:Montserrat, Segoe UI, Roboto, Helvetica, Arial, sans-serif;color:${baseText};">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:700px;margin:0 auto;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(15,23,42,0.08);">
       <tr>
         <td style="background:${primary};padding:20px 24px;">
