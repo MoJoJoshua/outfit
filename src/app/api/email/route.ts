@@ -7,8 +7,6 @@ import buildInquiryEmail from "@/lib/emailTemplate";
 const inquirySchema = zod.object({
 	email: zod.email(),
 	name: zod.string().trim().min(2).max(100),
-	// Optional: the quote form doesn't ask for it; an empty string counts as not given
-	phone: zod.union([zod.literal(""), zod.string().trim().min(10).max(15)]).optional(),
 	service: zod.string().trim().optional(),
 	message: zod.string().trim().min(1),
 });
@@ -29,14 +27,13 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json(
 			{
 				message:
-					"Please check your details: a valid name, email and message are required. If you add a phone number, it must be 10–15 characters.",
+					"Please check your details: a valid name, email and message are required.",
 			},
 			{ status: 400 }
 		);
 	}
 
 	const { name, email, message } = parsed.data;
-	const phone = parsed.data.phone || undefined;
 	const service = parsed.data.service || "General Inquiry";
 
 	try {
@@ -56,7 +53,7 @@ export async function POST(req: NextRequest) {
 			replyTo: email,
 			to: contactData.inquiryEmail,
 			subject: `New Service Inquiry: ${service}`,
-			html: buildInquiryEmail({ name, email, phone, service, message }),
+			html: buildInquiryEmail({ name, email, service, message }),
 		});
 
 		return NextResponse.json(
