@@ -12,9 +12,10 @@ const contactData = {
     googleAppointmentsLink: "https://calendar.app.google/gkHL3heYdtAA5FrP7"
 };
 
-// Search text used to place the pin on the embedded Google Map and for directions.
+// Office pin (J Block, Banawa, R. Duterte St., Cebu City), used for the embedded
+// Google Map and the Get Directions link.
 const mapData = {
-	query: "J Block, Banawa, R. Duterte St., Cebu City, Cebu, Philippines",
+	query: "10.3106885,123.8766559",
 };
 
 type FaqDataProps = {
