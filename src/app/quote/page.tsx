@@ -36,7 +36,6 @@ function QuoteForm() {
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
-		phone: "",
 		service: "",
 		message: "",
 	});
@@ -86,7 +85,6 @@ function QuoteForm() {
 				setFormData({
 					name: "",
 					email: "",
-					phone: "",
 					service: "",
 					message: "",
 				});
@@ -172,20 +170,6 @@ function QuoteForm() {
 								required
 								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-theme-primary focus:border-transparent"
 								placeholder="your.email@example.com"
-							/>
-						</div>
-
-						<div className="mb-4">
-							<label className="block text-sm font-medium text-gray-700 mb-2">
-								Phone Number
-							</label>
-							<input
-								type="tel"
-								name="phone"
-								value={formData.phone}
-								onChange={handleChange}
-								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-theme-primary focus:border-transparent"
-								placeholder="09XX XXX XXXX"
 							/>
 						</div>
 
