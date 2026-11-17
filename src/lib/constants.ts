@@ -805,6 +805,21 @@ const projectData: ProjectDataProps[] = [
 	},
 ];
 
+// Projects shown in the "Featured Projects" section on the home page, in display order.
+// projectKey must match a `key` in projectData; youtubeId is the part after youtu.be/;
+// label is the short name shown on the tab.
+type FeaturedProjectProps = {
+	projectKey: number;
+	youtubeId: string;
+	label: string;
+};
+
+const featuredProjectData: FeaturedProjectProps[] = [
+	{ projectKey: 39, youtubeId: "0gthbADlTas", label: "Royal Oceancrest Mactan" },
+	{ projectKey: 20, youtubeId: "5rDWm8ZSnhQ", label: "Urban Deca Homes Banilad" },
+	{ projectKey: 41, youtubeId: "9iIBOhdgbzY", label: "Harrington Place, Talisay" },
+];
+
 type ThreeDProjectDataProps = {
 	key: number;
 	title: string;
@@ -1153,6 +1168,7 @@ export {
 	faqData,
 	testimonialData,
     projectData,
+    featuredProjectData,
     threeDProjectData,
 	serviceData,
 };

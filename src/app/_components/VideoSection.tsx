@@ -1,8 +1,8 @@
 export default function VideoSection() {
 	return (
 		<section className="flex-grow flex w-full h-full">
-			<section className="text-theme-base flex flex-col lg:grid lg:grid-cols-2 gap-8 place-items-center">
-				<div id="content" className="flex flex-col gap-4 w-full lg:w-auto">
+			<section className="text-theme-base flex flex-col gap-8">
+				<div id="content" className="flex flex-col gap-4 w-full max-w-3xl">
 					<span className="uppercase font-light text-base md:text-xl">
 						Outfit Construction PH
 					</span>
@@ -26,15 +26,6 @@ export default function VideoSection() {
 							</span>
 						</div>
 					</div>
-				</div>
-				<div className="w-full aspect-video max-w-full flex items-center justify-center">
-					<iframe
-						src="https://www.youtube.com/embed/5rDWm8ZSnhQ"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-						className="w-full h-full rounded-xl"
-						style={{ minHeight: 200, maxHeight: 400 }}
-						title="Meet the Team Video"
-					/>
 				</div>
 			</section>
 		</section>
