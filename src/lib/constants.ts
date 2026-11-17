@@ -647,6 +647,162 @@ const projectData: ProjectDataProps[] = [
 		description:
 			"Modern condo unit featuring bedroom with custom bedframe and fluted accent wall, built-in wardrobes with vanity desk, window seating with cushioned bench, living area with TV console, foldable dining table, and bathroom with vanity cabinet and mirror storage.",
 	},
+	{
+		key: 35,
+		title: "From Bare Unit to Airbnb-Ready | ARC Towers",
+		category: "Fit-out",
+		imgGallery: [
+			"/projects/35/1.jpg",
+			"/projects/35/2.jpg",
+			"/projects/35/3.jpg",
+			"/projects/35/4.jpg",
+			"/projects/35/5.jpg",
+			"/projects/35/6.jpg",
+		],
+		description:
+			"A simple yet elegant minimalist makeover of a 22 sqm studio at ARC Towers. Thoughtfully designed to maximize space, functionality, and comfort for an Airbnb-ready experience.",
+	},
+	{
+		key: 36,
+		title: "Studio Unit Transformation into a Rental-Ready Space | Base Line Residences Cebu",
+		category: "Fit-out",
+		imgGallery: [
+			"/projects/36/1.jpg",
+			"/projects/36/2.jpg",
+			"/projects/36/3.jpg",
+			"/projects/36/4.jpg",
+			"/projects/36/5.jpg",
+			"/projects/36/6.jpg",
+		],
+		description:
+			"A modern and functional studio makeover at Base Line Residences, Cebu City. Thoughtfully designed to maximize space, enhance comfort, and create an inviting interior ideal for Airbnb or long-term rental.",
+	},
+	{
+		key: 37,
+		title: "From Bare to Cozy | Studio Unit Transformation at West Jones Residences",
+		category: "Fit-out",
+		imgGallery: [
+			"/projects/37/1.jpg",
+			"/projects/37/2.jpg",
+			"/projects/37/3.jpg",
+			"/projects/37/4.jpg",
+			"/projects/37/5.jpg",
+			"/projects/37/6.jpg",
+			"/projects/37/7.jpg",
+			"/projects/37/8.jpg",
+		],
+		description:
+			"A once-bare studio unit transformed into a cozy and relaxing retreat for our client, a doctor who needs a comfortable space to rest and recharge between hospital duties.",
+	},
+	{
+		key: 38,
+		title: "From Bare to Beautiful | Japandi 2-Bedroom Transformation at Royal Oceancrest Mactan",
+		category: "Renovation",
+		imgGallery: [
+			"/projects/38/1.jpg",
+			"/projects/38/2.jpg",
+			"/projects/38/3.jpg",
+			"/projects/38/4.jpg",
+			"/projects/38/5.jpg",
+			"/projects/38/6.jpg",
+			"/projects/38/7.jpg",
+			"/projects/38/8.jpg",
+			"/projects/38/9.jpg",
+			"/projects/38/10.jpg",
+			"/projects/38/11.jpg",
+		],
+		description:
+			"From a bare unit with unfinished floors and no drywall partitions to a cozy, Japandi-inspired two-bedroom home. Thoughtfully transformed to embrace natural textures, minimalist aesthetics, and functional living.",
+	},
+	{
+		key: 39,
+		title: "From Bare to Tropical Modern | A Stunning Two-Bedroom Condo Transformation",
+		category: "Fit-out",
+		imgGallery: [
+			"/projects/39/1.jpg",
+			"/projects/39/2.jpg",
+			"/projects/39/3.jpg",
+			"/projects/39/4.jpg",
+			"/projects/39/5.jpg",
+			"/projects/39/6.jpg",
+			"/projects/39/7.jpg",
+			"/projects/39/8.jpg",
+			"/projects/39/9.jpg",
+			"/projects/39/10.jpg",
+		],
+		description:
+			"Designed by Ar. Aznar, this once-bare two-bedroom condo has been transformed into a modern tropical retreat, blending resort-inspired aesthetics with everyday comfort. A relaxing home away from home in Cebu for our clients from Negros.",
+	},
+	{
+		key: 40,
+		title: "From Bare to Business-Ready | Modern and Customized Office Fit-Out",
+		category: "Fit-out",
+		imgGallery: [
+			"/projects/40/1.jpg",
+			"/projects/40/2.jpg",
+			"/projects/40/3.jpg",
+			"/projects/40/4.jpg",
+			"/projects/40/5.jpg",
+			"/projects/40/6.jpg",
+			"/projects/40/7.jpg",
+			"/projects/40/8.jpg",
+			"/projects/40/9.jpg",
+		],
+		description:
+			"Transforming a bare office space into a modern, functional, and customized workplace, thoughtfully designed to meet our client's operational needs, enhance productivity, and support team collaboration.",
+	},
+	{
+		key: 41,
+		title: "From Bare to Bold | Industrial Townhouse Transformation",
+		category: "Renovation",
+		imgGallery: [
+			"/projects/41/1.jpg",
+			"/projects/41/2.jpg",
+			"/projects/41/3.jpg",
+			"/projects/41/4.jpg",
+			"/projects/41/5.jpg",
+			"/projects/41/6.jpg",
+			"/projects/41/7.jpg",
+			"/projects/41/8.jpg",
+			"/projects/41/9.jpg",
+		],
+		description:
+			"A complete townhouse transformation featuring modern industrial aesthetics blended with warm cherry wood finishes, creating a bold yet inviting home that balances character, comfort, and functionality.",
+	},
+	{
+		key: 42,
+		title: "From Outdated to Timeless | Warm and Modern Townhouse Ground Floor Renovation",
+		category: "Renovation",
+		imgGallery: [
+			"/projects/42/1.jpg",
+			"/projects/42/2.jpg",
+			"/projects/42/3.jpg",
+			"/projects/42/4.jpg",
+			"/projects/42/5.jpg",
+			"/projects/42/6.jpg",
+			"/projects/42/7.jpg",
+			"/projects/42/8.jpg",
+		],
+		description:
+			"Transforming an ordinary townhouse into a warm, modern, and inviting home featuring a redesigned kitchen, customized TV wall, and upgraded flooring. Thoughtfully renovated to blend contemporary aesthetics with everyday comfort and functionality.",
+	},
+	{
+		key: 43,
+		title: "Cozy Townhouse Transformation | Ground Floor Renovation at Clearwater Residences",
+		category: "Renovation",
+		imgGallery: [
+			"/projects/43/1.jpg",
+			"/projects/43/2.jpg",
+			"/projects/43/3.jpg",
+			"/projects/43/4.jpg",
+			"/projects/43/5.jpg",
+			"/projects/43/6.jpg",
+			"/projects/43/7.jpg",
+			"/projects/43/8.jpg",
+		],
+		description:
+			"A cozy and thoughtfully designed ground floor renovation at Clearwater Residences, transforming a compact townhouse into a warm, stylish, and functional home that maximizes every inch of space.",
+	},
 ];
 
 type ThreeDProjectDataProps = {
