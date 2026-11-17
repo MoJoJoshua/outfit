@@ -44,7 +44,6 @@ function ContactForm() {
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
-		phone: "",
 		service: "",
 		message: "",
 	});
@@ -70,13 +69,9 @@ function ContactForm() {
 				toast.success("Inquiry sent successfully.", {
 					style: { background: "#d1fae5", color: "#065f46" },
 				});
-				toast.success("Inquiry sent successfully.", {
-					style: { background: "#d1fae5", color: "#065f46" },
-				});
 				setFormData({
 					name: "",
 					email: "",
-					phone: "",
 					service: "",
 					message: "",
 				});
@@ -169,20 +164,6 @@ function ContactForm() {
 
 						<div className="mb-4">
 							<label className="block text-sm font-medium text-gray-700 mb-2">
-								Phone Number
-							</label>
-							<input
-								type="tel"
-								name="phone"
-								value={formData.phone}
-								onChange={handleChange}
-								className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-theme-primary focus:border-transparent"
-								placeholder="09XX XXX XXXX"
-							/>
-						</div>
-
-						<div className="mb-4">
-							<label className="block text-sm font-medium text-gray-700 mb-2">
 								Service Interested In
 							</label>
 							<select
@@ -246,6 +227,13 @@ function ContactInfo() {
 			link: `mailto:${contactData.email}`,
 		},
 		{
+			icon: "💬",
+			title: "Message Us",
+			info: `Messenger ${contactData.messengerHandle}`,
+			action: "Open Messenger",
+			link: contactData.messengerLink,
+		},
+		{
 			icon: "🕒",
 			title: "Business Hours",
 			info: "Mon-Sat: 8:00 AM - 6:00 PM\nSunday: By Appointment",
@@ -265,7 +253,7 @@ function ContactInfo() {
 						Get In <span className="text-theme-primary">Touch</span>
 					</h2>
 				</div>
-				<div className="grid md:grid-cols-3 gap-8">
+				<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 					{contactMethods.map((method, index) => (
 						<Link
 							href={method.link}

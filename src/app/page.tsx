@@ -3,7 +3,7 @@ import Hero from "./_components/Hero";
 import Services from "./_components/Services";
 import Footer from "./_components/Footer";
 import OutfitPH from "./_components/OutfitPH";
-import VideoSection from "./_components/VideoSection";
+import FeaturedProjects from "./_components/FeaturedProjects";
 import GoogleMaps from "@/components/shared/Map";
 
 export type HeroData = {
@@ -76,7 +76,7 @@ export default async function Page() {
 				<section className="max-w-sm md:max-w-2xl lg:max-w-7xl w-full mx-auto flex flex-col gap-40">
 					<OutfitPH />
 					<Services homeCardData={homeCardData} />
-					<VideoSection />
+					<FeaturedProjects />
 					<GoogleMaps mapId="HQ_LOC" className="w-full h-[28rem]" />
 				</section>
 			</div>

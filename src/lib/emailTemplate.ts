@@ -3,7 +3,6 @@ import { contactData } from "./constants";
 export type InquiryData = {
 	name: string;
 	email: string;
-	phone?: string;
 	service?: string;
 	message?: string;
 };
@@ -15,7 +14,7 @@ export type InquiryData = {
  * website's theme (neutral base, prominent primary accent and soft yellow highlight).
  */
 export function buildInquiryEmail(data: InquiryData) {
-	const { name, email, phone = "-", service = "-", message = "-" } = data;
+	const { name, email, service = "-", message = "-" } = data;
 
 	// Colors chosen to match the site's theme classes: theme-primary (teal/dark),
 	// theme-accent (accent), and the pale highlight used in hero text (#F9ECCE).
@@ -68,12 +67,6 @@ export function buildInquiryEmail(data: InquiryData) {
               <td style="padding:10px 0;border-top:1px solid #eef2f7;font-weight:600;color:#334155;">Email</td>
               <td style="padding:10px 0;border-top:1px solid #eef2f7;color:#475569;">${escapeHtml(
 								email
-							)}</td>
-            </tr>
-            <tr>
-              <td style="padding:10px 0;border-top:1px solid #eef2f7;font-weight:600;color:#334155;">Phone</td>
-              <td style="padding:10px 0;border-top:1px solid #eef2f7;color:#475569;">${escapeHtml(
-								phone
 							)}</td>
             </tr>
             <tr>
