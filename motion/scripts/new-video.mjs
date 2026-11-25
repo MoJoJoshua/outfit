@@ -27,9 +27,33 @@ const noTranscribe = args.includes("--no-transcribe");
 if (noTranscribe) args.splice(args.indexOf("--no-transcribe"), 1);
 const model = flag("model", "small");
 const language = flag("language", "auto");
-const [input, slugArg] = args;
+let [input, slugArg] = args;
+const usage = "Usage: npm run new -- <path/to/video | Google Drive link> [slug] [--model small] [--language auto] [--no-transcribe]";
+
+// Google Drive links ("Anyone with the link" sharing) are downloaded first.
+// Uses curl so the container's HTTPS proxy applies.
+const driveId = input?.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)([\w-]+)/)?.[1];
+if (driveId) {
+	if (!slugArg) {
+		console.error("Give a slug for Drive videos, e.g. npm run new -- <link> accent-walls");
+		process.exit(1);
+	}
+	const dl = path.join(root, "public", "videos", `.download-${driveId}`);
+	fs.mkdirSync(path.dirname(dl), { recursive: true });
+	console.log("Downloading from Google Drive...");
+	const url = `https://drive.usercontent.google.com/download?id=${driveId}&export=download&confirm=t`;
+	const r = spawnSync("curl", ["-fL", "--retry", "3", "-o", dl, url], { stdio: "inherit" });
+	const head = r.status === 0 ? fs.readFileSync(dl).subarray(0, 512).toString("latin1") : "";
+	if (r.status !== 0 || /<html|<!doctype/i.test(head)) {
+		fs.rmSync(dl, { force: true });
+		console.error("\nCould not download the video. In Drive: Share -> General access -> 'Anyone with the link', then send the link again.");
+		console.error("If the download was refused by the network, the session needs the 'outfit' environment (it allows drive.google.com).");
+		process.exit(1);
+	}
+	input = dl;
+}
 if (!input || !fs.existsSync(input)) {
-	console.error("Usage: npm run new -- <path/to/video> [slug] [--model small] [--language auto] [--no-transcribe]");
+	console.error(usage);
 	process.exit(1);
 }
 
@@ -46,17 +70,20 @@ const probe = (file) =>
 		execFileSync("ffprobe", ["-v", "error", "-print_format", "json", "-show_streams", "-show_format", file]).toString(),
 	);
 
-// 1. Footage: keep H.264 MP4 as-is, convert anything else (HEVC from iPhones, MOV, ...).
+// 1. Footage: repackage H.264, convert anything else (HEVC from iPhones, ProRes, ...).
 const info = probe(input);
 const v = info.streams.find((s) => s.codec_type === "video");
 if (!v) throw new Error("No video stream found");
 const target = path.join(dir, "source.mp4");
-if (path.extname(input).toLowerCase() === ".mp4" && v.codec_name === "h264") {
-	fs.copyFileSync(input, target);
+if (v.codec_name === "h264") {
+	// already H.264: repackage as MP4 without re-encoding the picture
+	ff(["-i", input, "-map", "0:v:0", "-map", "0:a:0?", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart", target]);
 } else {
 	console.log(`Converting ${v.codec_name} to H.264...`);
 	ff(["-i", input, "-c:v", "libx264", "-crf", "17", "-preset", "fast", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart", target]);
 }
+
+if (driveId) fs.rmSync(input, { force: true });
 
 // Phone videos often store portrait as landscape + rotation metadata.
 const out = probe(target);

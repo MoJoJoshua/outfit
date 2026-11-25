@@ -24,14 +24,20 @@ product, add those words to the hint for better spelling.
 
 ## 1. Get the footage
 
-- Attached to the chat: it is in the uploads folder; use that path.
-- Google Drive link: download it with the Drive connector into the scratchpad.
-- Anything else: ask for the file.
+- **Attached to the chat** (limit about 30 MB): it is in the uploads folder;
+  use that path.
+- **Google Drive link** (any size): pass the link straight to `npm run new`;
+  it downloads the file. The file must be shared as "Anyone with the link"
+  (Share → General access). If the download is refused, the session is not
+  in the "outfit" environment.
+- **Too big to attach and no Drive?** Ask the user to record or export at
+  1080p, 30 fps: Reels are 1080×1920, so 4K/60 fps only makes the file bigger.
+  30 MB holds roughly 60–80 s at 1080p.
 
 ## 2. Import and transcribe
 
 ```bash
-cd motion && npm run new -- <path/to/video> <slug>
+cd motion && npm run new -- <path/to/video or Drive link> <slug>
 ```
 
 `<slug>` is short, lowercase, no date, e.g. `accent-walls`. This creates
