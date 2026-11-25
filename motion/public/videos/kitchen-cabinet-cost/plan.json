@@ -1,0 +1,112 @@
+{
+  "title": "Condo kitchen cabinet cost",
+  "video": "source.mp4",
+  "source": {
+    "width": 1088,
+    "height": 1458,
+    "fps": 25,
+    "durationInSeconds": 48.81
+  },
+  "output": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30
+  },
+  "captions": {
+    "enabled": true,
+    "file": "captions.json",
+    "combineWithinMs": 900
+  },
+  "trim": {
+    "startSeconds": 0
+  },
+  "overlays": [
+    {
+      "type": "punch",
+      "from": 0.1,
+      "to": 3.6,
+      "text": "How much is a\ncondo kitchen\ncabinet?",
+      "accentWords": [
+        "cabinet?"
+      ],
+      "position": "top"
+    },
+    {
+      "type": "lowerThird",
+      "from": 4.0,
+      "to": 8.0,
+      "name": "Outfit Construction",
+      "role": "Kitchen cabinets · Cebu"
+    },
+    {
+      "type": "cutaway",
+      "from": 9.7,
+      "to": 13.1,
+      "template": "kinetic-typography",
+      "props": {
+        "eyebrow": "Honest answer",
+        "headline": "3 things\ndecide the\nprice.",
+        "accentWords": [
+          "price."
+        ],
+        "background": "ink",
+        "size": "display"
+      }
+    },
+    {
+      "type": "punch",
+      "from": 13.2,
+      "to": 17.6,
+      "eyebrow": "01",
+      "text": "The\nboard.",
+      "accentWords": [
+        "board."
+      ],
+      "position": "top"
+    },
+    {
+      "type": "punch",
+      "from": 22.6,
+      "to": 27.0,
+      "eyebrow": "02",
+      "text": "The\nhardware.",
+      "accentWords": [
+        "hardware."
+      ],
+      "position": "top"
+    },
+    {
+      "type": "punch",
+      "from": 29.6,
+      "to": 34.6,
+      "eyebrow": "03 · The size",
+      "text": "Priced\nper linear\nmeter.",
+      "accentWords": [
+        "meter."
+      ],
+      "position": "top"
+    },
+    {
+      "type": "cutaway",
+      "from": 39.4,
+      "to": 44.0,
+      "template": "kinetic-typography",
+      "props": {
+        "eyebrow": "Before you compare quotes",
+        "headline": "Compare the\nsame specs.",
+        "accentWords": [
+          "specs."
+        ],
+        "background": "ivory",
+        "size": "display"
+      }
+    }
+  ],
+  "endCard": {
+    "enabled": true,
+    "seconds": 4,
+    "props": {
+      "cta": "Message us for a\nsite inspection."
+    }
+  }
+}
