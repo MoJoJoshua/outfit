@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "lib": [
+      "DOM",
+      "ES2022"
+    ],
+    "paths": {
+      "@outfit/*": [
+        "../.claude/skills/outfit-motion-studio/templates/*"
+      ],
+      "@remotion/google-fonts/*": [
+        "./node_modules/@remotion/google-fonts/dist/cjs/*.d.ts"
+      ],
+      "*": [
+        "./node_modules/@types/*",
+        "./node_modules/*"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "../.claude/skills/outfit-motion-studio/templates"
+  ]
+}

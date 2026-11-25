@@ -1,6 +1,6 @@
 ---
 name: outfit-motion-studio
-description: Makes on-brand motion graphics and social videos for Outfit Construction Inc. (OutfitPH, "We fit out your space") with Remotion. Use whenever asked for an Outfit video, reel, ad, logo animation, explainer, material comparison or ranking, tier list, before/after reveal, lower third, end card, or to turn a script into animated scenes for Outfit's Facebook, Instagram, TikTok or YouTube. Builds on the remotion-* skills; it decides what the video looks and moves like, they decide how Remotion code is written.
+description: Makes on-brand motion graphics and social videos for Outfit Construction Inc. (OutfitPH, "We fit out your space") with Remotion. Use whenever the user sends a talking-head video or clip to edit ("make a reel from this"), or asks for an Outfit video, reel, ad, logo animation, explainer, material comparison or ranking, tier list, before/after reveal, lower third, end card, or to turn a script into animated scenes for Outfit's Facebook, Instagram, TikTok or YouTube. Builds on the remotion-* skills; it decides what the video looks and moves like, they decide how Remotion code is written.
 ---
 
 # Outfit Motion Studio
@@ -13,7 +13,18 @@ For Remotion mechanics (project setup, fonts, sequencing, rendering, Studio),
 load the `remotion-best-practices` skill and follow it. Where it and this skill
 disagree on *look or motion*, this skill wins; on *code mechanics*, it wins.
 
-## Workflow
+## Which workflow
+
+- **The user sent footage of someone talking** (the usual case): follow
+  `references/talking-head.md` exactly. It uses the ready-made `motion/`
+  project in the outfit repo: `npm run new` imports and transcribes,
+  you write `plan.json`, `npm run stills` previews, `npm run render` exports.
+  Don't copy templates or set up a new project for this.
+- **A video made only of graphics** (no footage), or a new standalone clip:
+  use the workflow below. In the outfit repo, build it inside `motion/`
+  (templates are importable there as `@outfit/<template>`).
+
+## Graphics-only workflow
 
 1. **Read the brief or script.** If the user gave a script, follow
    `references/script-analysis.md` to break it into beats and map each beat
@@ -22,7 +33,8 @@ disagree on *look or motion*, this skill wins; on *code mechanics*, it wins.
 2. **Pick the format.** Default to vertical 1080×1920 at 30 fps (Reels, TikTok,
    Shorts). Use 1920×1080 for YouTube/website and 1080×1080 for feed posts.
    See `references/rendering-standards.md`.
-3. **Set up the project** (once per Remotion project):
+3. **Set up the project.** In the outfit repo, `motion/` is already set up
+   (`cd motion && npm install`). For a Remotion project elsewhere:
    - Copy `templates/` into the project's `src/outfit/` (keep `_shared/`).
    - Copy `assets/*.png` into the project's `public/outfit/`.
    - Install the extras at the project's Remotion version:
