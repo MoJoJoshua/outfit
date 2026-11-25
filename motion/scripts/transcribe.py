@@ -23,6 +23,12 @@ def main() -> int:
     ap.add_argument("--model", default="small", help="tiny, base, small, medium (bigger = better, slower)")
     ap.add_argument("--language", default="auto", help="auto, en, tl, ...")
     ap.add_argument("--threads", type=int, default=4)
+    ap.add_argument(
+        "--prompt",
+        default="Outfit Construction, Outfit PH, Cebu City, Banawa, condo fit-out, renovation, fluted panels, "
+        "laminate, cabinets, interior design, free consultation, Messenger.",
+        help="Vocabulary hint: names and terms the speaker is likely to use",
+    )
     args = ap.parse_args()
 
     try:
@@ -45,6 +51,7 @@ def main() -> int:
         token_timestamps=True,
         max_len=1,
         split_on_word=True,
+        initial_prompt=args.prompt,
     )
 
     captions = []

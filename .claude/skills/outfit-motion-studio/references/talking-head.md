@@ -9,12 +9,18 @@ graphics at the right moments, and the end card. Everything runs in the
 
 ```bash
 cd motion && npm install
-pip install pywhispercpp
+pip install pywhispercpp   # the "outfit" cloud environment does both of these automatically
 ```
 
-Transcription downloads a Whisper model from `huggingface.co` the first time.
-If that host is blocked, the import still works but without captions: tell the
-user, and offer to work from a transcript they paste instead.
+Transcription uses a Whisper model from `huggingface.co` (the "outfit" cloud
+environment allows it and pre-downloads the `small` model). If the download is
+blocked, the import still works but without captions: tell the user to start
+the chat in the "outfit" environment, or offer to work from a transcript they
+paste instead.
+
+Whisper gets a vocabulary hint (Outfit, Cebu, Banawa, fit-out...) through
+`scripts/transcribe.py --prompt`. If the speaker names a project, client or
+product, add those words to the hint for better spelling.
 
 ## 1. Get the footage
 
