@@ -1,0 +1,110 @@
+{
+	"title": "Accent walls ranked (example plan)",
+	"video": "source.mp4",
+	"source": {
+		"width": 1080,
+		"height": 1920,
+		"fps": 30,
+		"durationInSeconds": 20.01
+	},
+	"output": {
+		"width": 1080,
+		"height": 1920,
+		"fps": 30
+	},
+	"captions": {
+		"enabled": true,
+		"file": "captions.json",
+		"combineWithinMs": 900
+	},
+	"trim": {
+		"startSeconds": 0
+	},
+	"overlays": [
+		{
+			"type": "punch",
+			"from": 0.2,
+			"to": 2.6,
+			"text": "Stop painting\naccent walls.",
+			"accentWords": [
+				"walls"
+			],
+			"position": "top"
+		},
+		{
+			"type": "lowerThird",
+			"from": 3.0,
+			"to": 7.0,
+			"name": "Outfit Construction",
+			"role": "Condo fit-outs \u00b7 Cebu"
+		},
+		{
+			"type": "cutaway",
+			"from": 8.0,
+			"to": 14.5,
+			"template": "material-ranking",
+			"props": {
+				"title": "Condo accent walls",
+				"secondsPerItem": 2.1667,
+				"criteria": [
+					{
+						"key": "durability",
+						"label": "Durability",
+						"inverted": false
+					},
+					{
+						"key": "cost",
+						"label": "Affordability",
+						"inverted": true
+					}
+				],
+				"items": [
+					{
+						"name": "Fluted panel",
+						"note": "Texture without repainting",
+						"scores": {
+							"durability": 8,
+							"cost": 6
+						},
+						"image": "projects/21/5.jpg"
+					},
+					{
+						"name": "Laminate",
+						"note": "Easy clean, many finishes",
+						"scores": {
+							"durability": 7,
+							"cost": 7
+						},
+						"image": "projects/20/3.jpg"
+					},
+					{
+						"name": "Paint",
+						"note": "Cheapest, scuffs easily",
+						"scores": {
+							"durability": 4,
+							"cost": 9
+						},
+						"image": ""
+					}
+				]
+			}
+		},
+		{
+			"type": "cutaway",
+			"from": 14.5,
+			"to": 19.0,
+			"template": "before-after",
+			"props": {
+				"beforeImage": "projects/21/1.jpg",
+				"afterImage": "projects/21/5.jpg",
+				"projectName": "Condo fit-out \u00b7 Cebu City",
+				"revealAtSeconds": 1.0
+			}
+		}
+	],
+	"endCard": {
+		"enabled": true,
+		"seconds": 4,
+		"props": {}
+	}
+}

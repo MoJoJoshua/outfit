@@ -1,0 +1,9 @@
+node_modules/
+out/
+# footage is too large for git: each video folder keeps only plan/captions/transcript
+public/videos/*/*.mp4
+public/videos/*/*.mov
+public/videos/*/*.wav
+public/videos/*/*.m4a
+public/videos/*/*.jpg
+public/videos/*/*.png

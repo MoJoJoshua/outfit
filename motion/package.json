@@ -1,0 +1,26 @@
+{
+  "name": "outfit-motion",
+  "private": true,
+  "description": "Outfit Construction videos built with Remotion and the outfit-motion-studio skill",
+  "scripts": {
+    "studio": "remotion studio",
+    "new": "node scripts/new-video.mjs",
+    "stills": "node scripts/stills.mjs",
+    "render": "node scripts/render.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/captions": "4.0.547",
+    "@remotion/cli": "4.0.547",
+    "@remotion/google-fonts": "4.0.547",
+    "@remotion/zod-types": "4.0.547",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.547",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.2",
+    "typescript": "5.9.3"
+  }
+}
