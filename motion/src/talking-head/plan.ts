@@ -110,13 +110,22 @@ export const planSchema = z.object({
 		// "keyword": short phrases mid-frame, small connector words + one huge
 		// keyword (energetic videos). Point graphics and split screens switch
 		// captions to "word" at the bottom while they are on screen.
-		style: z.enum(["word", "keyword"]).optional(),
+		style: z.enum(["phrase", "word", "keyword"]).optional().describe('"word" is an old name for "phrase"'),
 		keywords: z.array(z.string()).optional().describe("Words that must be the keyword of their phrase"),
 		accentWords: z.array(z.string()).optional().describe("Keywords set in bronze instead of ivory"),
 		tone: z.enum(["light", "dark"]).optional().describe("light = ivory text (default); dark = ink text for bright backdrops"),
 		tracking: z.number().min(-6).max(6).optional().describe("Extra letter spacing for all captions in % (Figma units). Default -1 = tighter, fuller words"),
 	}),
 	trim: z.object({ startSeconds: z.number(), endSeconds: z.number().optional() }).optional(),
+	// Slow zoom on plain stretches (no punch/cutaway/point graphic/split). On by default.
+	pushIn: z
+		.object({
+			enabled: z.boolean().optional(),
+			max: z.number().min(0).max(0.1).optional().describe("Max zoom, 0.10 = 10% (the cap)"),
+			minSeconds: z.number().optional().describe("Shortest plain stretch that gets a push (default 2.5)"),
+			focusY: z.number().min(0).max(100).optional().describe("Zoom centre height in %, at the face (default 35)"),
+		})
+		.optional(),
 	overlays: z.array(overlaySchema),
 	endCard: z.object({
 		enabled: z.boolean(),

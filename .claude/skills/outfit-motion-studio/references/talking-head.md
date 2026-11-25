@@ -92,9 +92,13 @@ Rules of thumb for a talking head:
     actually cost"). The keyword is picked automatically (longest content
     word, numbers first); force the right one with `captions.keywords` and set
     1–5 money/claim words in bronze with `captions.accentWords`.
-  - `"word"` (calm stories, testimonials): one word at a time at the bottom.
-    Mark 2–5 **emphasis** phrases per minute in `captions.emphasis`: those
-    show up to 4 words with the spoken word on a bronze plate.
+  - `"phrase"` (calm stories, testimonials): 1–3 words at a time at the
+    bottom. Mark 2–5 **emphasis** phrases per minute in `captions.emphasis`:
+    those hold up to 4 words on a bronze plate. (`"word"` is an old name for it.)
+  - Both styles move **phrase by phrase, never word by word**: a phrase lands
+    as a whole 0.1 s before it's spoken and eases out just before the next.
+    Word-by-word reveal looked like it lagged behind fast speech, so it was
+    dropped at the user's request; don't bring it back.
   - `captions.tone`: `"light"` (ivory, default) or `"dark"` (ink) for very bright
     footage. `captions.tracking`: extra letter spacing in % (default -1, the
     user's preference for fuller words).
@@ -126,6 +130,11 @@ Rules of thumb for a talking head:
   The voice keeps playing underneath; captions hide during cutaways.
 - **Punches** for 1–2 key claims later in the video; not every sentence.
 - Trim dead air at the start with `trim.startSeconds`.
+- **Push-in is automatic**: every plain stretch (no punch, cutaway, point
+  graphic or split; lower thirds and keyword captions don't count) of 2.5 s+
+  gets a slow zoom toward the face, up to 10% for stretches of 8 s+, easing
+  back just before the next graphic. 10% is the user's cap; never exceed it.
+  Tune with `pushIn: { max, minSeconds, focusY }`, or `enabled: false`.
 - Placement is automatic: captions and lower thirds sit at the bottom of the
   Reels safe zone, centred on x=450 to clear the like/comment/share buttons.
   If the speaker's face is low in the frame, use `punch` with `position: "top"`

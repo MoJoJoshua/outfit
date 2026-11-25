@@ -25,19 +25,44 @@ export const splitAmount = (frame: number, fps: number, ranges: SplitRange[]) =>
 	return { p: 0, ratio: 0.5, focusY: 8 };
 };
 
+/* Slow push-in on the plain stretches (no big graphic on screen): the speaker
+   zooms in gently across the stretch, up to `max` (0.10 = 10%) for stretches of
+   8 s or more, then eases back out over the last 0.4 s before the next graphic. */
+export type PushIn = { max: number; focusY: number; calm: Array<readonly [number, number]> };
+
+const pushScale = (frame: number, fps: number, push?: PushIn) => {
+	if (!push) return 1;
+	const seg = push.calm.find(([a, b]) => frame >= a && frame < b);
+	if (!seg) return 1;
+	const [a, b] = seg;
+	const ret = Math.round(0.4 * fps);
+	const target = 1 + push.max * Math.min(1, (b - a) / (8 * fps));
+	const easing = Easing.inOut(Easing.cubic);
+	if (frame < b - ret) return interpolate(frame, [a, b - ret], [1, target], { ...clamp, easing });
+	return interpolate(frame, [b - ret, b], [interpolate(b - ret, [a, b - ret], [1, target], { ...clamp, easing }), 1], { ...clamp, easing });
+};
+
 /** The speaker footage, full frame or squeezed into the bottom of a split. */
-export const Footage: React.FC<{ src: string; trimBefore: number; splits: SplitRange[] }> = ({ src: videoSrc, trimBefore, splits }) => {
+export const Footage: React.FC<{ src: string; trimBefore: number; splits: SplitRange[]; push?: PushIn }> = ({ src: videoSrc, trimBefore, splits, push }) => {
 	const frame = useCurrentFrame();
 	const { fps, height } = useVideoConfig();
 	const { p, ratio, focusY } = splitAmount(frame, fps, splits);
 	const top = height * ratio * p;
+	const scale = pushScale(frame, fps, push);
 	return (
 		<AbsoluteFill style={{ top, height: height - top, overflow: "hidden" }}>
 			<OffthreadVideo
 				src={videoSrc}
 				trimBefore={trimBefore}
 				// keep the face in view as the frame gets shorter
-				style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `50% ${50 + (focusY - 50) * p}%` }}
+				style={{
+					width: "100%",
+					height: "100%",
+					objectFit: "cover",
+					objectPosition: `50% ${50 + (focusY - 50) * p}%`,
+					scale: String(scale),
+					transformOrigin: `50% ${push?.focusY ?? 35}%`,
+				}}
 			/>
 		</AbsoluteFill>
 	);

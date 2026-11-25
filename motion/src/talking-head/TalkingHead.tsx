@@ -16,7 +16,7 @@ import { BrandCaptions } from "./BrandCaptions";
 import { Punch } from "./Punch";
 import { SafeGuide } from "@outfit/_shared/SafeGuide";
 import { Photos, Questions, Steps, Strike } from "./PointGraphics";
-import { Footage, SplitRange, SplitTop } from "./Split";
+import { Footage, PushIn, SplitRange, SplitTop } from "./Split";
 
 export const talkingHeadSchema = z.object({
 	slug: z.string().describe("Folder name in public/videos/"),
@@ -73,12 +73,25 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions, 
 	const cutaways = plan.overlays.filter((o) => o.type === "cutaway").map((o) => [f(o.from), f(o.to)] as const);
 	// while a point graphic or split is on screen, captions drop to one word at the bottom
 	const compact = plan.overlays.filter((o) => (pointGraphicTypes as readonly string[]).includes(o.type)).map((o) => [f(o.from), f(o.to)] as const);
+	// plain stretches for the push-in: footage not covered by any big overlay (lower thirds don't count)
+	const busy = plan.overlays
+		.filter((o) => o.type !== "lowerThird")
+		.map((o) => [f(o.from) - Math.round(0.2 * fps), f(o.to) + Math.round(0.2 * fps)] as const)
+		.sort((x, y) => x[0] - y[0]);
+	const calm: Array<readonly [number, number]> = [];
+	let cursor = 0;
+	for (const [a, b] of [...busy, [footageFrames, footageFrames] as const]) {
+		if (a - cursor >= Math.round((plan.pushIn?.minSeconds ?? 2.5) * fps)) calm.push([cursor, Math.min(a, footageFrames)]);
+		cursor = Math.max(cursor, b);
+	}
+	const push: PushIn | undefined =
+		plan.pushIn?.enabled === false ? undefined : { max: Math.min(0.1, plan.pushIn?.max ?? 0.1), focusY: plan.pushIn?.focusY ?? 35, calm };
 	const splits: SplitRange[] = plan.overlays.flatMap((o) => (o.type === "split" ? [{ fromFrame: f(o.from), toFrame: f(o.to), ratio: o.ratio ?? 0.5, focusY: o.focusY ?? 8 }] : []));
 
 	return (
 		<AbsoluteFill style={{ backgroundColor: colors.ink }}>
 			<Sequence durationInFrames={footageFrames} name="Footage">
-				<Footage src={staticFile(`videos/${slug}/${plan.video}`)} trimBefore={Math.round(start * fps)} splits={splits} />
+				<Footage src={staticFile(`videos/${slug}/${plan.video}`)} trimBefore={Math.round(start * fps)} splits={splits} push={push} />
 			</Sequence>
 
 			{plan.overlays.map((o, i) => (
@@ -97,7 +110,7 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions, 
 						compactRanges={compact}
 						splits={splits}
 						emphasisMs={(plan.captions.emphasis ?? []).map((e) => [e.from * 1000, e.to * 1000] as const)}
-						style={plan.captions.style ?? "word"}
+						style={plan.captions.style ?? "phrase"}
 						keywords={plan.captions.keywords ?? []}
 						accentWords={plan.captions.accentWords ?? []}
 						tone={plan.captions.tone ?? "light"}
