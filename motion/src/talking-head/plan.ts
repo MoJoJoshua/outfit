@@ -51,7 +51,10 @@ export const planSchema = z.object({
 	captions: z.object({
 		enabled: z.boolean(),
 		file: z.string(),
-		combineWithinMs: z.number().optional(),
+		combineWithinMs: z.number().optional().describe("Unused since word-by-word captions; kept for old plans"),
+		// Phrases shown up to 4 words at a time with the spoken word on a bronze
+		// plate. Everything else is shown one word at a time. Source-footage seconds.
+		emphasis: z.array(z.object({ from: z.number(), to: z.number() })).optional(),
 	}),
 	trim: z.object({ startSeconds: z.number(), endSeconds: z.number().optional() }).optional(),
 	overlays: z.array(overlaySchema),

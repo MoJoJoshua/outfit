@@ -7,3 +7,4 @@ public/videos/*/*.wav
 public/videos/*/*.m4a
 public/videos/*/*.jpg
 public/videos/*/*.png
+public/videos/*/assets/

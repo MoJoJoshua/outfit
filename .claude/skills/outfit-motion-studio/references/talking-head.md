@@ -9,7 +9,7 @@ graphics at the right moments, and the end card. Everything runs in the
 
 ```bash
 cd motion && npm install
-pip install pywhispercpp   # the "outfit" cloud environment does both of these automatically
+pip install pywhispercpp gdown pillow-heif   # the "outfit" cloud environment does both of these automatically
 ```
 
 Transcription uses a Whisper model from `huggingface.co` (the "outfit" cloud
@@ -33,6 +33,24 @@ product, add those words to the hint for better spelling.
 - **Too big to attach and no Drive?** Ask the user to record or export at
   1080p, 30 fps: Reels are 1080×1920, so 4K/60 fps only makes the file bigger.
   30 MB holds roughly 60–80 s at 1080p.
+
+### Photos and other assets
+
+If the user has their own photos (site progress, finished rooms, materials,
+team), they put them in a Google Drive **folder** shared as "Anyone with the
+link" and send the folder link (a single file link also works):
+
+```bash
+cd motion && npm run assets -- <Drive folder link> <slug>
+```
+
+Photos land in `public/videos/<slug>/assets/` as JPG (HEIC from iPhones is
+converted, rotated upright, max 2400 px). **Open
+`assets/_contact-sheet.jpg` and look at the photos before planning**, then use
+them in plan.json as `"videos/<slug>/assets/<file>.jpg"`, e.g. as before/after
+images, ranking item images or tier-list chips. If no photo fits a beat, fall
+back to the website's own `projects/<n>/<k>.jpg`. Ask which photo is "before"
+and which is "after" if it isn't obvious.
 
 ## 2. Import and transcribe
 
@@ -68,6 +86,11 @@ the user the plan as a short table and **wait for approval**:
 
 Rules of thumb for a talking head:
 
+- **Captions** show one word at a time. Mark 2–5 **emphasis** phrases per
+  minute (the claim, a number, the question, the CTA) in
+  `captions.emphasis`: those show up to 4 words at once with the spoken word
+  on a bronze plate. Don't emphasize a line that already has a `punch`.
+  List the emphasis phrases in the plan table so the user can change them.
 - **Hook text** (`punch`) on the first spoken line, 2–3 s, always.
 - **Lower third** once, in the first 10 s, when the speaker is introduced or
   the topic starts. Don't stack it with a punch.
@@ -90,6 +113,7 @@ footage. `motion/examples/accent-walls.plan.json` is a complete example.
 
 ```jsonc
 {
+  "captions": { "enabled": true, "file": "captions.json", "emphasis": [{ "from": 8.2, "to": 11.0 }] },
   "overlays": [
     { "type": "punch", "from": 0.2, "to": 2.6, "text": "Stop painting\naccent walls.", "accentWords": ["walls"], "position": "top" },
     { "type": "lowerThird", "from": 3, "to": 7, "name": "Outfit Construction", "role": "Condo fit-outs · Cebu" },

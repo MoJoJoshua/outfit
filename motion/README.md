@@ -14,8 +14,9 @@ By hand:
 
 ```bash
 npm install
-pip install pywhispercpp
-npm run new -- ~/Downloads/clip.mp4 accent-walls   # import + transcribe
+pip install pywhispercpp gdown pillow-heif
+npm run new -- ~/Downloads/clip.mp4 accent-walls   # import + transcribe (or a Drive link)
+npm run assets -- <Drive folder link> accent-walls  # optional: your photos
 # edit public/videos/accent-walls/plan.json (see examples/)
 npm run stills -- accent-walls                     # preview images
 npm run render -- accent-walls                     # final MP4 in out/

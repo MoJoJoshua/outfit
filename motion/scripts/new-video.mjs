@@ -140,7 +140,7 @@ if (!fs.existsSync(planFile)) {
 		video: "source.mp4",
 		source: { width: w, height: h, fps, durationInSeconds: duration },
 		output: vertical ? { width: 1080, height: 1920, fps: 30 } : { width: 1920, height: 1080, fps: 30 },
-		captions: { enabled: hasCaptions, file: "captions.json", combineWithinMs: 900 },
+		captions: { enabled: hasCaptions, file: "captions.json", emphasis: [] },
 		trim: { startSeconds: 0 },
 		overlays: [],
 		endCard: { enabled: true, seconds: 4, props: {} },

@@ -88,7 +88,7 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions, 
 
 			{plan.captions.enabled && captions && captions.length > 0 ? (
 				<Sequence durationInFrames={footageFrames} name="Captions">
-					<BrandCaptions captions={captions as Caption[]} offsetMs={start * 1000} hiddenRanges={cutaways} raisedRanges={lowerThirds} combineWithinMs={plan.captions.combineWithinMs ?? 900} />
+					<BrandCaptions captions={captions as Caption[]} offsetMs={start * 1000} hiddenRanges={cutaways} raisedRanges={lowerThirds} emphasisMs={(plan.captions.emphasis ?? []).map((e) => [e.from * 1000, e.to * 1000] as const)} />
 				</Sequence>
 			) : null}
 
