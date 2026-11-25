@@ -22,6 +22,57 @@ const lowerThird = z.object({
 	tone: z.enum(["charcoal", "ivory"]).optional(),
 });
 
+// Point graphics: times (`at`, `strikeAt`, `replaceAt`) are source-footage
+// seconds, normally the moment the word is spoken (from captions.json).
+const at = z.number().describe("Source seconds when this item appears (the spoken word's start)");
+
+const steps = z.object({
+	type: z.literal("steps"),
+	from: z.number(),
+	to: z.number(),
+	title: z.string().optional(),
+	items: z.array(z.object({ label: z.string(), icon: z.string(), at })).min(2).max(5),
+});
+
+const question = z.object({
+	type: z.literal("question"),
+	from: z.number(),
+	to: z.number(),
+	items: z.array(z.object({ text: z.string(), at, icon: z.string().optional() })).min(1).max(3),
+	place: z.enum(["chest", "top"]).optional(),
+});
+
+const strike = z.object({
+	type: z.literal("strike"),
+	from: z.number(),
+	to: z.number(),
+	text: z.string(),
+	replacement: z.string().optional(),
+	strikeAt: z.number().optional(),
+	replaceAt: z.number().optional(),
+	place: z.enum(["chest", "top"]).optional(),
+});
+
+const photos = z.object({
+	type: z.literal("photos"),
+	from: z.number(),
+	to: z.number(),
+	items: z.array(z.object({ src: z.string(), at, caption: z.string().optional() })).min(1).max(4),
+	place: z.enum(["chest", "top"]).optional(),
+});
+
+// Speaker moves to the bottom part of the frame; photos/renders fill the top.
+const split = z.object({
+	type: z.literal("split"),
+	from: z.number(),
+	to: z.number(),
+	ratio: z.number().min(0.35).max(0.6).optional().describe("Share of the height for the top panel (default 0.5)"),
+	focusY: z.number().min(0).max(100).optional().describe("Vertical focus of the speaker footage in %, 0 = keep the top (default 8)"),
+	items: z.array(z.object({ src: z.string(), at, caption: z.string().optional() })).min(1),
+});
+
+export const pointGraphicTypes = ["steps", "question", "strike", "photos", "split"] as const;
+
 export const templateNames = [
 	"kinetic-typography",
 	"material-ranking",
@@ -40,7 +91,7 @@ const cutaway = z.object({
 	props: z.record(z.string(), z.unknown()).optional(),
 });
 
-export const overlaySchema = z.discriminatedUnion("type", [punch, lowerThird, cutaway]);
+export const overlaySchema = z.discriminatedUnion("type", [punch, lowerThird, cutaway, steps, question, strike, photos, split]);
 export type Overlay = z.infer<typeof overlaySchema>;
 
 export const planSchema = z.object({
@@ -55,6 +106,15 @@ export const planSchema = z.object({
 		// Phrases shown up to 4 words at a time with the spoken word on a bronze
 		// plate. Everything else is shown one word at a time. Source-footage seconds.
 		emphasis: z.array(z.object({ from: z.number(), to: z.number() })).optional(),
+		// "word": one word at a time at the bottom (calm videos).
+		// "keyword": short phrases mid-frame, small connector words + one huge
+		// keyword (energetic videos). Point graphics and split screens switch
+		// captions to "word" at the bottom while they are on screen.
+		style: z.enum(["word", "keyword"]).optional(),
+		keywords: z.array(z.string()).optional().describe("Words that must be the keyword of their phrase"),
+		accentWords: z.array(z.string()).optional().describe("Keywords set in bronze instead of ivory"),
+		tone: z.enum(["light", "dark"]).optional().describe("light = ivory text (default); dark = ink text for bright backdrops"),
+		tracking: z.number().min(-6).max(6).optional().describe("Extra letter spacing for all captions in % (Figma units). Default -1 = tighter, fuller words"),
 	}),
 	trim: z.object({ startSeconds: z.number(), endSeconds: z.number().optional() }).optional(),
 	overlays: z.array(overlaySchema),

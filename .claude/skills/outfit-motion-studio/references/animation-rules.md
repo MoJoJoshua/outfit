@@ -14,6 +14,7 @@ Defined in `templates/_shared/brand.ts` as `ease`:
 | `ease.remove` | `bezier(0.7, 0, 0.84, 0)` | Things leaving: gentle start, quick exit |
 | `ease.slide` | `bezier(0.65, 0, 0.35, 1)` | Panels and wipes crossing the frame |
 | `ease.draw` | `bezier(0.33, 1, 0.68, 1)` | Lines drawing on, bars filling |
+| cubic out | `Easing.out(Easing.cubic)` | Every caption word entering (user preference) and point-graphic items |
 
 Springs are allowed only with `damping >= 200` (no overshoot). Never use
 `Easing.elastic`, `Easing.bounce`, `Easing.back` or a spring that overshoots.
@@ -63,8 +64,10 @@ No fades between scenes, except fade to ink before the end card (10 frames).
 ## Forbidden
 
 - CSS `transition` / `animation`, Tailwind `animate-*` (they don't render).
-- Rotation over 2°, 3D flips, perspective tilts on text.
+- Rotation over 2°, 3D flips, perspective tilts on text. (Photo cards in
+  `photos` may tilt up to 3.5°, like prints laid on a table.)
 - Motion blur on text. Blur-in reveals. Glow. Chromatic aberration.
 - Typewriter character-by-character effects, except the tagline in
-  `logo-reveal` (letter-spaced, 1 frame per character).
+  `logo-reveal` (letter-spaced, 1 frame per character) and `question` chat
+  bubbles (they imitate a message being typed).
 - Shake, pulse, heartbeat, looping idle animations on text.

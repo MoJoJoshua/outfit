@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, CalculateMetadataFunction, OffthreadVideo, Sequence, staticFile, useVideoConfig } from "remotion";
+import { AbsoluteFill, CalculateMetadataFunction, Sequence, staticFile, useVideoConfig } from "remotion";
 import { z } from "zod";
 import type { Caption } from "@remotion/captions";
 import { colors } from "@outfit/_shared/brand";
@@ -11,10 +11,12 @@ import { BeforeAfter, beforeAfterDefaults } from "@outfit/before-after";
 import { LogoReveal, logoRevealDefaults } from "@outfit/logo-reveal";
 import { LowerThird, lowerThirdDefaults } from "@outfit/lower-third";
 import { EndCard, endCardDefaults } from "@outfit/end-card";
-import { Plan, planSchema, Overlay } from "./plan";
+import { planSchema, Overlay, pointGraphicTypes } from "./plan";
 import { BrandCaptions } from "./BrandCaptions";
 import { Punch } from "./Punch";
 import { SafeGuide } from "@outfit/_shared/SafeGuide";
+import { Photos, Questions, Steps, Strike } from "./PointGraphics";
+import { Footage, SplitRange, SplitTop } from "./Split";
 
 export const talkingHeadSchema = z.object({
 	slug: z.string().describe("Folder name in public/videos/"),
@@ -69,15 +71,14 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions, 
 	const f = (seconds: number) => Math.round((seconds - start) * fps);
 	const lowerThirds = plan.overlays.filter((o) => o.type === "lowerThird").map((o) => [f(o.from), f(o.to)] as const);
 	const cutaways = plan.overlays.filter((o) => o.type === "cutaway").map((o) => [f(o.from), f(o.to)] as const);
+	// while a point graphic or split is on screen, captions drop to one word at the bottom
+	const compact = plan.overlays.filter((o) => (pointGraphicTypes as readonly string[]).includes(o.type)).map((o) => [f(o.from), f(o.to)] as const);
+	const splits: SplitRange[] = plan.overlays.flatMap((o) => (o.type === "split" ? [{ fromFrame: f(o.from), toFrame: f(o.to), ratio: o.ratio ?? 0.5, focusY: o.focusY ?? 8 }] : []));
 
 	return (
 		<AbsoluteFill style={{ backgroundColor: colors.ink }}>
 			<Sequence durationInFrames={footageFrames} name="Footage">
-				<OffthreadVideo
-					src={staticFile(`videos/${slug}/${plan.video}`)}
-					trimBefore={Math.round(start * fps)}
-					style={{ width: "100%", height: "100%", objectFit: "cover" }}
-				/>
+				<Footage src={staticFile(`videos/${slug}/${plan.video}`)} trimBefore={Math.round(start * fps)} splits={splits} />
 			</Sequence>
 
 			{plan.overlays.map((o, i) => (
@@ -88,7 +89,20 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions, 
 
 			{plan.captions.enabled && captions && captions.length > 0 ? (
 				<Sequence durationInFrames={footageFrames} name="Captions">
-					<BrandCaptions captions={captions as Caption[]} offsetMs={start * 1000} hiddenRanges={cutaways} raisedRanges={lowerThirds} emphasisMs={(plan.captions.emphasis ?? []).map((e) => [e.from * 1000, e.to * 1000] as const)} />
+					<BrandCaptions
+						captions={captions as Caption[]}
+						offsetMs={start * 1000}
+						hiddenRanges={cutaways}
+						raisedRanges={lowerThirds}
+						compactRanges={compact}
+						splits={splits}
+						emphasisMs={(plan.captions.emphasis ?? []).map((e) => [e.from * 1000, e.to * 1000] as const)}
+						style={plan.captions.style ?? "word"}
+						keywords={plan.captions.keywords ?? []}
+						accentWords={plan.captions.accentWords ?? []}
+						tone={plan.captions.tone ?? "light"}
+						tracking={plan.captions.tracking ?? -1}
+					/>
 				</Sequence>
 			) : null}
 
@@ -109,6 +123,23 @@ const OverlayView: React.FC<{ overlay: Overlay }> = ({ overlay }) => {
 	}
 	if (overlay.type === "lowerThird") {
 		return <LowerThird {...lowerThirdDefaults} name={overlay.name} role={overlay.role ?? ""} tone={overlay.tone ?? "charcoal"} />;
+	}
+	// item times are absolute in the plan; the Sequence starts at overlay.from
+	const rel = (t: number) => t - overlay.from;
+	if (overlay.type === "steps") return <Steps title={overlay.title} items={overlay.items.map((it) => ({ ...it, at: rel(it.at) }))} />;
+	if (overlay.type === "question") return <Questions place={overlay.place} items={overlay.items.map((it) => ({ ...it, at: rel(it.at) }))} />;
+	if (overlay.type === "photos") return <Photos place={overlay.place} items={overlay.items.map((it) => ({ ...it, at: rel(it.at) }))} />;
+	if (overlay.type === "split") return <SplitTop ratio={overlay.ratio ?? 0.5} items={overlay.items.map((it) => ({ ...it, at: rel(it.at) }))} />;
+	if (overlay.type === "strike") {
+		return (
+			<Strike
+				text={overlay.text}
+				replacement={overlay.replacement}
+				strikeAt={overlay.strikeAt !== undefined ? rel(overlay.strikeAt) : undefined}
+				replaceAt={overlay.replaceAt !== undefined ? rel(overlay.replaceAt) : undefined}
+				place={overlay.place}
+			/>
+		);
 	}
 	const [Component, defaults] = TEMPLATES[overlay.template];
 	const C = Component as React.FC<Record<string, unknown>>;

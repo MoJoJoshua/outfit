@@ -86,11 +86,37 @@ the user the plan as a short table and **wait for approval**:
 
 Rules of thumb for a talking head:
 
-- **Captions** show one word at a time. Mark 2–5 **emphasis** phrases per
-  minute (the claim, a number, the question, the CTA) in
-  `captions.emphasis`: those show up to 4 words at once with the spoken word
-  on a bronze plate. Don't emphasize a line that already has a `punch`.
-  List the emphasis phrases in the plan table so the user can change them.
+- **Caption style** (`captions.style`), pick one per video and say which:
+  - `"keyword"` (default for explainers, tips, hooks): short phrases mid-frame,
+    connector words small and one keyword huge ("how much does a / CABINET /
+    actually cost"). The keyword is picked automatically (longest content
+    word, numbers first); force the right one with `captions.keywords` and set
+    1–5 money/claim words in bronze with `captions.accentWords`.
+  - `"word"` (calm stories, testimonials): one word at a time at the bottom.
+    Mark 2–5 **emphasis** phrases per minute in `captions.emphasis`: those
+    show up to 4 words with the spoken word on a bronze plate.
+  - `captions.tone`: `"light"` (ivory, default) or `"dark"` (ink) for very bright
+    footage. `captions.tracking`: extra letter spacing in % (default -1, the
+    user's preference for fuller words).
+- **Point graphics** prove what is being said. Time every item to the spoken
+  word (read its `startMs` in `captions.json`, minus ~0.1 s). Use one when the
+  speaker:
+  | says… | graphic |
+  |---|---|
+  | a list or process ("first… second… third", "plan, design, build") | `steps`: 2–5 cards, one per spoken item, icons from `motion/src/talking-head/icons.tsx` |
+  | a question people ask ("Sir, how much…?") | `question`: chat bubble that types in |
+  | "not X, but Y" / "instead of" / a myth | `strike`: X crossed out with a bronze line, Y below |
+  | "like this", "our clients", results, variety | `photos`: 1–4 photo cards flying in |
+  | describes something to look at for 5–12 s (a material, a room, a build) | `split`: photos on top, speaker below |
+  Leave 2–4 s of plain speaker between graphics; never two at once. While a
+  graphic or split is on, captions automatically switch to one word at the
+  bottom (or on the split seam). Graphics sit on the speaker's chest by
+  default; use `place: "top"` only when the speaker is framed low.
+- **Point-graphic content is the speaker's words.** Labels repeat what is
+  said (short, title case); don't add facts, prices or material claims they
+  didn't say. Photos from the website are stand-ins: say so in the plan and
+  ask for real ones (Drive folder) when the point is about a specific
+  material or product.
 - **Hook text** (`punch`) on the first spoken line, 2–3 s, always.
 - **Lower third** once, in the first 10 s, when the speaker is introduced or
   the topic starts. Don't stack it with a punch.
@@ -109,7 +135,7 @@ Rules of thumb for a talking head:
 ## 4. Write plan.json
 
 Edit `public/videos/<slug>/plan.json`. Times are seconds in the **source**
-footage. `motion/examples/accent-walls.plan.json` is a complete example.
+footage. `motion/examples/` has complete examples.
 
 ```jsonc
 {
@@ -129,6 +155,17 @@ footage. `motion/examples/accent-walls.plan.json` is a complete example.
 | `punch` | `text`, optional `eyebrow`, `accentWords`, `position` (`top`/`center`) |
 | `lowerThird` | `name`, optional `role`, `tone` (`charcoal`/`ivory`) |
 | `cutaway` | `template`: `kinetic-typography`, `material-ranking`, `tier-list`, `architectural-diagram`, `before-after`, `logo-reveal`; `props`: any of that template's props (see its README), missing ones use defaults |
+| `steps` | optional `title`; `items`: `[{ label, icon, at }]` (2–5) |
+| `question` | `items`: `[{ text, at, icon? }]` (1–3); optional `place` |
+| `strike` | `text`, optional `replacement`, `strikeAt`, `replaceAt`, `place` |
+| `photos` | `items`: `[{ src, at, caption? }]` (1–4); optional `place` |
+| `split` | `items`: `[{ src, at, caption? }]`; optional `ratio` (0.35–0.6, default 0.5), `focusY` (% of speaker footage kept at the top, default 8) |
+
+`at`, `strikeAt`, `replaceAt` are **source seconds** like `from`/`to`.
+Icons: consult, design, measure, 3d, build, turnover, home, sofa, cabinet,
+hinge, drawer, handle, paint, panel, peso, calendar, clock, truck, check,
+cross, camera, chat, question, search, star.
+`motion/examples/kitchen-cabinet-cost.plan.json` uses every point graphic.
 
 Match cutaway length to the template: material-ranking needs
 `items × secondsPerItem`, tier-list `1.6 + items × secondsPerItem + 2`.
