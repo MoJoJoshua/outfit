@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
-import { clamp, colors, ease, fontFamily, reelsZone, safeArea, type, unit } from "../_shared/brand";
+import { clamp, colors, ease, fontFamily, layoutBands, reelsZone, safeArea, type, unit } from "../_shared/brand";
 
 export const lowerThirdSchema = z.object({
 	name: z.string().describe("Person, project or place"),
@@ -37,7 +37,8 @@ export const LowerThird: React.FC<LowerThirdProps> = ({ name, role, tone }) => {
 
 	const bg = tone === "charcoal" ? colors.charcoal : colors.ivory;
 	const fg = tone === "charcoal" ? colors.ivory : colors.ink;
-	const bottom = safe.bottom;
+	// bottom of the captions third (the safe box bottom in landscape)
+	const bottom = height - layoutBands(width, height).captions[1];
 	// sits in the lower zone: keep clear of the action buttons on the right
 	const maxW = width - safe.left - reelsZone(width, height).notchRight;
 

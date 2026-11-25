@@ -1,0 +1,159 @@
+{
+	"title": "Kitchen cabinet cost (test)",
+	"video": "source.mp4",
+	"source": {
+		"width": 1088,
+		"height": 1458,
+		"fps": 25,
+		"durationInSeconds": 48.81
+	},
+	"output": {
+		"width": 1080,
+		"height": 1920,
+		"fps": 30
+	},
+	"captions": {
+		"enabled": true,
+		"file": "captions.json",
+		"style": "keyword",
+		"keywords": [
+			"cabinet",
+			"depends",
+			"three",
+			"board",
+			"hardware",
+			"size",
+			"meter",
+			"condo",
+			"specs",
+			"exact",
+			"inspection",
+			"honest"
+		],
+		"accentWords": [
+			"cost",
+			"depends",
+			"fast",
+			"meter",
+			"specs"
+		],
+		"tone": "light",
+		"emphasis": []
+	},
+	"trim": {
+		"startSeconds": 0
+	},
+	"overlays": [
+		{
+			"type": "question",
+			"from": 3.6,
+			"to": 8.0,
+			"items": [
+				{
+					"text": "Sir, how much for a kitchen cabinet?",
+					"at": 4.6,
+					"icon": "chat"
+				}
+			],
+			"place": "captions"
+		},
+		{
+			"type": "photos",
+			"from": 8.1,
+			"to": 10.6,
+			"items": [
+				{
+					"src": "projects/27/2.jpg",
+					"at": 8.16
+				},
+				{
+					"src": "projects/43/3.jpg",
+					"at": 8.7
+				},
+				{
+					"src": "projects/21/2.jpg",
+					"at": 9.6
+				}
+			],
+			"place": "captions"
+		},
+		{
+			"type": "split",
+			"from": 13.0,
+			"to": 22.5,
+			"ratio": 0.5,
+			"items": [
+				{
+					"src": "projects/27/2.jpg",
+					"at": 13.12,
+					"caption": "01 \u00b7 The board"
+				},
+				{
+					"src": "projects/5/2.jpg",
+					"at": 17.2,
+					"caption": "01 \u00b7 The board"
+				}
+			]
+		},
+		{
+			"type": "steps",
+			"from": 22.6,
+			"to": 29.4,
+			"title": "02 \u00b7 Hardware",
+			"items": [
+				{
+					"label": "Soft-close hinges",
+					"icon": "hinge",
+					"at": 24.48
+				},
+				{
+					"label": "Drawer slides",
+					"icon": "drawer",
+					"at": 25.91
+				},
+				{
+					"label": "Handles",
+					"icon": "handle",
+					"at": 27.21
+				}
+			],
+			"place": "captions"
+		},
+		{
+			"type": "steps",
+			"from": 34.7,
+			"to": 39.3,
+			"title": "Condo rules",
+			"items": [
+				{
+					"label": "Delivery",
+					"icon": "truck",
+					"at": 36.94
+				},
+				{
+					"label": "Working hours",
+					"icon": "clock",
+					"at": 37.2
+				}
+			],
+			"place": "captions"
+		},
+		{
+			"type": "strike",
+			"from": 39.4,
+			"to": 43.9,
+			"text": "Price only",
+			"replacement": "Same specs",
+			"strikeAt": 40.68,
+			"replaceAt": 43.12,
+			"place": "captions"
+		}
+	],
+	"endCard": {
+		"enabled": true,
+		"seconds": 4,
+		"props": {
+			"cta": "Message us for a\nsite inspection."
+		}
+	}
+}

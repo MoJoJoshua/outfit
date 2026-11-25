@@ -9,7 +9,7 @@ graphics at the right moments, and the end card. Everything runs in the
 
 ```bash
 cd motion && npm install
-pip install pywhispercpp   # the "outfit" cloud environment does both of these automatically
+pip install pywhispercpp gdown pillow-heif   # the "outfit" cloud environment does both of these automatically
 ```
 
 Transcription uses a Whisper model from `huggingface.co` (the "outfit" cloud
@@ -33,6 +33,24 @@ product, add those words to the hint for better spelling.
 - **Too big to attach and no Drive?** Ask the user to record or export at
   1080p, 30 fps: Reels are 1080×1920, so 4K/60 fps only makes the file bigger.
   30 MB holds roughly 60–80 s at 1080p.
+
+### Photos and other assets
+
+If the user has their own photos (site progress, finished rooms, materials,
+team), they put them in a Google Drive **folder** shared as "Anyone with the
+link" and send the folder link (a single file link also works):
+
+```bash
+cd motion && npm run assets -- <Drive folder link> <slug>
+```
+
+Photos land in `public/videos/<slug>/assets/` as JPG (HEIC from iPhones is
+converted, rotated upright, max 2400 px). **Open
+`assets/_contact-sheet.jpg` and look at the photos before planning**, then use
+them in plan.json as `"videos/<slug>/assets/<file>.jpg"`, e.g. as before/after
+images, ranking item images or tier-list chips. If no photo fits a beat, fall
+back to the website's own `projects/<n>/<k>.jpg`. Ask which photo is "before"
+and which is "after" if it isn't obvious.
 
 ## 2. Import and transcribe
 
@@ -68,6 +86,43 @@ the user the plan as a short table and **wait for approval**:
 
 Rules of thumb for a talking head:
 
+- **Caption style** (`captions.style`), pick one per video and say which:
+  - `"keyword"` (default for explainers, tips, hooks): short phrases mid-frame,
+    connector words small and one keyword huge ("how much does a / CABINET /
+    actually cost"). The keyword is picked automatically (longest content
+    word, numbers first); force the right one with `captions.keywords` and set
+    1–5 money/claim words in bronze with `captions.accentWords`.
+  - `"phrase"` (calm stories, testimonials): 1–3 words at a time at the
+    bottom. Mark 2–5 **emphasis** phrases per minute in `captions.emphasis`:
+    those hold up to 4 words on a bronze plate. (`"word"` is an old name for it.)
+  - Both styles move **phrase by phrase, never word by word**: a phrase lands
+    as a whole 0.1 s before it's spoken and eases out just before the next.
+    Word-by-word reveal looked like it lagged behind fast speech, so it was
+    dropped at the user's request; don't bring it back.
+  - `captions.tone`: `"light"` (ivory, default) or `"dark"` (ink) for very bright
+    footage. `captions.tracking`: extra letter spacing in % (default -1, the
+    user's preference for fuller words).
+- **Point graphics** prove what is being said. Time every item to the spoken
+  word (read its `startMs` in `captions.json`, minus ~0.1 s). Use one when the
+  speaker:
+  | says… | graphic |
+  |---|---|
+  | a list or process ("first… second… third", "plan, design, build") | `steps`: 2–5 cards, one per spoken item, icons from `motion/src/talking-head/icons.tsx` |
+  | a question people ask ("Sir, how much…?") | `question`: chat bubble that types in |
+  | "not X, but Y" / "instead of" / a myth | `strike`: X crossed out with a bronze line, Y below |
+  | "like this", "our clients", results, variety | `photos`: 1–4 photo cards flying in |
+  | describes something to look at for 5–12 s (a material, a room, a build) | `split`: photos on top, speaker below |
+  Leave 2–4 s of plain speaker between graphics; never two at once. While a
+  graphic or split is on, captions automatically switch to one word at the
+  bottom (or on the split seam). Graphics go in the **text hook** third
+  (top) by default; if the speaker is framed high (eyes in the top third), use
+  `place: "captions"`: the graphic then takes the captions third and captions
+  step aside while it shows.
+- **Point-graphic content is the speaker's words.** Labels repeat what is
+  said (short, title case); don't add facts, prices or material claims they
+  didn't say. Photos from the website are stand-ins: say so in the plan and
+  ask for real ones (Drive folder) when the point is about a specific
+  material or product.
 - **Hook text** (`punch`) on the first spoken line, 2–3 s, always.
 - **Lower third** once, in the first 10 s, when the speaker is introduced or
   the topic starts. Don't stack it with a punch.
@@ -77,19 +132,27 @@ Rules of thumb for a talking head:
   The voice keeps playing underneath; captions hide during cutaways.
 - **Punches** for 1–2 key claims later in the video; not every sentence.
 - Trim dead air at the start with `trim.startSeconds`.
-- Placement is automatic: captions and lower thirds sit at the bottom of the
-  Reels safe zone, centred on x=450 to clear the like/comment/share buttons.
-  If the speaker's face is low in the frame, use `punch` with `position: "top"`
-  and keep cutaways short rather than moving captions.
+- **Push-in is automatic**: every plain stretch (no punch, cutaway, point
+  graphic or split; lower thirds and keyword captions don't count) of 2.5 s+
+  gets a slow zoom toward the face, up to 10% for stretches of 8 s+, easing
+  back just before the next graphic. 10% is the user's cap; never exceed it.
+  Tune with `pushIn: { max, minSeconds, focusY }`, or `enabled: false`.
+- Placement is automatic and follows the layout thirds in
+  `rendering-standards.md`: captions and lower thirds in the captions third,
+  hook text in the text-hook third, the eyes third left to the speaker's face.
+  Check with `npm run stills -- <slug> --guides`. If the footage is framed so
+  the eyes aren't in the middle third, say so in the plan and suggest
+  reframing next time (eyes about 40–55% down the frame).
 - Facts in graphics (scores, prices, sizes) come from the user. Ask.
 
 ## 4. Write plan.json
 
 Edit `public/videos/<slug>/plan.json`. Times are seconds in the **source**
-footage. `motion/examples/accent-walls.plan.json` is a complete example.
+footage. `motion/examples/` has complete examples.
 
 ```jsonc
 {
+  "captions": { "enabled": true, "file": "captions.json", "emphasis": [{ "from": 8.2, "to": 11.0 }] },
   "overlays": [
     { "type": "punch", "from": 0.2, "to": 2.6, "text": "Stop painting\naccent walls.", "accentWords": ["walls"], "position": "top" },
     { "type": "lowerThird", "from": 3, "to": 7, "name": "Outfit Construction", "role": "Condo fit-outs · Cebu" },
@@ -105,6 +168,17 @@ footage. `motion/examples/accent-walls.plan.json` is a complete example.
 | `punch` | `text`, optional `eyebrow`, `accentWords`, `position` (`top`/`center`) |
 | `lowerThird` | `name`, optional `role`, `tone` (`charcoal`/`ivory`) |
 | `cutaway` | `template`: `kinetic-typography`, `material-ranking`, `tier-list`, `architectural-diagram`, `before-after`, `logo-reveal`; `props`: any of that template's props (see its README), missing ones use defaults |
+| `steps` | optional `title`, `place`; `items`: `[{ label, icon, at }]` (2–5) |
+| `question` | `items`: `[{ text, at, icon? }]` (1–3); optional `place` (`hook`/`captions`) |
+| `strike` | `text`, optional `replacement`, `strikeAt`, `replaceAt`, `place` |
+| `photos` | `items`: `[{ src, at, caption? }]` (1–4); optional `place` |
+| `split` | `items`: `[{ src, at, caption? }]`; optional `ratio` (0.35–0.6, default 0.5), `focusY` (% of speaker footage kept at the top, default 8) |
+
+`at`, `strikeAt`, `replaceAt` are **source seconds** like `from`/`to`.
+Icons: consult, design, measure, 3d, build, turnover, home, sofa, cabinet,
+hinge, drawer, handle, paint, panel, peso, calendar, clock, truck, check,
+cross, camera, chat, question, search, star.
+`motion/examples/kitchen-cabinet-cost.plan.json` uses every point graphic.
 
 Match cutaway length to the template: material-ranking needs
 `items × secondsPerItem`, tier-list `1.6 + items × secondsPerItem + 2`.

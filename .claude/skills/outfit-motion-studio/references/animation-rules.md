@@ -14,6 +14,7 @@ Defined in `templates/_shared/brand.ts` as `ease`:
 | `ease.remove` | `bezier(0.7, 0, 0.84, 0)` | Things leaving: gentle start, quick exit |
 | `ease.slide` | `bezier(0.65, 0, 0.35, 1)` | Panels and wipes crossing the frame |
 | `ease.draw` | `bezier(0.33, 1, 0.68, 1)` | Lines drawing on, bars filling |
+| cubic out / in | `Easing.out(Easing.cubic)` / `Easing.in(Easing.cubic)` | Caption phrases entering / leaving (user preference) and point-graphic items |
 
 Springs are allowed only with `damping >= 200` (no overshoot). Never use
 `Easing.elastic`, `Easing.bounce`, `Easing.back` or a spring that overshoots.
@@ -38,8 +39,8 @@ Exits are always faster than entrances (about 60%).
 - Text rises out of a mask by about one line height (`TypeSet` does this);
   small text that isn't masked moves at most 16–20 px. Never fly text in from off-frame.
 - Panels travel the full frame width/height; nothing else does.
-- Scale: only for photos (slow push-in **1.00 → 1.06** over the shot), never
-  for text.
+- Scale: only for photos (slow push-in **1.00 → 1.06** over the shot) and
+  talking-head footage on plain stretches (**max 1.10**), never for text.
 
 ## Choreography
 
@@ -63,8 +64,10 @@ No fades between scenes, except fade to ink before the end card (10 frames).
 ## Forbidden
 
 - CSS `transition` / `animation`, Tailwind `animate-*` (they don't render).
-- Rotation over 2°, 3D flips, perspective tilts on text.
+- Rotation over 2°, 3D flips, perspective tilts on text. (Photo cards in
+  `photos` may tilt up to 3.5°, like prints laid on a table.)
 - Motion blur on text. Blur-in reveals. Glow. Chromatic aberration.
 - Typewriter character-by-character effects, except the tagline in
-  `logo-reveal` (letter-spaced, 1 frame per character).
+  `logo-reveal` (letter-spaced, 1 frame per character) and `question` chat
+  bubbles (they imitate a message being typed).
 - Shake, pulse, heartbeat, looping idle animations on text.
