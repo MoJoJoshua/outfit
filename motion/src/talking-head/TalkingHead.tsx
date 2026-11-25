@@ -15,7 +15,7 @@ import { planSchema, Overlay, pointGraphicTypes } from "./plan";
 import { BrandCaptions } from "./BrandCaptions";
 import { Punch } from "./Punch";
 import { SafeGuide } from "@outfit/_shared/SafeGuide";
-import { Photos, Questions, Steps, Strike } from "./PointGraphics";
+import { Photos, Questions, Steps, Strike, placeBand } from "./PointGraphics";
 import { Footage, PushIn, SplitRange, SplitTop } from "./Split";
 
 export const talkingHeadSchema = z.object({
@@ -71,8 +71,12 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions, 
 	const f = (seconds: number) => Math.round((seconds - start) * fps);
 	const lowerThirds = plan.overlays.filter((o) => o.type === "lowerThird").map((o) => [f(o.from), f(o.to)] as const);
 	const cutaways = plan.overlays.filter((o) => o.type === "cutaway").map((o) => [f(o.from), f(o.to)] as const);
-	// while a point graphic or split is on screen, captions drop to one word at the bottom
-	const compact = plan.overlays.filter((o) => (pointGraphicTypes as readonly string[]).includes(o.type)).map((o) => [f(o.from), f(o.to)] as const);
+	// Point graphics in the hook third: captions keep running in compact form.
+	// Point graphics in the captions third: captions step aside (hidden) meanwhile.
+	const graphics = plan.overlays.filter((o) => (pointGraphicTypes as readonly string[]).includes(o.type));
+	const inCaptionsBand = (o: Overlay) => "place" in o && placeBand(o.place as never) === "captions";
+	const compact = graphics.map((o) => [f(o.from), f(o.to)] as const);
+	const graphicsBelow = graphics.filter(inCaptionsBand).map((o) => [f(o.from), f(o.to)] as const);
 	// plain stretches for the push-in: footage not covered by any big overlay (lower thirds don't count)
 	const busy = plan.overlays
 		.filter((o) => o.type !== "lowerThird")
@@ -105,7 +109,7 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions, 
 					<BrandCaptions
 						captions={captions as Caption[]}
 						offsetMs={start * 1000}
-						hiddenRanges={cutaways}
+						hiddenRanges={[...cutaways, ...graphicsBelow]}
 						raisedRanges={lowerThirds}
 						compactRanges={compact}
 						splits={splits}
@@ -139,7 +143,7 @@ const OverlayView: React.FC<{ overlay: Overlay }> = ({ overlay }) => {
 	}
 	// item times are absolute in the plan; the Sequence starts at overlay.from
 	const rel = (t: number) => t - overlay.from;
-	if (overlay.type === "steps") return <Steps title={overlay.title} items={overlay.items.map((it) => ({ ...it, at: rel(it.at) }))} />;
+	if (overlay.type === "steps") return <Steps place={overlay.place} title={overlay.title} items={overlay.items.map((it) => ({ ...it, at: rel(it.at) }))} />;
 	if (overlay.type === "question") return <Questions place={overlay.place} items={overlay.items.map((it) => ({ ...it, at: rel(it.at) }))} />;
 	if (overlay.type === "photos") return <Photos place={overlay.place} items={overlay.items.map((it) => ({ ...it, at: rel(it.at) }))} />;
 	if (overlay.type === "split") return <SplitTop ratio={overlay.ratio ?? 0.5} items={overlay.items.map((it) => ({ ...it, at: rel(it.at) }))} />;

@@ -14,36 +14,43 @@ for layout switches.
 
 ## Safe zones (vertical)
 
-Measured from an Instagram Reels UI overlay (sponsored post, worst case) at
-1080×1920. Keep all text, logos and key faces/products inside:
+The user's Instagram Reels safe zone, measured from Reels screenshots and
+converted to 1080×1920 video pixels. It replaced an earlier, tighter zone
+(with a lower-right notch) that the user found too cramped; don't bring that back.
 
 ```
-        x=110                         x=914
- y=254  ┌──────────────────────────────┐        top bar (Reels, camera)
-        │                              │
-        │          SAFE BOX            │
-        │                              │
- y=1072 │                    ┌─────────┘  <- notch: like / comment / share
-        │                    │             buttons take 290 px on the right
- y=1322 └────────────────────┘ x=790       username, caption, CTA below
-        |<- lower-zone centre x=450 ->|
+          x=155                          x=930
+   y=230  ┌────────────────────────────────┐   top bar (back, search) above
+          │  ┌─────────┬────────┬────────┐ │
+   y=300  │  │         TEXT HOOK         │ │   hook text, point graphics
+   y=690  │  ├─────────┼────────┼────────┤ │
+          │  │           EYES            │ │   speaker's eyes: keep clear
+   y=1119 │  ├─────────┼────────┼────────┤ │
+          │  │         CAPTIONS          │ │   captions, lower thirds
+   y=1547 │  └─────────┴────────┴────────┘ │
+   y=1604 └────────────────────────────────┘   username, caption, CTA below
+               x=352       x=725                like/comment/share right of x=930
 ```
 
-- Main box: top **254**, bottom **598**, left **110**, right **166** px clear.
-- Below **y=1072** the right inset grows to **290** px. Anything there
-  (captions, lower thirds, contact rows, bottom of grids) centres on
-  **x=450**, not 540.
-- Some phones crop ~**54 px** from each side; the margins above already cover it.
-- Backgrounds and photos may bleed to every edge; only text and key content
-  must stay inside.
+- **Safe box** (green): x 155–930, y 230–1604. Clear: top **230**, bottom
+  **316**, left **155**, right **150** px. All text, logos and key content stay
+  inside. Backgrounds and photos may bleed to every edge.
+- **Layout thirds** (white grid): text hook y 300–690, eyes y 690–1119,
+  captions y 1119–1547; columns at x 352 and 725, centre ≈ 540.
+  - Hook text and point graphics go in the **text hook** third.
+  - The **eyes** third belongs to the speaker's face. Ask for footage framed
+    with the eyes there; if the speaker is framed high (eyes in the hook
+    third), put point graphics in the captions third (`place: "captions"`).
+  - Captions and lower thirds sit in the **captions** third.
+- Phones that fill the screen crop ~50 px from each side; the box covers it.
 
-`_shared/brand.ts`: `safeArea()` returns the main box, `reelsZone()` the notch
-(`notchTop`, `notchRight`, `centerX`), `safeRightAt(y)` the right inset at a
-given height. Every template uses them. `fitFontSize()` shrinks headlines so
-the longest line fits the safe width.
+`_shared/brand.ts`: `safeArea()` returns the box, `layoutBands()` the thirds
+and columns, `fitFontSize()` shrinks headlines to fit the safe width.
+(`reelsZone()` remains for older code and no longer has a notch.)
 
 Check placement on any still with the guide overlay:
-`npm run stills -- <slug> --guides` (in `motion/`). Shaded = unsafe.
+`npm run stills -- <slug> --guides` (in `motion/`): red = unsafe, green = safe
+box, white grid = thirds.
 
 ## Render commands
 

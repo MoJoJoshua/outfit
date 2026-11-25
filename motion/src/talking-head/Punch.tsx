@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
-import { clamp, colors, ease, fitFontSize, fontFamily, isVertical, safeArea, type, unit } from "@outfit/_shared/brand";
+import { clamp, colors, ease, fitFontSize, fontFamily, isVertical, layoutBands, safeArea, type, unit } from "@outfit/_shared/brand";
 import { MeasureLine, TypeSet } from "@outfit/_shared/primitives";
 
 // Big brand text over the speaker (hook lines, key claims). A charcoal
@@ -31,7 +31,8 @@ export const Punch: React.FC<{ text: string; eyebrow?: string; accentWords: stri
 			/>
 			<AbsoluteFill
 				style={{
-					paddingTop: safe.top,
+					// hook text lives in the top third of the layout grid
+					paddingTop: position === "top" ? layoutBands(width, height).hook[0] : safe.top,
 					paddingLeft: safe.left,
 					paddingRight: safe.right,
 					justifyContent: position === "top" ? "flex-start" : "center",

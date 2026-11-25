@@ -114,8 +114,10 @@ Rules of thumb for a talking head:
   | describes something to look at for 5–12 s (a material, a room, a build) | `split`: photos on top, speaker below |
   Leave 2–4 s of plain speaker between graphics; never two at once. While a
   graphic or split is on, captions automatically switch to one word at the
-  bottom (or on the split seam). Graphics sit on the speaker's chest by
-  default; use `place: "top"` only when the speaker is framed low.
+  bottom (or on the split seam). Graphics go in the **text hook** third
+  (top) by default; if the speaker is framed high (eyes in the top third), use
+  `place: "captions"`: the graphic then takes the captions third and captions
+  step aside while it shows.
 - **Point-graphic content is the speaker's words.** Labels repeat what is
   said (short, title case); don't add facts, prices or material claims they
   didn't say. Photos from the website are stand-ins: say so in the plan and
@@ -135,10 +137,12 @@ Rules of thumb for a talking head:
   gets a slow zoom toward the face, up to 10% for stretches of 8 s+, easing
   back just before the next graphic. 10% is the user's cap; never exceed it.
   Tune with `pushIn: { max, minSeconds, focusY }`, or `enabled: false`.
-- Placement is automatic: captions and lower thirds sit at the bottom of the
-  Reels safe zone, centred on x=450 to clear the like/comment/share buttons.
-  If the speaker's face is low in the frame, use `punch` with `position: "top"`
-  and keep cutaways short rather than moving captions.
+- Placement is automatic and follows the layout thirds in
+  `rendering-standards.md`: captions and lower thirds in the captions third,
+  hook text in the text-hook third, the eyes third left to the speaker's face.
+  Check with `npm run stills -- <slug> --guides`. If the footage is framed so
+  the eyes aren't in the middle third, say so in the plan and suggest
+  reframing next time (eyes about 40–55% down the frame).
 - Facts in graphics (scores, prices, sizes) come from the user. Ask.
 
 ## 4. Write plan.json
@@ -164,8 +168,8 @@ footage. `motion/examples/` has complete examples.
 | `punch` | `text`, optional `eyebrow`, `accentWords`, `position` (`top`/`center`) |
 | `lowerThird` | `name`, optional `role`, `tone` (`charcoal`/`ivory`) |
 | `cutaway` | `template`: `kinetic-typography`, `material-ranking`, `tier-list`, `architectural-diagram`, `before-after`, `logo-reveal`; `props`: any of that template's props (see its README), missing ones use defaults |
-| `steps` | optional `title`; `items`: `[{ label, icon, at }]` (2–5) |
-| `question` | `items`: `[{ text, at, icon? }]` (1–3); optional `place` |
+| `steps` | optional `title`, `place`; `items`: `[{ label, icon, at }]` (2–5) |
+| `question` | `items`: `[{ text, at, icon? }]` (1–3); optional `place` (`hook`/`captions`) |
 | `strike` | `text`, optional `replacement`, `strikeAt`, `replaceAt`, `place` |
 | `photos` | `items`: `[{ src, at, caption? }]` (1–4); optional `place` |
 | `split` | `items`: `[{ src, at, caption? }]`; optional `ratio` (0.35–0.6, default 0.5), `focusY` (% of speaker footage kept at the top, default 8) |

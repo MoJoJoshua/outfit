@@ -32,6 +32,7 @@ const steps = z.object({
 	to: z.number(),
 	title: z.string().optional(),
 	items: z.array(z.object({ label: z.string(), icon: z.string(), at })).min(2).max(5),
+	place: z.enum(["hook", "captions", "top", "chest"]).optional(),
 });
 
 const question = z.object({
@@ -39,7 +40,7 @@ const question = z.object({
 	from: z.number(),
 	to: z.number(),
 	items: z.array(z.object({ text: z.string(), at, icon: z.string().optional() })).min(1).max(3),
-	place: z.enum(["chest", "top"]).optional(),
+	place: z.enum(["hook", "captions", "top", "chest"]).optional().describe("Layout third: hook (top, default) or captions (bottom; captions hide meanwhile)"),
 });
 
 const strike = z.object({
@@ -50,7 +51,7 @@ const strike = z.object({
 	replacement: z.string().optional(),
 	strikeAt: z.number().optional(),
 	replaceAt: z.number().optional(),
-	place: z.enum(["chest", "top"]).optional(),
+	place: z.enum(["hook", "captions", "top", "chest"]).optional().describe("Layout third: hook (top, default) or captions (bottom; captions hide meanwhile)"),
 });
 
 const photos = z.object({
@@ -58,7 +59,7 @@ const photos = z.object({
 	from: z.number(),
 	to: z.number(),
 	items: z.array(z.object({ src: z.string(), at, caption: z.string().optional() })).min(1).max(4),
-	place: z.enum(["chest", "top"]).optional(),
+	place: z.enum(["hook", "captions", "top", "chest"]).optional().describe("Layout third: hook (top, default) or captions (bottom; captions hide meanwhile)"),
 });
 
 // Speaker moves to the bottom part of the frame; photos/renders fill the top.

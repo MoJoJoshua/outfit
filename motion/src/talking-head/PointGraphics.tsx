@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Easing, Img, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
-import { clamp, colors, fitFontSize, fontFamily, isVertical, reelsZone, safeArea, src, type, unit } from "@outfit/_shared/brand";
+import { clamp, colors, fitFontSize, fontFamily, isVertical, layoutBands, safeArea, src, type, unit } from "@outfit/_shared/brand";
 import { Icon } from "./icons";
 
 // "Point graphics": objects that prove what the speaker is saying, timed to the
@@ -22,14 +22,15 @@ const useEnterExit = (atSec: number, enterSec = 0.35) => {
 
 const shadow = "0 18px 40px rgba(0,0,0,0.35)";
 
-// Graphics sit on the CHEST band by default (below the face, above the Reels
-// action-button notch), like the references. "top" places them above the head
-// for footage where the speaker is framed low.
-export type Place = "chest" | "top";
-const band = (width: number, height: number, place: Place) => {
-	const safe = safeArea(width, height);
-	const bottom = isVertical(width, height) ? reelsZone(width, height).notchTop - 24 * unit(width, height) : height - safe.bottom;
-	return place === "top" ? { top: safe.top, bottom: safe.top + (bottom - safe.top) * 0.42 } : { top: height * 0.36, bottom };
+// Graphics follow the user's layout thirds (brand.ts layoutBands):
+//   "hook" (default): the top third, above the speaker's eyes.
+//   "captions": the bottom third, for footage framed high; captions hide while it shows.
+// "top"/"chest" are old names for "hook"/"captions".
+export type Place = "hook" | "captions" | "top" | "chest";
+export const placeBand = (place: Place | undefined) => (place === "captions" || place === "chest" ? "captions" : "hook");
+const band = (width: number, height: number, place: Place = "hook") => {
+	const b = layoutBands(width, height)[placeBand(place)];
+	return { top: b[0], bottom: b[1], h: b[1] - b[0] };
 };
 
 // label on a charcoal chip so it reads on any backdrop
@@ -41,21 +42,22 @@ const Chip: React.FC<{ text: string; u: number; style?: React.CSSProperties }> =
 
 export type StepItem = { label: string; icon: string; at: number };
 
-export const Steps: React.FC<{ items: StepItem[]; title?: string }> = ({ items, title }) => {
+export const Steps: React.FC<{ items: StepItem[]; title?: string; place?: Place }> = ({ items, title, place }) => {
 	const { width, height } = useVideoConfig();
 	const frame = useCurrentFrame();
 	const { fps } = useVideoConfig();
 	const u = unit(width, height);
 	const safe = safeArea(width, height);
-	const zone = reelsZone(width, height);
 	const n = Math.max(1, items.length);
 	const gap = 16 * u;
 	const left = safe.left;
 	const right = width - safe.right;
 	const cardW = (right - left - gap * (n - 1)) / n;
-	const cardH = Math.min(cardW * 1.15, 230 * u);
-	// row sits just above the lower-right notch, clear of the bottom captions
-	const top = (isVertical(width, height) ? zone.notchTop : height - safe.bottom) - cardH - 24 * u;
+	const b = band(width, height, place);
+	const titleH = title ? 64 * u : 0;
+	const cardH = Math.min(cardW * 1.15, 230 * u, b.h - titleH);
+	// title + row centred in the band
+	const top = b.top + (b.h - titleH - cardH) / 2 + titleH;
 	const current = items.reduce((acc, it, i) => (frame >= Math.round(it.at * fps) ? i : acc), -1);
 	const titleIn = useEnterExit(0, 0.3);
 
@@ -109,14 +111,15 @@ const StepCard: React.FC<{ item: StepItem; index: number; active: boolean; x: nu
 
 export type QuestionItem = { text: string; at: number; icon?: string };
 
-export const Questions: React.FC<{ items: QuestionItem[]; place?: Place }> = ({ items, place = "chest" }) => {
+export const Questions: React.FC<{ items: QuestionItem[]; place?: Place }> = ({ items, place }) => {
 	const { width, height } = useVideoConfig();
 	const u = unit(width, height);
 	const safe = safeArea(width, height);
 	const w = width - safe.left - safe.right;
 	const pillH = 104 * u;
 	const b = band(width, height, place);
-	const top = place === "top" ? b.top + 40 * u : b.bottom - items.length * (pillH + 22 * u) - 40 * u;
+	const stackH = items.length * (pillH + 22 * u) - 22 * u;
+	const top = b.top + (b.h - stackH) / 2;
 	return (
 		<AbsoluteFill style={{ fontFamily }}>
 			{items.map((q, i) => (
@@ -166,7 +169,7 @@ const QuestionPill: React.FC<{ q: QuestionItem; x: number; y: number; w: number;
 
 /* ---------- Strike-through: "not this, that" ---------- */
 
-export const Strike: React.FC<{ text: string; replacement?: string; strikeAt?: number; replaceAt?: number; place?: Place }> = ({ text, replacement, strikeAt = 0.5, replaceAt, place = "chest" }) => {
+export const Strike: React.FC<{ text: string; replacement?: string; strikeAt?: number; replaceAt?: number; place?: Place }> = ({ text, replacement, strikeAt = 0.5, replaceAt, place }) => {
 	const { width, height } = useVideoConfig();
 	const u = unit(width, height);
 	const safe = safeArea(width, height);
@@ -179,7 +182,7 @@ export const Strike: React.FC<{ text: string; replacement?: string; strikeAt?: n
 	const b = band(width, height, place);
 	return (
 		<AbsoluteFill style={{ fontFamily }}>
-			<div style={{ position: "absolute", left: safe.left, ...(place === "top" ? { top: b.top + 30 * u } : { bottom: height - b.bottom }), width: w, textAlign: "center", opacity: 1 - word.exit }}>
+			<div style={{ position: "absolute", left: safe.left, top: b.top, height: b.h, width: w, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", opacity: 1 - word.exit }}>
 				<div style={{ position: "relative", display: "inline-block", overflow: "visible" }}>
 					<div
 						style={{
@@ -228,7 +231,7 @@ const SLOTS = [
 	{ x: 0.9, y: 0.9, r: -2.5 },
 ];
 
-export const Photos: React.FC<{ items: PhotoItem[]; place?: Place }> = ({ items, place = "chest" }) => {
+export const Photos: React.FC<{ items: PhotoItem[]; place?: Place }> = ({ items, place }) => {
 	const { width, height } = useVideoConfig();
 	const u = unit(width, height);
 	const safe = safeArea(width, height);

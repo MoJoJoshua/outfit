@@ -57,29 +57,53 @@ export const unit = (width: number, height: number) =>
 	isVertical(width, height) || width === height ? width / 1080 : (height / 1080) * 1.25;
 
 // Text-safe insets (references/rendering-standards.md).
-// Vertical numbers are the Instagram Reels UI safe zone at 1080x1920: top bar,
-// caption/username/CTA block at the bottom, and the like/comment/share column
-// on the right (see reelsZone for the lower-right notch).
+// Vertical: the user's Instagram Reels safe zone at 1080x1920, measured from a
+// Reels screenshot (green box): clear of the top bar, the username/caption
+// block at the bottom and the like/comment/share column on the right. One
+// rectangle, x 155-930, y 230-1604.
 export const safeArea = (width: number, height: number) => {
 	const u = width / 1080;
 	if (isVertical(width, height)) {
-		return { top: 254 * u, bottom: 598 * u, left: 110 * u, right: 166 * u };
+		return { top: 230 * u, bottom: 316 * u, left: 155 * u, right: 150 * u };
 	}
 	const m = width >= 1920 ? 120 * (width / 1920) : 80 * u;
 	return { top: m, bottom: m, left: m, right: m };
 };
 
-// Lower-right notch of the Reels safe zone: below notchTop the action buttons
-// take 290 px on the right, so anything there uses notchRight as its right
-// inset and centers on centerX (x=450 at 1080 wide), not the frame center.
-// Landscape/square: no notch, values equal safeArea.
+// Layout thirds inside the vertical safe zone (the user's grid):
+//   hook     y 300-690   text hook / headline / point graphics
+//   eyes     y 690-1119  the speaker's eyes: keep clear
+//   captions y 1119-1547 captions, lower thirds
+// Columns at x 352 and 725 (centre column ~540). Landscape/square: thirds of the safe area.
+export const layoutBands = (width: number, height: number) => {
+	const u = width / 1080;
+	if (isVertical(width, height)) {
+		const y = (v: number) => v * u;
+		return { hook: [y(300), y(690)], eyes: [y(690), y(1119)], captions: [y(1119), y(1547)], cols: [352 * u, 725 * u] } as const;
+	}
+	const s = safeArea(width, height);
+	const h = (height - s.top - s.bottom) / 3;
+	return {
+		hook: [s.top, s.top + h],
+		eyes: [s.top + h, s.top + 2 * h],
+		captions: [s.top + 2 * h, height - s.bottom],
+		cols: [width / 3, (2 * width) / 3],
+	} as const;
+};
+
+// Kept for templates written against the old zone (which had a lower-right
+// notch). The new zone has none: notchTop is the frame bottom, notchRight is
+// the normal right inset, centerX is the safe box centre. crop = phones that
+// fill the screen cut ~50 px off each side of a 1080-wide video.
 export const reelsZone = (width: number, height: number) => {
 	const u = width / 1080;
 	const safe = safeArea(width, height);
-	if (!isVertical(width, height)) {
-		return { notchTop: height, notchRight: safe.right, centerX: width / 2, crop: 0 };
-	}
-	return { notchTop: 1072 * u, notchRight: 290 * u, centerX: (safe.left + width - 290 * u) / 2, crop: 54 * u };
+	return {
+		notchTop: height,
+		notchRight: safe.right,
+		centerX: (safe.left + width - safe.right) / 2,
+		crop: isVertical(width, height) ? 50 * u : 0,
+	};
 };
 
 // Right inset for content whose bottom edge reaches y.

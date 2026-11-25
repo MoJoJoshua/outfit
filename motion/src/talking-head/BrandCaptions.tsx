@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import type { Caption } from "@remotion/captions";
-import { clamp, colors, fitFontSize, fontFamily, isVertical, reelsZone, safeArea, unit } from "@outfit/_shared/brand";
+import { clamp, colors, fitFontSize, fontFamily, isVertical, layoutBands, reelsZone, safeArea, unit } from "@outfit/_shared/brand";
 import { SplitRange, splitAmount } from "./Split";
 
 // Outfit captions. Captions move as PHRASES, never word by word: a phrase lands
@@ -76,7 +76,7 @@ export const BrandCaptions: React.FC<{
 			style={{
 				justifyContent: "flex-end",
 				alignItems: "center",
-				paddingBottom: split.p > 0 ? height - height * split.ratio * split.p + 36 * u : safe.bottom + 16 * u + (raised ? 190 * u : 0),
+				paddingBottom: split.p > 0 ? height - height * split.ratio * split.p + 36 * u : height - layoutBands(width, height).captions[1] + (raised ? 190 * u : 0),
 				paddingLeft: safe.left,
 				paddingRight: zone.notchRight,
 			}}
@@ -210,10 +210,11 @@ const KeywordPhrase: React.FC<{ chunk: Chunk; nowMs: number; accent: string[]; t
 	return (
 		<AbsoluteFill
 			style={{
-				// block sits mid-frame, its bottom just above the Reels action-button notch
-				justifyContent: "flex-end",
+				// block centred in the captions third of the layout grid
+				justifyContent: "center",
 				alignItems: "center",
-				paddingBottom: vertical ? height - zone.notchTop + 30 * u : safe.bottom + 60 * u,
+				paddingTop: layoutBands(width, height).captions[0],
+				paddingBottom: height - layoutBands(width, height).captions[1],
 				paddingLeft: safe.left,
 				paddingRight: safe.right,
 			}}

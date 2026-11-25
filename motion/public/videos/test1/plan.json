@@ -54,7 +54,8 @@
 					"at": 4.6,
 					"icon": "chat"
 				}
-			]
+			],
+			"place": "captions"
 		},
 		{
 			"type": "photos",
@@ -73,7 +74,8 @@
 					"src": "projects/21/2.jpg",
 					"at": 9.6
 				}
-			]
+			],
+			"place": "captions"
 		},
 		{
 			"type": "split",
@@ -114,7 +116,8 @@
 					"icon": "handle",
 					"at": 27.21
 				}
-			]
+			],
+			"place": "captions"
 		},
 		{
 			"type": "steps",
@@ -132,7 +135,8 @@
 					"icon": "clock",
 					"at": 37.2
 				}
-			]
+			],
+			"place": "captions"
 		},
 		{
 			"type": "strike",
@@ -141,7 +145,8 @@
 			"text": "Price only",
 			"replacement": "Same specs",
 			"strikeAt": 40.68,
-			"replaceAt": 43.12
+			"replaceAt": 43.12,
+			"place": "captions"
 		}
 	],
 	"endCard": {
