@@ -12,6 +12,7 @@ glance. Use them in plan.json as "videos/<slug>/assets/<file>.jpg".
 import os
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 
@@ -50,15 +51,34 @@ def main() -> int:
     try:
         folder = re.search(r"/folders/([\w-]+)", link)
         try:
+            # gdown lists the folder; files are fetched from drive.usercontent.google.com
+            # because gdown's own download redirects to per-file googleusercontent
+            # hosts that the container network does not allow.
             if folder:
-                got = gdown.download_folder(id=folder.group(1), output=tmp, quiet=False, use_cookies=False)
+                files = gdown.download_folder(id=folder.group(1), output=tmp, quiet=True, use_cookies=False, skip_download=True)
+                items = [(f.id, f.path) for f in files or []]
             else:
                 fid = re.search(r"(?:/file/d/|[?&]id=)([\w-]+)", link)
                 if not fid:
                     print("That doesn't look like a Google Drive file or folder link.", file=sys.stderr)
                     return 1
-                got = gdown.download(id=fid.group(1), output=tmp + os.sep, quiet=False, use_cookies=False)
-                got = [got] if got else None
+                items = [(fid.group(1), None)]
+            got = []
+            for file_id, rel in items:
+                dest = os.path.join(tmp, rel) if rel else os.path.join(tmp, file_id)
+                os.makedirs(os.path.dirname(dest), exist_ok=True)
+                url = f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t"
+                r = subprocess.run(["curl", "-fsSL", "--retry", "3", "-o", dest, "-D", dest + ".hdr", url])
+                if r.returncode != 0:
+                    raise RuntimeError(f"download failed for {rel or file_id}")
+                if not rel:  # single file: take the name from the response headers
+                    hdr = open(dest + ".hdr", encoding="latin1").read()
+                    m = re.search(r'filename="([^"]+)"', hdr)
+                    if m:
+                        os.rename(dest, os.path.join(tmp, m.group(1)))
+                os.remove(dest + ".hdr")
+                got.append(rel or file_id)
+                print(f"  downloaded {rel or file_id}")
         except Exception as e:  # gdown raises on private links and refused connections
             got = None
             print(f"Download error: {e}", file=sys.stderr)
