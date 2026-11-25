@@ -14,12 +14,36 @@ for layout switches.
 
 ## Safe zones (vertical)
 
-Platform UI covers parts of the frame. Keep all text and the logo inside:
+Measured from an Instagram Reels UI overlay (sponsored post, worst case) at
+1080×1920. Keep all text, logos and key faces/products inside:
 
-- top **220 px**, bottom **380 px**, right **140 px**, left **80 px** clear.
+```
+        x=110                         x=914
+ y=254  ┌──────────────────────────────┐        top bar (Reels, camera)
+        │                              │
+        │          SAFE BOX            │
+        │                              │
+ y=1072 │                    ┌─────────┘  <- notch: like / comment / share
+        │                    │             buttons take 290 px on the right
+ y=1322 └────────────────────┘ x=790       username, caption, CTA below
+        |<- lower-zone centre x=450 ->|
+```
 
-`_shared/brand.ts` exports `safeArea(width, height)` that returns these insets;
-every template uses it. Backgrounds and photos may bleed to the edges.
+- Main box: top **254**, bottom **598**, left **110**, right **166** px clear.
+- Below **y=1072** the right inset grows to **290** px. Anything there
+  (captions, lower thirds, contact rows, bottom of grids) centres on
+  **x=450**, not 540.
+- Some phones crop ~**54 px** from each side; the margins above already cover it.
+- Backgrounds and photos may bleed to every edge; only text and key content
+  must stay inside.
+
+`_shared/brand.ts`: `safeArea()` returns the main box, `reelsZone()` the notch
+(`notchTop`, `notchRight`, `centerX`), `safeRightAt(y)` the right inset at a
+given height. Every template uses them. `fitFontSize()` shrinks headlines so
+the longest line fits the safe width.
+
+Check placement on any still with the guide overlay:
+`npm run stills -- <slug> --guides` (in `motion/`). Shaded = unsafe.
 
 ## Render commands
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Img, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
-import { clamp, colors, ease, fontFamily, isVertical, safeArea, tierColors, type, unit, src } from "../_shared/brand";
+import { clamp, colors, ease, fitFontSize, fontFamily, isVertical, reelsZone, safeArea, tierColors, type, unit, src } from "../_shared/brand";
 import { FluteSurface, PanelSlide, TypeSet } from "../_shared/primitives";
 
 const tierKey = z.enum(["S", "A", "B", "C"]);
@@ -48,13 +48,13 @@ export const TierList: React.FC<TierListProps> = ({ title, items, secondsPerItem
 	const per = Math.round(secondsPerItem * fps);
 	const intro = Math.round(INTRO_S * fps);
 
-	const gridTop = vertical ? safe.top + 330 * u : safe.top + 190 * u;
+	const gridTop = vertical ? safe.top + 260 * u : safe.top + 190 * u;
 	const gridBottom = height - safe.bottom;
 	const rowGap = 14 * u;
 	const rowH = (gridBottom - gridTop - rowGap * 3) / 4;
 	const labelW = rowH * (vertical ? 0.9 : 0.8);
 	const gridLeft = safe.left;
-	const gridRight = width - safe.right;
+	const gridRight = width - reelsZone(width, height).notchRight;
 	const perRow = vertical ? 4 : 6;
 	const chipGap = 12 * u;
 	const chipW = (gridRight - gridLeft - labelW - chipGap * (perRow + 1)) / perRow;
@@ -67,7 +67,7 @@ export const TierList: React.FC<TierListProps> = ({ title, items, secondsPerItem
 		<AbsoluteFill style={{ backgroundColor: colors.ink, fontFamily }}>
 			<FluteSurface tone="ink" style={{ opacity: 0.5 }} />
 			<div style={{ position: "absolute", left: safe.left, right: safe.right, top: safe.top }}>
-				<TypeSet text={title.toUpperCase()} delay={2} style={{ ...type.headline, fontSize: (vertical ? 80 : 64) * u, color: colors.ivory }} />
+				<TypeSet text={title.toUpperCase()} delay={2} style={{ ...type.headline, fontSize: fitFontSize(title, width - safe.left - safe.right, (vertical ? 80 : 64) * u), color: colors.ivory }} />
 				{sampleData ? <div style={{ ...type.label, fontSize: 24 * u, color: colors.copper, marginTop: 12 * u }}>Sample data</div> : null}
 			</div>
 			{TIERS.map((t, ti) => {

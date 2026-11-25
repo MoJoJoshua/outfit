@@ -14,11 +14,13 @@ import { EndCard, endCardDefaults } from "@outfit/end-card";
 import { Plan, planSchema, Overlay } from "./plan";
 import { BrandCaptions } from "./BrandCaptions";
 import { Punch } from "./Punch";
+import { SafeGuide } from "@outfit/_shared/SafeGuide";
 
 export const talkingHeadSchema = z.object({
 	slug: z.string().describe("Folder name in public/videos/"),
 	plan: planSchema.optional(),
 	captions: z.array(z.any()).optional(),
+	showGuides: z.boolean().optional().describe("Overlay the Reels safe zone (previews only)"),
 });
 export type TalkingHeadProps = z.infer<typeof talkingHeadSchema>;
 
@@ -58,7 +60,7 @@ const TEMPLATES = {
 	"logo-reveal": [LogoReveal, logoRevealDefaults],
 } as const;
 
-export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions }) => {
+export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions, showGuides }) => {
 	const { fps } = useVideoConfig();
 	if (!plan) return null;
 	const start = plan.trim?.startSeconds ?? 0;
@@ -95,6 +97,8 @@ export const TalkingHead: React.FC<TalkingHeadProps> = ({ slug, plan, captions }
 					<EndCard {...endCardDefaults} {...(plan.endCard.props as object)} />
 				</Sequence>
 			) : null}
+
+			{showGuides ? <SafeGuide /> : null}
 		</AbsoluteFill>
 	);
 };

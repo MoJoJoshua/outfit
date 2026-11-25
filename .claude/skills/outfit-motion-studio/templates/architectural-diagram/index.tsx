@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
-import { clamp, colors, ease, fontFamily, isVertical, safeArea, type, unit } from "../_shared/brand";
+import { clamp, colors, ease, fitFontSize, fontFamily, isVertical, reelsZone, safeArea, type, unit } from "../_shared/brand";
 import { MeasureLine, PanelSlide, TypeSet } from "../_shared/primitives";
 
 const room = z.object({
@@ -47,9 +47,9 @@ export const ArchitecturalDiagram: React.FC<ArchitecturalDiagramProps> = ({ eyeb
 
 	// plan area
 	const areaLeft = vertical ? safe.left + 40 * u : width * 0.5;
-	const areaRight = width - safe.right - 40 * u;
-	const areaTop = vertical ? safe.top + 380 * u : safe.top + 80 * u;
-	const areaBottom = height - safe.bottom - 120 * u;
+	const areaRight = width - reelsZone(width, height).notchRight - 20 * u;
+	const areaTop = vertical ? safe.top + 330 * u : safe.top + 80 * u;
+	const areaBottom = height - safe.bottom - 70 * u;
 	const scale = Math.min((areaRight - areaLeft) / planWidthM, (areaBottom - areaTop) / planDepthM);
 	const pw = planWidthM * scale;
 	const ph = planDepthM * scale;
@@ -82,7 +82,7 @@ export const ArchitecturalDiagram: React.FC<ArchitecturalDiagramProps> = ({ eyeb
 
 			<div style={{ position: "absolute", left: safe.left, top: safe.top, width: vertical ? width - safe.left - safe.right : width * 0.5 - safe.left - 140 * u }}>
 				<div style={{ ...type.eyebrow, fontSize: 30 * u, color: colors.bronze, marginBottom: 16 * u }}>{eyebrow}</div>
-				<TypeSet text={title.toUpperCase()} delay={6} style={{ ...type.headline, fontSize: (vertical ? 96 : 72) * u, color: colors.ink }} />
+				<TypeSet text={title.toUpperCase()} delay={6} style={{ ...type.headline, fontSize: fitFontSize(title, vertical ? width - safe.left - safe.right : width * 0.5 - safe.left - 140 * u, (vertical ? 96 : 72) * u), color: colors.ink }} />
 			</div>
 
 			{/* rooms: fill and labels */}

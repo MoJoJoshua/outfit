@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Img, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
-import { assets, clamp, colors, ease, fontFamily, isVertical, safeArea, type, unit } from "../_shared/brand";
+import { assets, clamp, colors, ease, fitFontSize, fontFamily, isVertical, reelsZone, safeArea, type, unit } from "../_shared/brand";
 import { FluteReveal, FluteSurface, MeasureLine, PanelSlide, TypeSet } from "../_shared/primitives";
 
 const contactRow = z.object({
@@ -40,7 +40,7 @@ export const EndCard: React.FC<EndCardProps> = ({ cta, subline, contacts }) => {
 	const vertical = isVertical(width, height);
 
 	const contentW = width - safe.left - safe.right;
-	const logoW = vertical ? contentW : Math.min(contentW * 0.42, 820 * u);
+	const logoW = vertical ? contentW * 0.78 : Math.min(contentW * 0.42, 820 * u);
 	const logoH = logoW / LOGO_ASPECT;
 	const ctaWords = cta.split(/\s+/).filter(Boolean).length;
 	const ctaStart = 16;
@@ -70,12 +70,12 @@ export const EndCard: React.FC<EndCardProps> = ({ cta, subline, contacts }) => {
 				style={{
 					position: "absolute",
 					left: safe.left,
-					right: safe.right,
+					right: reelsZone(width, height).notchRight,
 					top: safe.top,
 					bottom: safe.bottom,
 					display: "flex",
 					flexDirection: vertical ? "column" : "row",
-					gap: (vertical ? 70 : 100) * u,
+					gap: (vertical ? 48 : 100) * u,
 					alignItems: vertical ? "stretch" : "center",
 					justifyContent: "center",
 				}}
@@ -89,7 +89,7 @@ export const EndCard: React.FC<EndCardProps> = ({ cta, subline, contacts }) => {
 				</div>
 
 				<div style={{ display: "flex", flexDirection: "column", gap: 26 * u, flex: vertical ? undefined : 1 }}>
-					<TypeSet text={cta.toUpperCase()} delay={ctaStart} accentWords={[]} style={{ ...type.headline, fontSize: (vertical ? 96 : 76) * u, color: colors.ivory }} />
+					<TypeSet text={cta.toUpperCase()} delay={ctaStart} accentWords={[]} style={{ ...type.headline, fontSize: fitFontSize(cta, vertical ? width - safe.left - reelsZone(width, height).notchRight : contentW * 0.5, (vertical ? 96 : 76) * u), color: colors.ivory }} />
 					<div style={{ position: "relative", height: 8 * u }}>
 						<MeasureLine x={0} y={0} length={300 * u} thickness={4 * u} delay={ctaStart + ctaWords * 3} />
 					</div>

@@ -1,11 +1,12 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import type { Caption } from "@remotion/captions";
-import { clamp, colors, ease, fontFamily, isVertical, safeArea, unit } from "@outfit/_shared/brand";
+import { clamp, colors, ease, fontFamily, isVertical, reelsZone, safeArea, unit } from "@outfit/_shared/brand";
 
 // Outfit caption style: Montserrat ExtraBold uppercase, ivory with a soft
 // shadow; the word being spoken sits on a bronze plate. One short page at a
-// time, above the platform UI safe zone. Hidden while a cutaway covers the speaker.
+// time, at the bottom of the Reels safe zone, centred on the lower-zone centreline
+// (x=450 at 1080 wide) so it clears the like/comment/share buttons. Hidden while a cutaway covers the speaker.
 export const BrandCaptions: React.FC<{
 	captions: Caption[];
 	offsetMs: number;
@@ -27,9 +28,10 @@ export const BrandCaptions: React.FC<{
 	const enter = interpolate(frame, [pageFrame, pageFrame + 6], [0, 1], { ...clamp, easing: ease.install });
 	const fontSize = (isVertical(width, height) ? 64 : 54) * u;
 	const raised = raisedRanges.some(([a, b]) => frame >= a - 6 && frame < b + 6);
+	const zone = reelsZone(width, height);
 
 	return (
-		<AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: safe.bottom + (isVertical(width, height) ? 40 * u : 0) + (raised ? 190 * u : 0), paddingLeft: safe.left, paddingRight: safe.right }}>
+		<AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: safe.bottom + 16 * u + (raised ? 190 * u : 0), paddingLeft: safe.left, paddingRight: zone.notchRight }}>
 			<div
 				style={{
 					fontFamily,
@@ -41,7 +43,7 @@ export const BrandCaptions: React.FC<{
 					textAlign: "center",
 					color: colors.ivory,
 					textShadow: "0 3px 14px rgba(0,0,0,0.65), 0 1px 2px rgba(0,0,0,0.8)",
-					maxWidth: width - safe.left - safe.right,
+					maxWidth: width - safe.left - zone.notchRight,
 					opacity: enter,
 					translate: `0 ${(1 - enter) * 12}px`,
 				}}

@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
-import { clamp, colors, ease, fontFamily, isVertical, safeArea, type, unit } from "@outfit/_shared/brand";
+import { clamp, colors, ease, fitFontSize, fontFamily, isVertical, safeArea, type, unit } from "@outfit/_shared/brand";
 import { MeasureLine, TypeSet } from "@outfit/_shared/primitives";
 
 // Big brand text over the speaker (hook lines, key claims). A charcoal
@@ -16,7 +16,7 @@ export const Punch: React.FC<{ text: string; eyebrow?: string; accentWords: stri
 	const scrimOut = interpolate(frame, [exitAt, exitAt + 10], [1, 0], clamp);
 	const words = text.split(/\s+/).filter(Boolean).length;
 	const eyebrowIn = interpolate(frame, [2, 2 + Math.round(0.47 * fps)], [0, 1], { ...clamp, easing: ease.install });
-	const fontSize = (vertical ? 112 : 96) * u;
+	const fontSize = fitFontSize(text, width - safe.left - safe.right, (vertical ? 112 : 96) * u);
 
 	return (
 		<AbsoluteFill>

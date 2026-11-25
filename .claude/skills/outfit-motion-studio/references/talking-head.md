@@ -71,6 +71,10 @@ Rules of thumb for a talking head:
   The voice keeps playing underneath; captions hide during cutaways.
 - **Punches** for 1–2 key claims later in the video; not every sentence.
 - Trim dead air at the start with `trim.startSeconds`.
+- Placement is automatic: captions and lower thirds sit at the bottom of the
+  Reels safe zone, centred on x=450 to clear the like/comment/share buttons.
+  If the speaker's face is low in the frame, use `punch` with `position: "top"`
+  and keep cutaways short rather than moving captions.
 - Facts in graphics (scores, prices, sizes) come from the user. Ask.
 
 ## 4. Write plan.json
@@ -106,11 +110,14 @@ speaker describes; look at them first.
 ## 5. Preview, then render
 
 ```bash
+npm run stills -- <slug> --guides   # first pass: Reels safe-zone overlay on, check placement
 npm run stills -- <slug>     # out/<slug>/stills/*.jpg, one per overlay + captions + end card
 npm run render -- <slug>     # out/<slug>/outfit_<slug>_V_<date>.mp4
 ```
 
-Look at every still before showing them. Send the stills to the user, apply
+Look at every still before showing them. In the `--guides` pass nothing
+readable may touch the pink shade (see the safe-zone diagram in
+`rendering-standards.md`); send the clean stills (without guides) to the user. Send the stills to the user, apply
 their changes to `plan.json`, re-run stills for what changed, then render and
 send the MP4. Footage and renders are not committed to git (too large); commit
 `plan.json`, `captions.json` and `transcript.txt` if the user wants the edit kept.

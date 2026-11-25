@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
-import { clamp, colors, ease, fontFamily, isVertical, safeArea, type, unit } from "../_shared/brand";
+import { clamp, colors, ease, fitFontSize, fontFamily, isVertical, safeArea, type, unit } from "../_shared/brand";
 import { FluteSurface, MeasureLine, PanelSlide, TypeSet } from "../_shared/primitives";
 
 export const kineticTypographySchema = z.object({
@@ -37,7 +37,7 @@ export const KineticTypography: React.FC<KineticTypographyProps> = ({ eyebrow, h
 	const safe = safeArea(width, height);
 	const dark = background !== "ivory";
 	const fg = dark ? colors.ivory : colors.ink;
-	const fontSize = (size === "display" ? (isVertical(width, height) ? 150 : 130) : 88) * u;
+	const fontSize = fitFontSize(headline, width - safe.left - safe.right, (size === "display" ? (isVertical(width, height) ? 150 : 130) : 88) * u);
 	const words = headline.split(/\s+/).filter(Boolean).length;
 	const exitAt = exit ? durationInFrames - Math.round(0.33 * fps) : undefined;
 	const headlineStart = eyebrow ? 8 : 4;

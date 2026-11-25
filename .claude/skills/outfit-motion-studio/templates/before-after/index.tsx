@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Img, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
-import { clamp, colors, ease, fontFamily, safeArea, type, unit, src } from "../_shared/brand";
+import { clamp, colors, ease, fontFamily, reelsZone, safeArea, type, unit, src } from "../_shared/brand";
 import { FluteReveal, FluteSurface, PushIn } from "../_shared/primitives";
 
 export const beforeAfterSchema = z.object({
@@ -95,7 +95,7 @@ export const BeforeAfter: React.FC<BeforeAfterProps> = ({ beforeImage, afterImag
 			{tag(afterLabel, wipeEnd - 6, null, true)}
 
 			{projectName ? (
-				<div style={{ position: "absolute", left: safe.left, right: safe.right, bottom: safe.bottom, overflow: "hidden" }}>
+				<div style={{ position: "absolute", left: safe.left, right: reelsZone(width, height).notchRight, bottom: safe.bottom, overflow: "hidden" }}>
 					<div
 						style={{
 							...type.eyebrow,

@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
 import { z } from "zod";
-import { clamp, colors, ease, fontFamily, isVertical, safeArea, type, unit, src } from "../_shared/brand";
+import { clamp, colors, ease, fitFontSize, fontFamily, isVertical, reelsZone, safeArea, type, unit, src } from "../_shared/brand";
 import { FluteReveal, FluteSurface, PanelSlide, PushIn } from "../_shared/primitives";
 
 const criterion = z.object({
@@ -79,11 +79,13 @@ const RankCard: React.FC<
 
 	// image area: top half (vertical) or right 45% (landscape)
 	const imgBox = vertical
-		? { left: 0, top: 0, width, height: height * 0.42 }
+		? { left: 0, top: 0, width, height: height * 0.36 }
 		: { left: width * 0.55, top: 0, width: width * 0.45, height };
 	const textBox = vertical
-		? { left: safe.left, right: safe.right, top: height * 0.42 + 60 * u, bottom: safe.bottom }
+		? { left: safe.left, right: reelsZone(width, height).notchRight, top: height * 0.36 + 40 * u, bottom: safe.bottom }
 		: { left: safe.left, right: width * 0.45 + 60 * u, top: safe.top, bottom: safe.bottom };
+
+	const textBoxW = width - textBox.left - textBox.right;
 
 	return (
 		<AbsoluteFill>
@@ -113,7 +115,7 @@ const RankCard: React.FC<
 				<div style={{ display: "flex", alignItems: "baseline", gap: 28 * u, overflow: "hidden" }}>
 					<div style={{ ...type.display, fontSize: 170 * u, color: accent, translate: `0 ${rise(6) * 120 * u}px` }}>{String(rank).padStart(2, "0")}</div>
 					<div style={{ overflow: "hidden" }}>
-						<div style={{ ...type.headline, fontSize: 76 * u, color: colors.ivory, translate: `0 ${rise(10) * 90 * u}px` }}>{name}</div>
+						<div style={{ ...type.headline, fontSize: fitFontSize(name, textBoxW - 200 * u, 76 * u), color: colors.ivory, translate: `0 ${rise(10) * 90 * u}px` }}>{name}</div>
 					</div>
 				</div>
 				<div style={{ ...type.body, fontSize: 36 * u, color: colors.ivory, opacity: 1 - rise(14) }}>{note}</div>

@@ -27,7 +27,8 @@ export const LogoReveal: React.FC<LogoRevealProps> = ({ tagline, background }) =
 	const logoW = Math.min(width - safe.left - safe.right, isVertical(width, height) ? width * 0.86 : width * 0.5);
 	const logoH = logoW / LOGO_ASPECT;
 	const logoLeft = (width - logoW) / 2;
-	const logoTop = (height - logoH) / 2 - 30 * u;
+	// centre on the safe box (above the Reels caption block), not the frame
+	const logoTop = safe.top + (height - safe.top - safe.bottom - logoH) / 2 - 50 * u;
 	const seamX = logoLeft + logoW * LOGO_SEAM;
 
 	return (

@@ -57,13 +57,35 @@ export const unit = (width: number, height: number) =>
 	isVertical(width, height) || width === height ? width / 1080 : (height / 1080) * 1.25;
 
 // Text-safe insets (references/rendering-standards.md).
+// Vertical numbers are the Instagram Reels UI safe zone at 1080x1920: top bar,
+// caption/username/CTA block at the bottom, and the like/comment/share column
+// on the right (see reelsZone for the lower-right notch).
 export const safeArea = (width: number, height: number) => {
 	const u = width / 1080;
 	if (isVertical(width, height)) {
-		return { top: 220 * u, bottom: 380 * u, left: 80 * u, right: 140 * u };
+		return { top: 254 * u, bottom: 598 * u, left: 110 * u, right: 166 * u };
 	}
 	const m = width >= 1920 ? 120 * (width / 1920) : 80 * u;
 	return { top: m, bottom: m, left: m, right: m };
+};
+
+// Lower-right notch of the Reels safe zone: below notchTop the action buttons
+// take 290 px on the right, so anything there uses notchRight as its right
+// inset and centers on centerX (x=450 at 1080 wide), not the frame center.
+// Landscape/square: no notch, values equal safeArea.
+export const reelsZone = (width: number, height: number) => {
+	const u = width / 1080;
+	const safe = safeArea(width, height);
+	if (!isVertical(width, height)) {
+		return { notchTop: height, notchRight: safe.right, centerX: width / 2, crop: 0 };
+	}
+	return { notchTop: 1072 * u, notchRight: 290 * u, centerX: (safe.left + width - 290 * u) / 2, crop: 54 * u };
+};
+
+// Right inset for content whose bottom edge reaches y.
+export const safeRightAt = (width: number, height: number, y: number) => {
+	const z = reelsZone(width, height);
+	return y > z.notchTop ? z.notchRight : safeArea(width, height).right;
 };
 
 // Flute pitch: 48 px at 1080 wide.
@@ -81,3 +103,11 @@ export const type = {
 // Image props accept a public/ path ("outfit/kitchen.jpg"), an absolute URL or a
 // staticFile() result. Plain paths are wrapped in staticFile().
 export const src = (path: string) => (/^(https?:|data:|blob:|\/)/.test(path) ? path : staticFile(path));
+
+// Shrinks a headline's font size until its longest line fits maxWidth.
+// Estimate for Montserrat ExtraBold uppercase (~0.74em per character incl.
+// spacing); errs on the small side so text never crosses the safe edge.
+export const fitFontSize = (text: string, maxWidth: number, target: number, emPerChar = 0.74) => {
+	const longest = Math.max(1, ...text.split("\n").map((l) => l.trim().length));
+	return Math.min(target, maxWidth / (longest * emPerChar));
+};
